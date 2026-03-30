@@ -1,30 +1,17 @@
-#!/usr/bin/env python3
-"""
-Reads result_files/results_per_split.csv
-Creates summary plots
-Saves plots to generated_plots/
-"""
-
 from pathlib import Path
 import pandas as pd
 from matplotlib import pyplot as plt
 
+# TODO: Adapt file and plot name
 FILE_NAME = "dummy_results.csv"
 PLOT_NAME = "dummy_plot.png"
+
+# TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Metric Error"
 
-SCRIPT_DIR = Path(__file__).parent / "../"
-RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-def main():
-    df = pd.read_csv(RESULTS_FILE, low_memory=False)
-    plot_metric_error_by_fs(df)
-
-
+# TODO: Adapt plotting function
 def plot_metric_error_by_fs(df):
     methods = sorted(df["feature_selection_method"].dropna().unique())
     data = [
@@ -48,6 +35,18 @@ def plot_metric_error_by_fs(df):
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out)
     plt.close()
+
+
+# Do nothing below
+SCRIPT_DIR = Path(__file__).parent / "../"
+RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def main():
+    df = pd.read_csv(RESULTS_FILE, low_memory=False)
+    plot_metric_error_by_fs(df)
 
 
 if __name__ == "__main__":
