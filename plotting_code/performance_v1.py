@@ -3,6 +3,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from matplotlib.patches import Patch
+
+""" 
+Description:
+This plot shows the 
+"""
 
 # TODO: Adapt file and plot name
 FILE_NAME = "dummy_results.csv"
@@ -17,33 +23,37 @@ Y_LABEL = "Metric Error"
 def plot(df):
     methods = sorted(df["feature_selection_method"].dropna().unique())
 
-    # Group by method AND max_features for multiple bars per method
+    # When using this part, we get the bars for only the first, the last and the middle value in max_features
     groups = df.dropna(subset=["feature_selection_method", "time_train_s", "metric_error", "max_features"])
+    all_max_feats = sorted(groups["max_features"].unique())
+    n_steps = len(all_max_feats)
+    step_indices = sorted(set([0, n_steps // 2, n_steps - 1]))
+    selected_max_feats = [all_max_feats[idx] for idx in step_indices]
+    groups = groups[groups["max_features"].isin(selected_max_feats)]
+
+    # When using this part, we get the bars for all different steps in max_features
+    """groups = df.dropna(subset=["feature_selection_method", "time_train_s", "metric_error", "max_features"])
+    """
+
     pivot = groups.pivot_table(values='metric_error', index='feature_selection_method',
                                columns='max_features', aggfunc='mean').fillna(np.nan)
 
     fig, ax = plt.subplots(figsize=(16, 7))
 
     max_feats = sorted(pivot.columns)  # e.g. [5, 10, 20] or [50, 100, 200, 500]
-    step_to_color = plt.get_cmap("tab10", len(max_feats))
+    step_to_color = plt.get_cmap("Set3", len(max_feats))
     colors = {mf: step_to_color(i) for i, mf in enumerate(max_feats)}
 
     for i, method in enumerate(methods):
         method_cols = pivot.loc[method].dropna().index  # Available max_features values
 
         # Width inversely proportional to max_features (smaller #features = narrower bar)
-        widths = 0.8 / (np.array(method_cols) / method_cols.max() + 0.1)  # Avoid div0
+        widths = np.linspace(1.5, 0.5, len(method_cols))
 
         means = pivot.loc[method].dropna().values
         bar_colors = [colors[mf] for mf in method_cols]
 
         bars = ax.bar(i, means, width=widths * 0.12, color=bar_colors, label=f'{method} ({len(method_cols)} budgets)' if i == 0 else "")
-
-        # Annotate #features on bars
-        for bar, n_feat in zip(bars, method_cols):
-            height = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width() / 2., height,
-                    f'{int(n_feat)}F', ha='center', va='bottom', fontsize=8)
 
     ax.set_xticks(np.arange(len(methods)))
     ax.set_xticklabels(methods, rotation=45, ha='right')
@@ -51,7 +61,12 @@ def plot(df):
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
     ax.grid(True, alpha=0.3, axis='y')
-    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    max_feat_labels = ["Lowest #max_features", "Middle #max_features", "Highest #max_features"]
+    max_feat_colors = [colors[mf] for mf in sorted(selected_max_feats)]
+    legend_elements = [Patch(facecolor=c, label=l)
+                       for c, l in zip(max_feat_colors, max_feat_labels)]
+    ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75),
+              loc='upper left', title="max_features")
 
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
