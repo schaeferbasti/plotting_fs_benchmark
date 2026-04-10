@@ -11,7 +11,7 @@ This plot shows the
 """
 
 # TODO: Adapt file and plot name
-FILE_NAME = "dummy_results.csv"
+FILE_NAME = "dummy_performance_results.csv"
 PLOT_NAME = "performance_v1.png"
 
 # TODO: Adapt title and labels

@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 # TODO: Adapt file and plot name
-FILE_NAME = "dummy_results.csv"
+FILE_NAME = "dummy_performance_results.csv"
 PLOT_NAME = "dummy_plot.png"
 
 # TODO: Adapt title and labels
