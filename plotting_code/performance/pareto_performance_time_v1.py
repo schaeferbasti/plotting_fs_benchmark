@@ -99,9 +99,9 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../"
+SCRIPT_DIR = Path(__file__).parent / "../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 

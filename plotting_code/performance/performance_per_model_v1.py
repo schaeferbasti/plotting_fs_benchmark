@@ -19,6 +19,7 @@ PLOT_TITLE = "Performance"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Metric Error"
 
+
 # TODO: Adapt plotting function
 def plot(df):
     df["model_name"] = df["model_details"].apply(extract_model_name)
@@ -63,11 +64,13 @@ def plot(df):
     plt.savefig(out, dpi=150, bbox_inches="tight")
     plt.close()
 
+
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../"
+SCRIPT_DIR = Path(__file__).parent / "../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
 
 def extract_model_name(model_details):
     """Clean model name from dict string"""
@@ -78,6 +81,7 @@ def extract_model_name(model_details):
         return f"{details['model_cls']} ({details['model_type']})"
     except:
         return str(model_details)[:20] + "..."
+
 
 def main():
     df = pd.read_csv(RESULTS_FILE, low_memory=False)
