@@ -12,12 +12,13 @@ This plot shows the
 
 # TODO: Adapt file and plot name
 FILE_NAME = "dummy_performance_results.csv"
-PLOT_NAME = "performance_v1.png"
+PLOT_NAME = "performance_per_max_feature_v1.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Performance"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Metric Error"
+
 
 # TODO: Adapt plotting function
 def plot(df):
@@ -53,7 +54,8 @@ def plot(df):
         means = pivot.loc[method].dropna().values
         bar_colors = [colors[mf] for mf in method_cols]
 
-        bars = ax.bar(i, means, width=widths * 0.12, color=bar_colors, label=f'{method} ({len(method_cols)} budgets)' if i == 0 else "")
+        bars = ax.bar(i, means, width=widths * 0.12, color=bar_colors,
+                      label=f'{method} ({len(method_cols)} budgets)' if i == 0 else "")
 
     ax.set_xticks(np.arange(len(methods)))
     ax.set_xticklabels(methods, rotation=45, ha='right')
@@ -72,6 +74,7 @@ def plot(df):
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out, dpi=300, bbox_inches='tight')
     plt.close()
+
 
 # Do nothing below
 SCRIPT_DIR = Path(__file__).parent / "../"
