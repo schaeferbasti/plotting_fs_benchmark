@@ -78,5 +78,5 @@ wine\_quality regression & regression & 12 & 6497 &  \\
 \bottomrule
 \end{tabular}
 \caption{Characteristics of datasets included in SelectArena}
-\label{tab:datasets}
+\label{datasets-table}
 \end{table}

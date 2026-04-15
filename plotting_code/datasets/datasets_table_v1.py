@@ -47,7 +47,7 @@ Name & Problem Type & \# features & \# samples & \# classes \\
 """ + latex_body + r"""\bottomrule
 \end{tabular}
 \caption{Characteristics of datasets included in SelectArena}
-\label{tab:datasets}
+\label{datasets-table}
 \end{table}
 """
     txt_path = OUTPUT_DIR / PLOT_NAME
