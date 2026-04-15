@@ -1,0 +1,82 @@
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{p{6.5cm}c{2cm}ccc{1.8cm}}
+\toprule
+Name & Problem Type & \# features & \# samples & \# classes \\
+\midrule
+allstate\_claims\_severity & regression & 130 & 188318 &  \\
+ancestry\_study & multiclass & 105 & 635 & 7.0 \\
+anneal & multiclass & 38 & 898 & 5.0 \\
+aps\_failure & binary & 170 & 76000 & 2.0 \\
+audiology\_diagnosis & multiclass & 68 & 226 & 24.0 \\
+automobile & ordinal & 24 & 205 & 7.0 \\
+bad\_customer\_detection & binary & 13 & 1723 & 2.0 \\
+bank\_customer\_churn & binary & 10 & 10000 & 2.0 \\
+bank\_marketing  & binary & 13 & 45211 & 2.0 \\
+bioresponse & binary & 1776 & 3751 & 2.0 \\
+body\_density\_prediction & regression & 14 & 252 &  \\
+brasilian\_houses & regression & 12 & 10692 &  \\
+churn & binary & 19 & 5000 & 2.0 \\
+clock\_protein\_period & binary & 1091 & 90 & 2.0 \\
+clock\_protein\_toxicity & binary & 1111 & 171 & 2.0 \\
+coil2000\_insurance\_policies & binary & 85 & 9822 & 2.0 \\
+colon\_tumor & binary & 1991 & 62 & 2.0 \\
+credit\_approval & binary & 15 & 690 & 2.0 \\
+credit\_card\_clients\_default & binary & 23 & 30000 & 2.0 \\
+customer\_satisfaction\_in\_airline & binary & 21 & 129880 & 2.0 \\
+drug\_induced\_autoimmunity\_prediction & binary & 197 & 477 & 2.0 \\
+forest\_fires & regression & 12 & 517 &  \\
+framingham\_heart\_study & binary & 15 & 4240 & 2.0 \\
+give\_me\_some\_credit & binary & 10 & 150000 & 2.0 \\
+hazelnut\_spread\_contaminant\_detection\_10GHz & binary & 30 & 2400 & 2.0 \\
+heart\_disease\_cleveland & binary & 13 & 303 & 2.0 \\
+heart\_disease\_hungary & binary & 13 & 303 & 2.0 \\
+heart\_disease\_switzerland & binary & 12 & 303 & 2.0 \\
+heart\_disease\_va\_long\_beach & binary & 12 & 303 & 2.0 \\
+heloc & binary & 23 & 10459 & 2.0 \\
+hepatitis\_survival\_prediction & binary & 19 & 155 & 2.0 \\
+hiva\_agnostic & binary & 1617 & 4229 & 2.0 \\
+homesite\_quote\_conversion & binary & 295 & 260753 & 2.0 \\
+horse\_colic\_survival & multiclass & 20 & 368 & 3.0 \\
+hr\_analytics & binary & 12 & 19158 & 2.0 \\
+in\_vehicle\_coupon\_recommendation classification & binary & 24 & 12684 & 2.0 \\
+ionosphere & binary & 33 & 351 & 2.0 \\
+kddcup09\_appetency & binary & 212 & 50000 & 2.0 \\
+labor\_negotiations & binary & 16 & 57 & 2.0 \\
+leukemia\_allaml & binary & 7129 & 72 & 2.0 \\
+ljubljana\_primary\_tumor & multiclass & 17 & 339 & 22.0 \\
+lung\_cancer & multiclass & 12600 & 203 & 5.0 \\
+lymphography & multiclass & 18 & 148 & 4.0 \\
+marketing\_campaign & binary & 25 & 2240 & 2.0 \\
+mechanisms\_of\_action\_prediction & multiclass & 206 & 23814 & 2.0 \\
+miami\_housing & regression & 15 & 13932 &  \\
+mic & multiclass & 111 & 1700 & 2.0 \\
+naticusdroid\_android\_permissions\_dataset & binary & 86 & 7491 & 2.0 \\
+nci\_ovarian\_cancer & binary & 15147 & 253 & 2.0 \\
+nci\_pancreatic\_cancer & binary & 6770 & 181 & 2.0 \\
+nci\_prostate\_cancer & binary & 15153 & 322 & 2.0 \\
+online\_shoppers\_purchasing\_intention\_dataset & binary & 17 & 12330 & 2.0 \\
+otto\_group\_product\_classification\_challenge & multiclass & 93 & 61878 & 9.0 \\
+polish\_companies\_bankruptcy & binary & 64 & 10503 & 2.0 \\
+porto\_seguro & binary & 37 & 595212 & 2.0 \\
+predict\_students\_dropout\_and\_academic\_success & multiclass & 36 & 4424 & 3.0 \\
+prostate\_cancer & binary & 12600 & 102 & 2.0 \\
+pva\_revenue\_prediction\_kddcup98 & regression & 478 & 191260 &  \\
+qsar\_biodeg & binary & 41 & 1055 & 2.0 \\
+qsar\_oral\_toxicity & binary & 1024 & 8992 & 2.0 \\
+qsar\_tid\_11 & regression & 1025 & 5742 &  \\
+santander\_customer\_transaction\_prediction & binary & 201 & 200000 & 2.0 \\
+sdss\_17 & multiclass & 11 & 78053 & 3.0 \\
+smoking\_lung\_cancer & binary & 22215 & 187 & 2.0 \\
+soybean\_large & multiclass & 35 & 683 & 18.0 \\
+srbct\_prediction & multiclass & 2308 & 83 & 4.0 \\
+superconductivity & regression & 81 & 21263 &  \\
+taiwanese\_bankruptcy\_prediction & binary & 94 & 6819 & 2.0 \\
+thyroid\_discordant & multiclass & 26 & 3163 & 5.0 \\
+wine\_quality regression & regression & 12 & 6497 &  \\
+\bottomrule
+\end{tabular}
+\caption{Characteristics of benchmark datasets)}
+\label{tab:datasets}
+\end{table}
