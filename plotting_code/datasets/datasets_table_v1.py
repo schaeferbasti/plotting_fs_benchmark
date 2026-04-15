@@ -34,6 +34,7 @@ def make_table(df):
     # Dynamic table body from CSV (matches your format exactly)
     csv_str = df_table.to_csv(index=False, sep='|', escapechar='\\', header=False)
     csv_str = csv_str.replace('_', r'\_')
+    csv_str = csv_str.replace('.0', r'')
     latex_body = csv_str.replace('|', ' & ').replace('\n', ' \\\\\n')
 
     latex = r"""\begin{table}[ht]
