@@ -77,6 +77,6 @@ thyroid\_discordant & multiclass & 26 & 3163 & 5.0 \\
 wine\_quality regression & regression & 12 & 6497 &  \\
 \bottomrule
 \end{tabular}
-\caption{Characteristics of benchmark datasets)}
+\caption{Characteristics of datasets included in SelectArena}
 \label{tab:datasets}
 \end{table}

@@ -45,7 +45,7 @@ Name & Problem Type & \# features & \# samples & \# classes \\
 \midrule
 """ + latex_body + r"""\bottomrule
 \end{tabular}
-\caption{Characteristics of benchmark datasets)}
+\caption{Characteristics of datasets included in SelectArena}
 \label{tab:datasets}
 \end{table}
 """
