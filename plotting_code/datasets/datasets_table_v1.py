@@ -38,8 +38,8 @@ def make_table(df):
 
     latex = r"""\begin{table}[ht]
 \centering
-\small
-\begin{tabular}{p{6.5cm}c{2cm}ccc{1.8cm}}
+\scriptsize
+\begin{tabular}{p{5cm}cccc}
 \toprule
 Name & Problem Type & \# features & \# samples & \# classes \\
 \midrule
