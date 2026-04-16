@@ -49,11 +49,37 @@ def compute_validity(selected_features, max_features):
     return TP / max_features
 
 
+def compute_stability(selected_features, original_features):
+    """
+    Compute stability from repeated selected feature subsets using _getStability.
+    https://github.com/nogueirs/JMLR2018/blob/master/python/stability/__init__.py.
+
+    Parameters
+    ----------
+    selected_features : pandas.Series (lists)
+    original_features : pandas.Series (lists)
+
+    Returns
+    -------
+    float
+        Stability value
+    """
+    feature_set = original_features.iloc[0]
+    feature_to_idx = {f: i for i, f in enumerate(feature_set)}
+
+    Z = np.zeros((len(selected_features), len(feature_set)), dtype=int)
+
+    for row_idx, features in enumerate(selected_features):
+        for f in features:
+            Z[row_idx, feature_to_idx[f]] = 1
+
+    return _getStability(Z)
+
+
 def _getStability(Z):
     ''' 
     Let us assume we have M>1 feature sets and d>0 features in total.
     This function computes the stability estimate as given in Definition 4 in  [1].
-    https://github.com/nogueirs/JMLR2018/blob/master/python/stability/__init__.py.
     
     INPUT: A BINARY matrix Z (given as a list or as a numpy.ndarray of size M*d).
            Each row of the binary matrix represents a feature set, where a 1 at the f^th position 
