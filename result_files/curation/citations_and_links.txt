@@ -1,0 +1,962 @@
+=== online_shoppers_purchasing_intention_dataset ===
+academic_reference_bibtex="""
+@article{sakar2019pruchasing_intention,
+  title={Real-time prediction of online shoppers’ purchasing intention using multilayer perceptron and LSTM recurrent neural networks},
+  author={Sakar, C Okan and Polat, S Olcay and Katircioglu, Mete and Kastro, Yomi},
+  journal={Neural Computing and Applications},
+  volume={31},
+  number={10},
+  pages={6893--6908},
+  year={2019},
+  publisher={Springer}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5F88Q"
+
+=== nci_prostate_cancer ===
+academic_reference_bibtex="""
+@article{Petricoin2002SerumPP,
+  title={Serum Proteomic Patterns for Detection of Prostate Cancer},
+  author={Emanuel F. Petricoin and David K. Ornstein and Cloud P. Paweletz and Ali Ardekani and Paul S. Hackett and Ben A. Hitt and Alfredo Velassco and Christian Trucco and Laura Wiegand and Kamillah Wood and Charles B. Simone and Peter J. Levine and W. Marston Linehan and Michael R. Emmert-Buck and Seth M. Steinberg and Elise C. Kohn and Lance A. Liotta},
+  journal={JNCI: Journal of the National Cancer Institute},
+  year={2002},
+  volume={94},
+  number={20},
+  pages={1576-1578},
+  doi={10.1093/jnci/94.20.1576},
+  url={https://doi.org/10.1093/jnci/94.20.1576}
+}
+"""
+original_dataset_source_download_link="https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp"
+
+=== sdss_17 ===
+academic_reference_bibtex="""
+@article{abazajian2009stars,
+  title={The seventh data release of the Sloan Digital Sky Survey},
+  author={Abazajian, Kevork N and Adelman-McCarthy, Jennifer K and Ag{\"u}eros, Marcel A and Allam, Sahar S and Prieto, Carlos Allende and An, Deokkeun and Anderson, Kurt SJ and Anderson, Scott F and Annis, James and Bahcall, Neta A and others},
+  journal={The Astrophysical Journal Supplement Series},
+  volume={182},
+  number={2},
+  pages={543--558},
+  year={2009},
+  publisher={The American Astronomical Society}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17"
+
+=== japanese_credit_screening ===
+academic_reference_bibtex="""
+@misc{Sano1992japaneseCreditScreening,
+  author       = {Sano, Chiharu},
+  title        = {{Japanese Credit Screening}},
+  year         = {1992},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI}: https://doi.org/10.24432/C5259N}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5259N"
+
+=== ionosphere ===
+academic_reference_bibtex="""
+@inproceedings{Sigillito1989ClassificationOR,
+  title={Classification of radar returns from the ionosphere using neural networks},
+  author={Vincent G. Sigillito and Simon Wing and Larrie V. Hutton and K. L. Baker},
+  year={1989},
+  url={https://api.semanticscholar.org/CorpusID:18522381}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5W01B"
+
+=== ljubljana_primary_tumor ===
+academic_reference_bibtex="""
+@misc{Zwitter1987primarytumor,
+  author       = {Zwitter, M. and Soklic, M.},
+  title        = {{Primary Tumor}},
+  year         = {1987},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI}: https://doi.org/10.24432/C5WK5Q}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5WK5Q"
+
+=== thyroid_discordant ===
+academic_reference_bibtex="""
+@article{quinlan1987simplifying,
+  title={Simplifying decision trees},
+  author={Quinlan, J. Ross},
+  journal={International journal of man-machine studies},
+  volume={27},
+  number={3},
+  pages={221--234},
+  year={1987},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5D010"
+
+=== homesite_quote_conversion ===
+academic_reference_bibtex="""
+@misc{Darrel2015HomesiteQuoteConversion,
+  author = {Darrel and Stephen D. Stayton and Will Cukierski},
+  title  = {Homesite Quote Conversion},
+  year   = {2015},
+  howpublished = {\url{https://kaggle.com/competitions/homesite-quote-conversion}},
+  note   = {Kaggle competition}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/competitions/homesite-quote-conversion"
+
+=== pva_revenue_prediction_kddcup98 ===
+academic_reference_bibtex="""
+@misc{Parsa1998KDDCup1998,
+  author = {Ismail Parsa},
+  title  = {KDD Cup 1998},
+  year   = {1998},
+  howpublished = {\url{https://kdd.ics.uci.edu/databases/kddcup98/kddcup98.html}},
+  note   = {Dataset, UCI Machine Learning Repository. DOI: 10.24432/C5401H}
+}
+"""
+original_dataset_source_download_link="https://kdd.ics.uci.edu/databases/kddcup98/kddcup98.html"
+
+=== otto_group_product_classification_challenge ===
+academic_reference_bibtex="""
+@misc{Bossan2015OttoGroupProductClassificationChallenge,
+  author = {Benjamin Bossan and Josef Feigl and Wendy Kan},
+  title  = {Otto Group Product Classification Challenge},
+  year   = {2015},
+  howpublished = {\url{https://kaggle.com/competitions/otto-group-product-classification-challenge}},
+  note   = {Kaggle competition}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/competitions/otto-group-product-classification-challenge"
+
+=== allstate_claims_severity ===
+academic_reference_bibtex="""
+@misc{Ferguson2016AllstateClaimsSeverity,
+  author = {Dana Ferguson and Meg Risdal and NoTrick and Sara R. Sillah and Tim Emmerling and Will Cukierski},
+  title  = {Allstate Claims Severity},
+  year   = {2016},
+  howpublished = {\url{https://kaggle.com/competitions/allstate-claims-severity},
+  note   = {Kaggle competition}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/competitions/allstate-claims-severity"
+
+=== porto_seguro ===
+academic_reference_bibtex="""
+@misc{Howard2017PortoSegurosSafeDriverPrediction,
+  author = {Addison Howard and Adriano Moala and Walter Reade},
+  title  = {Porto Seguro’s Safe Driver Prediction},
+  year   = {2017},
+  howpublished = {\url{https://kaggle.com/competitions/porto-seguro-safe-driver-prediction}},
+  note   = {Kaggle competition}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/c/porto-seguro-safe-driver-prediction"
+
+=== soybean_large ===
+academic_reference_bibtex="""
+@article{Michalski1980LearningBB,
+  title={Learning by Being Told and Learning from Examples: An Experimental Comparison of the Two Methods of Knowledge Acquisition in the Context of Developing an Expert System for Soybean Disease Diagnosis},
+  author={Ryszard S. Michalski and R. L. Chilausky},
+  journal={International Journal of Policy Analysis and Information Systems},
+  year={1980},
+  volume={4},
+  number={2}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5JG6Z"
+
+=== hr_analytics ===
+academic_reference_bibtex="""
+@misc{Arashnic2021HRAnalytics,
+  title={HR Analytics: Job Change of Data Scientists},
+  author={Arashnic},
+  year={2021},
+  publisher={Kaggle},
+  url={https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists"
+
+=== ancestry_study ===
+academic_reference_bibtex="""
+@article{ruiz2023ancestry,
+  title={Development and evaluations of the ancestry informative markers of the VISAGE Enhanced Tool for Appearance and Ancestry},
+  author={Ruiz-Ram{\'\i}rez, Jorge and de La Puente, M and Xavier, Catarina and Ambroa-Conde, Adri{\'a}n and {\'A}lvarez-Dios, J and Freire-Aradas, A and Mosquera-Miguel, Ana and Ralf, Arwin and Amory, Christina and Katsara, Maria Alexandra and others},
+  journal={Forensic Science International: Genetics},
+  volume={64},
+  pages={102853},
+  year={2023},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://github.com/CarolaHeinzel/BGA_Classification/blob/main/data/input_data/full_data.csv"
+
+=== brasilian_houses ===
+academic_reference_bibtex="""
+@misc{farias2020brasilian,
+    author = {Fernando Lucas de Oliveira Farias and Raphael Fontes},
+    title = {Ensino 5A > Datacamp},
+    year = {2020},
+    howpublished = {\url{https://kaggle.com/competitions/ensino-5a-datacamp}},
+    note = {Kaggle}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/data/download/22044541/dataset"
+
+=== qsar_oral_toxicity ===
+academic_reference_bibtex="""
+@misc{uci2019qsaroral,
+    title        = {QSAR oral toxicity},
+    year         = {2019},
+    author       = {Unknown},
+    howpublished = {UCI Machine Learning Repository},
+    url = {https://doi.org/10.24432/C5PS4J},
+    }
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/508/qsar+oral+toxicity"
+
+=== kdd_cup_09_appetency ===
+academic_reference_bibtex="""
+@inproceedings{Guyon2009AnalysisOT,
+  title={Analysis of the KDD Cup 2009: Fast Scoring on a Large Orange Customer Database},
+  author={Isabelle Guyon and Constantin Aliferis and Greg Cooper and André Elisseeff and Jean-Philippe Pellet and Peter Spirtes and Alexander Statnikov},
+  booktitle={KDD-Cup 2009 Competition},
+  publisher={PMLR},
+  year={2009},
+  url={https://proceedings.mlr.press/v7/guyon09.html}
+}
+"""
+original_dataset_source_download_link="https://kdd.org/kdd-cup/view/kdd-cup-2009/Data"
+
+=== hazelnut_spread_contaminant_detection_10GHz ===
+academic_reference_bibtex="""
+@INPROCEEDINGS{urbinati2020hazelnut,
+  author={Urbinati, Luca and Ricci, Marco and Turvani, Giovanna and Vasquez, Jorge A. Tobon and Vipiana, Francesca and Casu, Mario R.},
+  booktitle={2020 IEEE International Symposium on Circuits and Systems (ISCAS)},
+  title={A Machine-Learning Based Microwave Sensing Approach to Food Contaminant Detection},
+  year={2020},
+  volume={},
+  number={},
+  pages={1-5},
+  keywords={Microwave imaging;Microwave theory and techniques;Training;Support vector machines;Pollution measurement;Sensors;Plastics},
+  doi={10.1109/ISCAS45731.2020.9181293}}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/45538"
+
+=== heart_disease_switzerland ===
+academic_reference_bibtex="""
+@article{detrano1989international,
+  title={International application of a new probability algorithm for the diagnosis of coronary artery disease},
+  author={Detrano, Robert and Janosi, Andras and Steinbrunn, Walter and Pfisterer, Matthias and Schmid, Johann-Jakob and Sandhu, Sarbjit and Guppy, Kern H and Lee, Stella and Froelicher, Victor},
+  journal={The American journal of cardiology},
+  volume={64},
+  number={5},
+  pages={304--310},
+  year={1989},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C52P4X"
+
+=== santander_customer_transaction_prediction ===
+academic_reference_bibtex="""
+@misc{Piedra2019SantanderCustomerTransactionPrediction,
+  author = {Mercedes Piedra and Sohier Dane and Soraya Jimenez},
+  title  = {Santander Customer Transaction Prediction},
+  year   = {2019},
+  howpublished = {\url{https://kaggle.com/competitions/santander-customer-transaction-prediction}},
+  note   = {Kaggle competition}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/c/santander-customer-transaction-prediction"
+
+=== heloc ===
+academic_reference_bibtex="""
+@misc{oliabev2021heloc,
+  title        = {heloc},
+  year         = {2021},
+  author       = {Averkiy Oliabev},
+  howpublished = {Kaggle},
+  url = {"https://www.kaggle.com/datasets/averkiyoliabev/home-equity-line-of-creditheloc},
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/averkiyoliabev/home-equity-line-of-creditheloc"
+
+=== hiva_agnostic ===
+academic_reference_bibtex="""
+@inproceedings{guyon2007agnostic,
+  author={Isabelle Guyon and Amir Saffari and Gideon Dror and Gavin Cawley},
+  booktitle={2007 International Joint Conference on Neural Networks},
+  title={Agnostic Learning vs. Prior Knowledge Challenge},
+  year={2007},
+  pages={829-834},
+  doi={10.1109/IJCNN.2007.4371065}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.1109/IJCNN.2007.4371065"
+
+=== srbct_prediction ===
+academic_reference_bibtex="""
+@article{Khan2001ClassificationAD,
+  title={Classification and diagnostic prediction of cancers using gene expression profiling and artificial neural networks},
+  author={Javed Khan and Jun S. Wei and Markus Ringnér and Lao H. Saal and Marc Ladanyi and Frank Westermann and Frank Berthold and Manfred Schwab and Cristina R. Antonescu and Carsten Peterson and Paul S. Meltzer},
+  journal={Nature Medicine},
+  year={2001},
+  volume={7},
+  number={6},
+  pages={673-679},
+  doi={10.1038/89044},
+  url={https://doi.org/10.1038/89044}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/45101"
+
+=== bioresponse ===
+academic_reference_bibtex="""
+@misc{bioresponse2012hamner,
+    author = {Ben Hamner and dcthompson and Jorg},
+    title = {Predicting a Biological Response},
+    year = {2012},
+    howpublished = {https://kaggle.com/competitions/bioresponse},
+    note = {Kaggle}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/c/bioresponse"
+
+=== customer_satisfaction_in_airline ===
+academic_reference_bibtex="""
+@misc{yakhyojon2023airlinesatisfaction,
+    author = {Kaggle User Yakhyojon},
+    title = {Customer Satisfaction in Airline.},
+    year = {2023},
+    howpublished = {url{https://www.kaggle.com/datasets/yakhyojon/customer-satisfaction-in-airline}},
+    note = {Kaggle}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/yakhyojon/customer-satisfaction-in-airline"
+
+=== leukemia_allaml ===
+academic_reference_bibtex="""
+@article{Golub1999MolecularCC,
+  title={Molecular classification of cancer: class discovery and class prediction by gene expression monitoring},
+  author={Todd R. Golub and Donna K. Slonim and Pablo Tamayo and Christine Huard and Michelle Gaasenbeek and Jill P. Mesirov and Hilary Coller and Mignon L. Loh and James R. Downing and Michael A. Caligiuri and Clara D. Bloomfield and Eric S. Lander},
+  journal={Science},
+  year={1999},
+  volume={286},
+  number={5439},
+  pages={531-537},
+  doi={10.1126/science.286.5439.531},
+  url={https://doi.org/10.1126/science.286.5439.531}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/1104"
+
+=== miami_housing ===
+academic_reference_bibtex="""
+@article{bourassa2021miami_housing,
+  title={Big data, accessibility and urban house prices},
+  author={Bourassa, Steven C and Hoesli, Martin and Merlin, Louis and Renne, John},
+  journal={Urban Studies},
+  volume={58},
+  number={15},
+  pages={3176--3195},
+  year={2021},
+  publisher={SAGE Publications Sage UK: London, England}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/43093"
+
+=== mic ===
+academic_reference_bibtex="""
+@article{golovenkin2020trajectories,
+  title={Trajectories, bifurcations, and pseudo-time in large clinical datasets: applications to myocardial infarction and diabetes data},
+  author={Golovenkin, Sergey E and Bac, Jonathan and Chervov, Alexander and Mirkes, Evgeny M and Orlova, Yuliya V and Barillot, Emmanuel and Gorban, Alexander N and Zinovyev, Andrei},
+  journal={GigaScience},
+  volume={9},
+  number={11},
+  pages={giaa128},
+  year={2020},
+  publisher={Oxford University Press}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/579/myocardial+infarction+complications"
+
+=== lymphography ===
+academic_reference_bibtex="""
+@misc{Zwitter1988Lymphography,
+  author       = {Zwitter, M. and Soklic, M.},
+  title        = {{Lymphography}},
+  year         = {1988},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI}: https://doi.org/10.24432/C54598}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C54598"
+
+=== hepatitis_survival_prediction ===
+academic_reference_bibtex="""
+@inproceedings{efron1981statistical,
+  title={Statistical theory and the computer},
+  author={Efron, Bradley and Gong, Gail},
+  booktitle={Computer science and statistics: Proceedings of the 13th Symposium on the Interface},
+  pages={3--7},
+  year={1981},
+  organization={Springer}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5Q59J"
+
+=== credit_card_clients_default ===
+academic_reference_bibtex="""
+@article{Yeh2009TheCD,
+  title={The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients},
+  author={I-Cheng Yeh and Che-hui Lien},
+  journal={Expert Systems with Applications},
+  year={2009},
+  volume={36},
+  number={2},
+  pages={2473-2480},
+  doi={10.1016/j.eswa.2007.12.020},
+  url={https://doi.org/10.1016/j.eswa.2007.12.020}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C55S3H"
+
+=== framingham_heart_study ===
+academic_reference_bibtex="""
+@misc{bhardwaj2022framingham,
+	title={Framingham heart study dataset },
+	url={https://www.kaggle.com/dsv/3493583},
+	DOI={10.34740/KAGGLE/DSV/3493583},
+	publisher={Kaggle},
+	author={Ashish Bhardwaj},
+	year={2022}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset"
+
+=== smoking_lung_cancer ===
+academic_reference_bibtex="""
+@article{Spira2007AirwayEG,
+  title={Airway epithelial gene expression in the diagnostic evaluation of smokers with suspect lung cancer},
+  author={Avrum Spira and Jennifer Beane and Vishal Shah and Katrina Steiling and Gang Liu and Frank Schembri and Sara Gilman and Yves-Martine Dumas and Paula Calner and Paola Sebastiani and others},
+  journal={Nature Medicine},
+  year={2007},
+  volume={13},
+  number={3},
+  pages={361-366},
+  doi={10.1038/nm1556},
+  url={https://doi.org/10.1038/nm1556}
+}
+"""
+original_dataset_source_download_link="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE4115"
+
+=== forest_fires ===
+academic_reference_bibtex="""
+@article{cortez2007data,
+  title={A data mining approach to predict forest fires using meteorological data},
+  author={Cortez, Paulo and Morais, An{\'\i}bal de Jesus Raimundo},
+  year={2007},
+  publisher={Associa{\c{c}}{\~a}o Portuguesa para a Intelig{\^e}ncia Artificial (APPIA)}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5D88D"
+
+=== heart_disease_cleveland ===
+academic_reference_bibtex="""
+@article{detrano1989international,
+  title={International application of a new probability algorithm for the diagnosis of coronary artery disease},
+  author={Detrano, Robert and Janosi, Andras and Steinbrunn, Walter and Pfisterer, Matthias and Schmid, Johann-Jakob and Sandhu, Sarbjit and Guppy, Kern H and Lee, Stella and Froelicher, Victor},
+  journal={The American journal of cardiology},
+  volume={64},
+  number={5},
+  pages={304--310},
+  year={1989},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C52P4X"
+
+=== bank_marketing ===
+academic_reference_bibtex="""
+@article{moro2014bank-marketing,
+  title={A data-driven approach to predict the success of bank telemarketing},
+  author={Moro, S{\'e}rgio and Cortez, Paulo and Rita, Paulo},
+  journal={Decision Support Systems},
+  volume={62},
+  pages={22--31},
+  year={2014},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/222/bank+marketing"
+
+=== heart_disease_va_long_beach ===
+academic_reference_bibtex="""
+@article{detrano1989international,
+  title={International application of a new probability algorithm for the diagnosis of coronary artery disease},
+  author={Detrano, Robert and Janosi, Andras and Steinbrunn, Walter and Pfisterer, Matthias and Schmid, Johann-Jakob and Sandhu, Sarbjit and Guppy, Kern H and Lee, Stella and Froelicher, Victor},
+  journal={The American journal of cardiology},
+  volume={64},
+  number={5},
+  pages={304--310},
+  year={1989},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C52P4X"
+
+=== polish_companies_bankruptcy ===
+academic_reference_bibtex="""
+@article{Ziba2016EnsembleBT,
+  title={Ensemble boosted trees with synthetic features generation in application to bankruptcy prediction},
+  author={Maciej Ziȩba and Sebastian Klaudiusz Tomczak and Jakub M. Tomczak},
+  journal={Expert Syst. Appl.},
+  year={2016},
+  volume={58},
+  pages={93-101},
+  url={https://api.semanticscholar.org/CorpusID:40512567}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5F600"
+
+=== mechanisms_of_action ===
+academic_reference_bibtex="""
+@misc{lish2021moa,
+    author = {inversion and Jin Paik and Maggie and mrbhbs and Steven Randazzo  and tnat1031},
+    title = {Mechanisms of Action (MoA) Prediction},
+    year = {2020},
+    howpublished = {url{https://kaggle.com/competitions/lish-moa}},
+    note = {Kaggle}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/competitions/lish-moa/data"
+
+=== aps_failure ===
+academic_reference_bibtex="""
+@misc{ida2016challenge,
+  author       = {{IDA2016Challenge}},
+  title        = {IDA2016Challenge [Dataset]},
+  year         = {2016},
+  howpublished = {\\url{https://doi.org/10.24432/C5V60Q}},
+  note         = {UCI Machine Learning Repository},
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5V60Q"
+
+=== bank_customer_churn ===
+academic_reference_bibtex="""
+@misc{Topre2022BankCustomerChurn,
+  title={Bank Customer Churn Dataset},
+  author={Gaurav Topre},
+  year={2022},
+  publisher={Kaggle},
+  url={https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset"
+
+=== bad_customer_detection ===
+academic_reference_bibtex="""
+@misc{Podsyp2020IsThisAGoodCustomer,
+  title={Is This a Good Customer?},
+  author={Podsyp},
+  year={2020},
+  publisher={Kaggle},
+  url={https://www.kaggle.com/datasets/podsyp/is-this-a-good-customer}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/podsyp/is-this-a-good-customer"
+
+=== superconductivity ===
+academic_reference_bibtex="""
+@article{hamidieh2018superconductor,
+  title={A data-driven statistical model for predicting the critical temperature of a superconductor},
+  author={Hamidieh, Kam},
+  journal={Computational Materials Science},
+  volume={154},
+  pages={346--354},
+  year={2018},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/464/superconductivty+data"
+
+=== nci_pancreatic_cancer ===
+academic_reference_bibtex="""
+@article{Hingorani2003PreinvasiveAI,
+  title={Preinvasive and invasive ductal pancreatic cancer and its early detection in the mouse},
+  author={Sunil R. Hingorani and Emanuel F. Petricoin and Anirban Maitra and Vinodh Rajapakse and Cynthia King and Michael A. Jacobetz and Sarah Ross and Thomas P. Conrads and Timothy D. Veenstra and Ben A. Hitt and Yoshiya Kawaguchi and David Johann and Lance A. Liotta and Howard C. Crawford and Mary E. Putt and Tyler Jacks and Christopher V. Wright and Ralph H. Hruban and Andrew M. Lowy and David A. Tuveson},
+  journal={Cancer Cell},
+  year={2003},
+  volume={4},
+  number={6},
+  pages={437-450},
+  doi={10.1016/s1535-6108(03)00309-x},
+  url={https://doi.org/10.1016/s1535-6108(03)00309-x}
+}
+"""
+original_dataset_source_download_link="https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp"
+
+=== coil_2000_insurance_policies ===
+academic_reference_bibtex="""
+@techreport{putten2000coil,
+  title={CoIL Challenge 2000: The Insurance Company Case, Sentient Machine Research, Amsterdam and Leiden Institute of Advanced Computer Science},
+  author={van der Putten, P and van Someren, M},
+  year={2000},
+  institution={Leiden LIACS Technical Report 2000-09}
+}
+"""
+original_dataset_source_download_link="http://archive.ics.uci.edu/dataset/125/insurance+company+benchmark+coil+2000"
+
+=== drug_induced_autoimmunity_prediction ===
+academic_reference_bibtex="""
+@article{huang2025interdia,
+  title={InterDIA: Interpretable prediction of drug-induced autoimmunity through ensemble machine learning approaches},
+  author={Huang, Lina and Liu, Peineng and Huang, Xiaojie},
+  journal={Toxicology},
+  volume={511},
+  pages={154064},
+  year={2025},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5332M"
+
+=== clock_protein_period ===
+academic_reference_bibtex="""
+@article{Gul2021StructureBasedDC,
+  title={Structure-based design and classifications of small molecules regulating the circadian rhythm period},
+  author={Sadia Gul and Fatima Rahim and Selen Isin and others},
+  journal={Scientific Reports},
+  year={2021},
+  volume={11},
+  pages={18510},
+  doi={10.1038/s41598-021-97962-5},
+  url={https://doi.org/10.1038/s41598-021-97962-5}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5B31D"
+
+=== body_density_prediction ===
+academic_reference_bibtex="""
+@article{penrose1985generalized,
+  title={Generalized body composition prediction equation for men using simple measurement techniques},
+  author={Penrose, Keith W and Nelson, Arnold G and Fisher, Arnold Garth},
+  journal={Medicine \& Science in Sports \& Exercise},
+  volume={17},
+  number={2},
+  pages={189},
+  year={1985},
+  publisher={Ovid Technologies (Wolters Kluwer Health)}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset"
+
+=== credit_approval ===
+academic_reference_bibtex="""
+@article{quinlan1987simplifying,
+  title={Simplifying decision trees},
+  author={Quinlan, J. Ross},
+  journal={International journal of man-machine studies},
+  volume={27},
+  number={3},
+  pages={221--234},
+  year={1987},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5FS30"
+
+=== audiology_diagnosis ===
+academic_reference_bibtex="""
+@incollection{bareiss1990protos,
+  title={Protos: An exemplar-based learning apprentice},
+  author={Bareiss, E Ray and Porter, Bruce W and Wier, Craig C},
+  booktitle={Machine learning},
+  pages={112--127},
+  year={1990},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5TP4R"
+
+=== clock_protein_toxicity ===
+academic_reference_bibtex="""
+@article{Gul2021StructureBasedDC,
+  title={Structure-based design and classifications of small molecules regulating the circadian rhythm period},
+  author={Sadia Gul and Fatima Rahim and Selen Isin and others},
+  journal={Scientific Reports},
+  year={2021},
+  volume={11},
+  pages={18510},
+  doi={10.1038/s41598-021-97962-5},
+  url={https://doi.org/10.1038/s41598-021-97962-5}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C59313"
+
+=== taiwanese_bankruptcy_prediction ===
+academic_reference_bibtex="""
+@article{liang2016financial,
+  title={Financial ratios and corporate governance indicators in bankruptcy prediction: A comprehensive study},
+  author={Liang, Deron and Lu, Chia-Chi and Tsai, Chih-Fong and Shih, Guan-An},
+  journal={European journal of operational research},
+  volume={252},
+  number={2},
+  pages={561--572},
+  year={2016},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction"
+
+=== horse_colic_survival ===
+academic_reference_bibtex="""
+@misc{McLeish1989HorseColic,
+  author       = {McLeish, Mary and Cecile, Matt},
+  title        = {{Horse Colic}},
+  year         = {1989},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI}: https://doi.org/10.24432/C58W23}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C58W23"
+
+=== anneal ===
+academic_reference_bibtex="""
+@misc{uci1990annealing,
+  title        = {Annealing},
+  year         = {1990},
+  author       = {Unknown},
+  howpublished = {UCI Machine Learning Repository},
+  url = {https://doi.org/10.24432/C5RW2F},
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/3/annealing"
+
+=== labor_negotiations ===
+academic_reference_bibtex="""
+@article{Matwin1988Collective,
+  title={Collective Bargaining Review},
+  author={Stan Matwin},
+  year={1988},
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5CP4Q"
+
+=== marketing_campaign ===
+academic_reference_bibtex="""
+@misc{uci1990annealing,
+  title        = {Marketing Campaign},
+  year         = {2020},
+  author       = {Saldanha, Rodolfo},
+  howpublished = {Kaggle},
+  url = {https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign},
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign"
+
+=== prostate_cancer ===
+academic_reference_bibtex="""
+@article{Singh2002GeneEC,
+  title={Gene expression correlates of clinical prostate cancer behavior},
+  author={Dinesh Singh and Phillip G. Febbo and Kenneth Ross and Donald G. Jackson and Judith Manola and Christine Ladd and Pablo Tamayo and Andrew A. Renshaw and Anthony V. D'Amico and Jerome P. Richie and others},
+  journal={Cancer Cell},
+  year={2002},
+  volume={1},
+  number={2},
+  pages={203-209},
+  doi={10.1016/S1535-6108(02)00030-2},
+  url={https://doi.org/10.1016/S1535-6108(02)00030-2}
+}
+"""
+original_dataset_source_download_link="https://api.openml.org/data/download/22112160/dataset"
+
+=== lung_cancer ===
+academic_reference_bibtex="""
+@article{Bhattacharjee2001ClassificationOH,
+  title={Classification of human lung carcinomas by mRNA expression profiling reveals distinct adenocarcinoma subclasses},
+  author={Arindam Bhattacharjee and William G. Richards and Jane Staunton and Cheng Li and Stefano Monti and Priya Vasa and Christine Ladd and Javad Beheshti and Raphael Bueno and Michael Gillette and others},
+  journal={Proceedings of the National Academy of Sciences},
+  year={2001},
+  volume={98},
+  number={24},
+  pages={13790-13795},
+  doi={10.1073/pnas.191502998},
+  url={https://doi.org/10.1073/pnas.191502998}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/45093"
+
+=== colon_tumor ===
+academic_reference_bibtex="""
+@article{Alon1999BroadPO,
+  title={Broad patterns of gene expression revealed by clustering analysis of tumor and normal colon tissues probed by oligonucleotide arrays},
+  author={Uri Alon and Naama Barkai and Daniel A. Notterman and Kurt Gish and Suzanne Ybarra and Daniel Mack and Arnold J. Levine},
+  journal={Proceedings of the National Academy of Sciences},
+  year={1999},
+  volume={96},
+  number={12},
+  pages={6745-6750},
+  doi={10.1073/pnas.96.12.6745},
+  url={https://doi.org/10.1073/pnas.96.12.6745}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/45087"
+
+=== nci_ovarian_cancer ===
+academic_reference_bibtex="""
+@article{Petricoin2002UseOP,
+  title={Use of proteomic patterns in serum to identify ovarian cancer},
+  author={Emanuel F. Petricoin and Ali M. Ardekani and Ben A. Hitt and Peter J. Levine and Vincent A. Fusaro and Seth M. Steinberg and Gordon B. Mills and Charles Simone and David A. Fishman and Elise C. Kohn and Lance A. Liotta},
+  journal={The Lancet},
+  year={2002},
+  volume={359},
+  number={9306},
+  pages={572-577},
+  doi={10.1016/S0140-6736(02)07746-2},
+  url={https://doi.org/10.1016/S0140-6736(02)07746-2}
+}
+"""
+original_dataset_source_download_link="https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp"
+
+=== naticusdroid_android_permissions_dataset ===
+academic_reference_bibtex="""
+@article{mathur2021naticusdroid,
+  title={NATICUSdroid: A malware detection framework for Android using native and custom permissions},
+  author={Mathur, Akshay and Podila, Laxmi Mounika and Kulkarni, Keyur and Niyaz, Quamar and Javaid, Ahmad Y},
+  journal={Journal of Information Security and Applications},
+  volume={58},
+  pages={102696},
+  year={2021},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/722/naticusdroid+android+permissions+dataset"
+
+=== predict_students_dropout_and_academic_success ===
+academic_reference_bibtex="""
+@inproceedings{martins2021studentperformance,
+  title={Early prediction of student’s performance in higher education: A case study},
+  author={Martins, M{\'o}nica V and Tolledo, Daniel and Machado, Jorge and Baptista, Lu{\'\i}s MT and Realinho, Valentim},
+  booktitle={World Conference on Information Systems and Technologies},
+  pages={166--175},
+  year={2021},
+  organization={Springer}
+}
+"""
+original_dataset_source_download_link="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success"
+
+=== qsar_tid_11 ===
+academic_reference_bibtex="""
+@article{Olier2018MetaQSAR,
+  title={Meta-QSAR: a large-scale application of meta-learning to drug design and discovery},
+  author={Ivan Olier and Noureddin Sadawi and G. Richard Bickerton and Josie Vanschoren and Celine Griner and Luca Soldatova and Ross D. King},
+  journal={Machine Learning},
+  year={2018},
+  volume={107},
+  pages={285-311},
+  doi={10.1007/s10994-017-5685-x},
+  url={https://doi.org/10.1007/s10994-017-5685-x}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/3050"
+
+=== heart_disease_hungary ===
+academic_reference_bibtex="""
+@article{detrano1989international,
+  title={International application of a new probability algorithm for the diagnosis of coronary artery disease},
+  author={Detrano, Robert and Janosi, Andras and Steinbrunn, Walter and Pfisterer, Matthias and Schmid, Johann-Jakob and Sandhu, Sarbjit and Guppy, Kern H and Lee, Stella and Froelicher, Victor},
+  journal={The American journal of cardiology},
+  volume={64},
+  number={5},
+  pages={304--310},
+  year={1989},
+  publisher={Elsevier}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C52P4X"
+
+=== in_vehicle_coupon_recommendation ===
+academic_reference_bibtex="""
+@article{wang2017bayesian,
+  title={A bayesian framework for learning rule sets for interpretable classification},
+  author={Wang, Tong and Rudin, Cynthia and Doshi-Velez, Finale and Liu, Yimin and Klampfl, Erica and MacNeille, Perry},
+  journal={Journal of Machine Learning Research},
+  volume={18},
+  number={70},
+  pages={1--37},
+  year={2017}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5GS4P"
+
+=== churn ===
+academic_reference_bibtex="""
+@misc{marcoulides2005churn,
+  title={Discovering knowledge in data: An introduction to data mining},
+  author={Marcoulides, George A},
+  year={2005},
+  publisher={Taylor \& Francis}
+}
+"""
+original_dataset_source_download_link="https://www.openml.org/d/40701"
+
+=== give_me_some_credit ===
+academic_reference_bibtex="""
+@misc{cukierski2011credit,
+    author = {Credit Fusion and Will Cukierski},
+    title = {Give Me Some Credit},
+    year = {2011},
+    howpublished = {url{https://kaggle.com/competitions/GiveMeSomeCredit}},
+    note = {Kaggle}
+}
+"""
+original_dataset_source_download_link="https://www.kaggle.com/competitions/GiveMeSomeCredit/overview"
+
+=== automobile ===
+academic_reference_bibtex="""
+@misc{Schlimmer1985Automobile,
+  title={Automobile},
+  author={Jeffrey Schlimmer},
+  year={1985},
+  title={1985 Model Import Car and Truck Specifications},
+  journal={Ward's Automotive Yearbook}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5B01C"
+
+=== qsar_biodeg ===
+academic_reference_bibtex="""
+@article{mansouri2013qsar,
+  title={Quantitative structure--activity relationship models for ready biodegradability of chemicals},
+  author={Mansouri, Kamel and Ringsted, Tine and Ballabio, Davide and Todeschini, Roberto and Consonni, Viviana},
+  journal={Journal of chemical information and modeling},
+  volume={53},
+  number={4},
+  pages={867--878},
+  year={2013},
+  publisher={ACS Publications}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C5H60M"
+
+=== wine_quality ===
+academic_reference_bibtex="""
+@article{Cortez2009ModelingWP,
+  title={Modeling wine preferences by data mining from physicochemical properties},
+  author={Paulo Cortez and Antonio Cerdeira and Fernando Almeida and Telmo Matos and Jose Reis},
+  journal={Decision Support Systems},
+  year={2009},
+  volume={47},
+  number={4},
+  pages={547-553},
+  doi={10.1016/j.dss.2009.05.016},
+  url={https://doi.org/10.1016/j.dss.2009.05.016}
+}
+"""
+original_dataset_source_download_link="https://doi.org/10.24432/C56S3T"
+
