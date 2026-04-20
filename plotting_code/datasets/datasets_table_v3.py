@@ -95,7 +95,7 @@ Name & Problem Type & \# features & \# samples & \# classes & License \\
 \bottomrule
 \end{{tabular}}
 \caption{{Characteristics of datasets included in SelectArena}}
-\label{{datasets-table}}
+\label{{appendix-table-datasets-overview-selected}}
 \end{{table}}
 """
     txt_path = OUTPUT_DIR / PLOT_NAME

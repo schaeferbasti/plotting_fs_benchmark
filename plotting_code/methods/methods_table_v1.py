@@ -53,7 +53,7 @@ def make_table(df):
     latex = r"""\begin{longtable}{p{6.5cm}ccc}
 \caption[\textbf{Feature selection methods overview.}]{%
   \textbf{Feature selection methods overview.} We list the method name with a link to the source of the method, provide year and the number of appearances across the considered literature. In the "Decision" column we list the reason for excluding the method ("Citations" if there are below three citations, "Variation" if the method is a variation of another method, and "Wrong Domain" if the method is not suited for tabular data) or we put a yes if the method is included.
-  \label{all-methods-table}
+  \label{appendix-table-methods-overview}
 }\\
 \toprule
 Feature Selection Method Name & Year & \# appearances & Decision \\
