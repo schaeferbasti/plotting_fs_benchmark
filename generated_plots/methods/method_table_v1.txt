@@ -1,243 +1,246 @@
-\begin{longtable}{p{5cm}ccc}
-\caption{All FS Methods Overview. \label{all-methods-table}} \\
+\begin{longtable}{p{6.5cm}ccc}
+\caption[\textbf{Feature selection methods overview.}]{%
+  \textbf{Feature selection methods overview.} We list the method name with a link to the source of the method, provide year and the number of appearances across the considered literature. In the "Decision" column we list the reason for excluding the method ("Citations" if there are below three citations, "Variation" if the method is a variation of another method, and "Wrong Domain" if the method is not suited for tabular data) or we put a yes if the method is included.
+  \label{all-methods-table}
+}\\
 \toprule
-Name & Year & \# appearances & Decision \\
+Feature Selection Method Name & Year & \# appearances & Decision \\
 \midrule
 \endfirsthead
 
+\caption[]{\textbf{Feature selection methods overview.} (continued)}\\
 \toprule
-Name & Year & \# appearances & Decision \\
+Feature Selection Method Name & Year & \# appearances & Decision \\
 \midrule
 \endhead
-
 \bottomrule
 \endlastfoot
 
-\href{https://doi.org/10.48550/arXiv.2302.13960}{AACO} & 2024 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/978-3-540-25948-0_31}{ACO 1} & 2004 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/CEC.2010.5586080}{ACO 2} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.sigpro.2012.10.022}{ACO 3} & 2012 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.asoc.2014.07.024}{ACO 4} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.asoc.2011.05.054}{AISCBR} & 2011 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/IJCNN.2004.1379918}{AMIFS} & 2004 & 1 & Too few citations, Variation of another method \\
+\href{https://doi.org/10.48550/arXiv.2302.13960}{AACO} & 2024 & 1 & Citations \\
+\href{https://doi.org/10.1007/978-3-540-25948-0_31}{ACO 1} & 2004 & 1 & Citations \\
+\href{https://doi.org/10.1109/CEC.2010.5586080}{ACO 2} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.sigpro.2012.10.022}{ACO 3} & 2012 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.asoc.2014.07.024}{ACO 4} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.asoc.2011.05.054}{AISCBR} & 2011 & 1 & Citations \\
+\href{https://doi.org/10.1109/IJCNN.2004.1379918}{AMIFS} & 2004 & 1 & Citations, Variation \\
 \href{https://doi.org/10.1016/0169-7439(89)80095-4}{ANOVA F-Test} & 1989 & 6 & Yes \\
-\href{https://doi.org/10.1007/978-3-642-37331-2_26}{AUMFS} & 2013 & 1 & Wrong data domain, Too few citations \\
+\href{https://doi.org/10.1007/978-3-642-37331-2_26}{AUMFS} & 2013 & 1 & Wrong data domain, Citations \\
 \href{https://doi.org/10.1007/978-3-540-35488-8_4}{Accuracy} & 2006 & 3 & Yes \\
-\href{https://doi.org/10.1145/1081870.1081914}{Alpha-Investing} & 2005 & 2 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.2106.11959}{Attention Map Importance} & 2021 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/TC.1977.1674939}{BAB} & 1977 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/0031-3203(93)90054-Z}{BAB*} & 1993 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2018.1462709}{Ball Correlation (Bcor-SIS)} & 2018 & 1 & Too few citations \\
-\href{https://doi.org/10.3233/FI-2010-288}{Boruta} & 2010 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.1901.09346}{CAE-S} & 2019 & 1 & Too few citations \\
+\href{https://doi.org/10.1145/1081870.1081914}{Alpha-Investing} & 2005 & 2 & Citations \\
+\href{https://doi.org/10.48550/arXiv.2106.11959}{Attention Map Importance} & 2021 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1109/TC.1977.1674939}{BAB} & 1977 & 1 & Citations \\
+\href{https://doi.org/10.1016/0031-3203(93)90054-Z}{BAB*} & 1993 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2018.1462709}{Ball Correlation (Bcor-SIS)} & 2018 & 1 & Citations \\
+\href{https://doi.org/10.3233/FI-2010-288}{Boruta} & 2010 & 1 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.1901.09346}{CAE-S} & 2019 & 1 & Citations \\
 \href{https://doi.org/10.1201/9781315139470}{CART} & 1984 & 4 & Yes \\
-\href{https://doi.org/10.22266/ijies2026.0131.23}{CAWOA-NRS} & 2026 & 0 & Too few citations \\
-\href{https://doi.org/10.1038/s41598-025-15068-8}{CEFS+} & 2025 & 0 & Too few citations \\
+\href{https://doi.org/10.22266/ijies2026.0131.23}{CAWOA-NRS} & 2026 & 0 & Citations \\
+\href{https://doi.org/10.1038/s41598-025-15068-8}{CEFS+} & 2025 & 0 & Citations \\
 \href{https://doi.org/10.1109/CESYS.2018.8723980}{CFS (Hall)} & 1999 & 8 & Yes \\
-\href{https://doi.org/10.1007/11744023_6}{CIFE} & 2006 & 3 & Variation of another method \\
-\href{https://doi.org/10.4218/etrij.11.0110.0237}{CMIFS} & 2011 & 1 & Too few citations, Variation of another method \\
+\href{https://doi.org/10.1007/11744023_6}{CIFE} & 2006 & 3 & Variation \\
+\href{https://doi.org/10.4218/etrij.11.0110.0237}{CMIFS} & 2011 & 1 & Citations, Variation \\
 \href{http://www.jmlr.org/papers/volume5/fleuret04a/fleuret04a.pdf}{CMIM} & 2004 & 5 & Yes \\
-\href{https://doi.org/10.48550/arXiv.1910.12336}{CXPlain} & 2019 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.cmpb.2022.107269}{Categorical Concordance Index (CI-SIS)} & 2023 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2019.1573734}{Category-Adaptive Variable Screening (CAS)} & 2019 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/978-3-540-87527-7_1}{Combined Ant Colony and Differential Evolution FS Algorithm} & 2008 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/s00180-023-01399-5}{Concordance Index (CSIS)} & 2024 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2014.993081}{Conditional Distance Correlation (CDCSIS)} & 2015 & 1 & Too few citations \\
-\href{https://doi.org/10.1186/1471-2105-9-307}{Conditional Perm. Test} & 2008 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1206.1024}{Conditional SIS} & 2012 & 1 & Too few citations \\
+\href{https://doi.org/10.48550/arXiv.1910.12336}{CXPlain} & 2019 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.cmpb.2022.107269}{Categorical Concordance Index (CI-SIS)} & 2023 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2019.1573734}{Category-Adaptive Variable Screening (CAS)} & 2019 & 1 & Citations \\
+\href{https://doi.org/10.1007/978-3-540-87527-7_1}{Combined Ant Colony and Differential Evolution FS Algorithm} & 2008 & 1 & Citations \\
+\href{https://doi.org/10.1007/s00180-023-01399-5}{Concordance Index (CSIS)} & 2024 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2014.993081}{Conditional Distance Correlation (CDCSIS)} & 2015 & 1 & Citations \\
+\href{https://doi.org/10.1186/1471-2105-9-307}{Conditional Perm. Test} & 2008 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1206.1024}{Conditional SIS} & 2012 & 1 & Citations \\
 \href{https://scispace.com/pdf/consistency-based-feature-selection-33w8ejugqf.pdf}{Consistency} & 2000 & 3 & Yes \\
-\href{https://doi.org/10.1016/j.patcog.2007.10.009}{Constraint score} & 2008 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/10556788.2013.834900}{DE 2} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.2306.03301}{DIME-DG} & 2023 & 1 & Too few citations \\
+\href{https://doi.org/10.1016/j.patcog.2007.10.009}{Constraint score} & 2008 & 1 & Citations \\
+\href{https://doi.org/10.1080/10556788.2013.834900}{DE 2} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.2306.03301}{DIME-DG} & 2023 & 1 & Citations \\
 \href{https://doi.org/10.1007/11732242_9}{DISR} & 2006 & 5 & Yes \\
-\href{https://doi.org/10.48550/arXiv.1012.4255}{Distance Correlation (DC-SIS)} & 2012 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1809.11142}{EDDI-GG} & 2019 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.eswa.2024.125860}{EHOFS} & 2025 & 0 & Too few citations \\
-\href{https://doi.org/10.1609/aaai.v29i1.9211}{EUFS} & 2015 & 1 & Too few citations, Variation of another method \\
+\href{https://doi.org/10.48550/arXiv.1012.4255}{Distance Correlation (DC-SIS)} & 2012 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1809.11142}{EDDI-GG} & 2019 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.eswa.2024.125860}{EHOFS} & 2025 & 0 & Citations \\
+\href{https://doi.org/10.1609/aaai.v29i1.9211}{EUFS} & 2015 & 1 & Citations, Variation \\
 \href{https://doi.org/10.1111/j.1467-9868.2005.00503.x}{Elastic net} & 2005 & 3 & Yes \\
-\href{Hunt, E. B., Marin, J., & Stone, P. J. (1966). Experiments in induction. Academic Press.}{Equal Information Gain} & 1966 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/CEC.2009.4982945}{Evolution Strategy FS} & 2009 & 1 & Too few citations \\
+\href{Hunt, E. B., Marin, J., & Stone, P. J. (1966). Experiments in induction. Academic Press.}{Equal Information Gain} & 1966 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1109/CEC.2009.4982945}{Evolution Strategy FS} & 2009 & 1 & Citations \\
 \href{https://doi.org/10.48550/arXiv.1910.08485}{Extremal
-Perturbations (EP)} & 2019 & 1 & Too few citations \\
-\href{https://asu.elsevierpure.com/en/publications/feature-selection-for-high-dimensional-data-a-fast-correlation-ba/}{FCBF} & 2003 & 5 & Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.1807.08024}{FIDO-CA} & 2018 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.engappai.2025.111298}{FIGFS} & 2025 & 0 & Too few citations \\
-\href{Mejía-Lavalle, Manuel, Enrique Sucar, and Gustavo Arroyo. "Feature selection with a perceptron neural net." Proceedings of the international workshop on feature selection for data mining. 2006.}{FS-P} & 2006 & 1 & Too few citations \\
-\href{https://doi.org/10.1145/2806416.2806521}{FSDS} & 2015 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2025.112032}{FSRDE} & 2026 & 0 & Too few citations \\
-\href{https://www.jstor.org/stable/48723335}{Feature Similarity (Mahalanobis)} & 1936 & 1 & Too few citations \\
-\href{https://link.springer.com/content/pdf/10.1023/A:1024016609528.pdf}{Feature Weighting k means} & 2003 & 1 & Too few citations \\
+Perturbations (EP)} & 2019 & 1 & Citations \\
+\href{https://asu.elsevierpure.com/en/publications/feature-selection-for-high-dimensional-data-a-fast-correlation-ba/}{FCBF} & 2003 & 5 & Variation \\
+\href{https://doi.org/10.48550/arXiv.1807.08024}{FIDO-CA} & 2018 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.engappai.2025.111298}{FIGFS} & 2025 & 0 & Citations \\
+\href{Mejía-Lavalle, Manuel, Enrique Sucar, and Gustavo Arroyo. "Feature selection with a perceptron neural net." Proceedings of the international workshop on feature selection for data mining. 2006.}{FS-P} & 2006 & 1 & Citations \\
+\href{https://doi.org/10.1145/2806416.2806521}{FSDS} & 2015 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1016/j.patcog.2025.112032}{FSRDE} & 2026 & 0 & Citations \\
+\href{https://www.jstor.org/stable/48723335}{Feature Similarity (Mahalanobis)} & 1936 & 1 & Citations \\
+\href{https://link.springer.com/content/pdf/10.1023/A:1024016609528.pdf}{Feature Weighting k means} & 2003 & 1 & Citations \\
 \href{https://doi.org/10.1198/jasa.2010.tm09415}{Feature selection for
-sparse clustering} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1202.3725}{Fisher criterion} & 2012 & 2 & Too few citations, Variation of another method \\
+sparse clustering} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1202.3725}{Fisher criterion} & 2012 & 2 & Citations, Variation \\
 \href{https://doi.org/10.1111/j.1469-1809.1936.tb02137.x}{Fisher score} & 1936 & 6 & Yes \\
-\href{https://doi.org/10.1016/0167-8655(89)90037-8}{GA 1} & 1989 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2009.06.009}{GA 2} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1057/jors.2013.72}{GA 3} & 2014 & 1 & Too few citations \\
-\href{https://dl.acm.org/doi/10.5555/3053814.3053817}{GDCOV} & 2008 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.48550/arXiv.2301.00557}{GDFS-DG} & 2023 & 1 & Too few citations \\
-\href{https://doi.org/10.1371/journal.pgen.1000587}{GF Lasso} & 2009 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1371/journal.pgen.1000587}{GFLasso} & 2009 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/TSMCB.2005.854499}{GP 1} & 2006 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/CEC.2010.5586536}{GP 2} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/978-3-642-29139-5_9}{GP 3} & 2012 & 1 & Too few citations \\
+\href{https://doi.org/10.1016/0167-8655(89)90037-8}{GA 1} & 1989 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.patcog.2009.06.009}{GA 2} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1057/jors.2013.72}{GA 3} & 2014 & 1 & Citations \\
+\href{https://dl.acm.org/doi/10.5555/3053814.3053817}{GDCOV} & 2008 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.48550/arXiv.2301.00557}{GDFS-DG} & 2023 & 1 & Citations \\
+\href{https://doi.org/10.1371/journal.pgen.1000587}{GF Lasso} & 2009 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1371/journal.pgen.1000587}{GFLasso} & 2009 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1109/TSMCB.2005.854499}{GP 1} & 2006 & 1 & Citations \\
+\href{https://doi.org/10.1109/CEC.2010.5586536}{GP 2} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1007/978-3-642-29139-5_9}{GP 3} & 2012 & 1 & Citations \\
 \href{https://link.springer.com/article/10.1007/BF00116251}{Gain Ratio} & 1986 & 3 & Yes \\
-\href{https://doi.org/10.1007/978-3-540-39857-8_30}{Gain Ratio Cost} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC3095976/}{Generalized SIS} & 2009 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/0167-8655(89)90037-8}{Genetic Algorithm (Siedlecki)} & 1989 & 2 & Too few citations \\
-\href{https://doi.org/10.1109/5254.671091}{Genetic Algorithm (Yang)} & 2002 & 2 & Too few citations \\
+\href{https://doi.org/10.1007/978-3-540-39857-8_30}{Gain Ratio Cost} & 2003 & 1 & Citations, Variation \\
+\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC3095976/}{Generalized SIS} & 2009 & 1 & Citations \\
+\href{https://doi.org/10.1016/0167-8655(89)90037-8}{Genetic Algorithm (Siedlecki)} & 1989 & 2 & Citations \\
+\href{https://doi.org/10.1109/5254.671091}{Genetic Algorithm (Yang)} & 2002 & 2 & Citations \\
 \href{Gini, Corrado W. "Variability and mutability, contribution to the study of statistical distributions and relations." Studi Economico-Giuridici della R. Universita de Cagliari (1912).}{Gini} & 1912 & 6 & Yes \\
-\href{https://www.jmlr.org/papers/volume3/perkins03a/perkins03a.pdf}{Grafting} & 2003 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1145/2339530.2339675}{Graph FS (GOSCAR)} & 2012 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.2010.08097}{Group Lasso} & 2020 & 3 & Variation of another method \\
-\href{https://proceedings.mlr.press/v151/poignard22a/poignard22a.pdf}{Hilbert-Schmidt Independence Criterion (HSIC)} & 2022 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.knosys.2014.07.013}{IAIRS} & 2014 & 0 & Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2026.113416}{ICS-RCFS} & 2026 & 0 & Too few citations \\
-\href{https://doi.org/10.1109/ICCV.2003.1238356}{IF} & 2003 & 1 & Too few citations \\
+\href{https://www.jmlr.org/papers/volume3/perkins03a/perkins03a.pdf}{Grafting} & 2003 & 2 & Citations, Variation \\
+\href{https://doi.org/10.1145/2339530.2339675}{Graph FS (GOSCAR)} & 2012 & 2 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.2010.08097}{Group Lasso} & 2020 & 3 & Variation \\
+\href{https://proceedings.mlr.press/v151/poignard22a/poignard22a.pdf}{Hilbert-Schmidt Independence Criterion (HSIC)} & 2022 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.knosys.2014.07.013}{IAIRS} & 2014 & 0 & Citations \\
+\href{https://doi.org/10.1016/j.patcog.2026.113416}{ICS-RCFS} & 2026 & 0 & Citations \\
+\href{https://doi.org/10.1109/ICCV.2003.1238356}{IF} & 2003 & 1 & Citations \\
 \href{https://doi.org/10.3233/IDA-2009-0364}{INTERACT} & 2009 & 2 & Yes \\
-\href{https://doi.org/10.1016/j.bspc.2025.109061}{ISFS} & 2026 & 0 & Too few citations \\
+\href{https://doi.org/10.1016/j.bspc.2025.109061}{ISFS} & 2026 & 0 & Citations \\
 \href{https://doi.org/10.1007/978-3-540-35488-8_4}{Impurity} & 2006 & 3 & Yes \\
-\href{https://api.semanticscholar.org/CorpusID:17123515}{Inconsistency criterion} & 1996 & 1 & Too few citations \\
+\href{https://api.semanticscholar.org/CorpusID:17123515}{Inconsistency criterion} & 1996 & 1 & Citations \\
 \href{https://doi.org/10.1023/A:1022643204877}{Information Gain} & 1986 & 7 & Yes \\
 \href{https://doi.org/10.1016/j.ipm.2004.08.006}{Information Gain Text} & 2006 & 1 & Wrong data domain \\
-\href{https://people.eecs.berkeley.edu/~efros/courses/AP06/Papers/vidal-iccv-03.pdf}{Informative Fragment} & 2003 & 1 & Too few citations \\
-\href{https://www.jmlr.org/papers/volume12/jenatton11b/jenatton11b.pdf}{Interaction Capping} & 2011 & 2 & Too few citations \\
-\href{https://api.semanticscholar.org/CorpusID:13975272}{Interaction Gain FS} & 2008 & 1 & Too few citations \\
-\href{https://proceedings.neurips.cc/paper_files/paper/2018/file/e5841df2166dd424a57127423d276bbe-Paper.pdf}{JAFA-MFRL} & 2018 & 1 & Too few citations \\
+\href{https://people.eecs.berkeley.edu/~efros/courses/AP06/Papers/vidal-iccv-03.pdf}{Informative Fragment} & 2003 & 1 & Citations \\
+\href{https://www.jmlr.org/papers/volume12/jenatton11b/jenatton11b.pdf}{Interaction Capping} & 2011 & 2 & Citations \\
+\href{https://api.semanticscholar.org/CorpusID:13975272}{Interaction Gain FS} & 2008 & 1 & Citations \\
+\href{https://proceedings.neurips.cc/paper_files/paper/2018/file/e5841df2166dd424a57127423d276bbe-Paper.pdf}{JAFA-MFRL} & 2018 & 1 & Citations \\
 \href{https://proceedings.neurips.cc/paper_files/paper/1999/file/8c01a75941549a705cf7275e41b21f0d-Paper.pdf}{JMI} & 1999 & 5 & Yes \\
-\href{https://doi.org/10.1016/j.eswa.2015.07.007}{JMIM} & 2015 & 2 & Too few citations \\
-\href{https://doi.org/10.1007/978-3-540-87481-2_21}{Jaccard Index} & 2008 & 1 & Too few citations \\
-\href{https://ai.stanford.edu/~koller/Papers/Koller+Sahami:ICML96.pdf}{Koller-Sahami metric (KS)} & 1996 & 1 & Too few citations \\
-\href{https://doi.org/10.1214/14-AOS1303}{Kolmogorov Filter (Kfilter)} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.1952.10483441}{Kruskal-Wallis} & 2015 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.1602.04938}{LIME (Images)} & 2019 & 1 & Wrong data domain, Too few citations \\
-\href{https://dl.acm.org/doi/pdf/10.5555/3546258.3546467}{LIME (Tabular)} & 2021 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.2407.02694}{LLM-Select} & 2025 & 0 & Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2025.111874}{LSSSMV-FS} & 2026 & 0 & Too few citations \\
-\href{https://doi.org/10.1145/2339530.2339673}{LUFS} & 2012 & 1 & Wrong data domain, Too few citations \\
+\href{https://doi.org/10.1016/j.eswa.2015.07.007}{JMIM} & 2015 & 2 & Citations \\
+\href{https://doi.org/10.1007/978-3-540-87481-2_21}{Jaccard Index} & 2008 & 1 & Citations \\
+\href{https://ai.stanford.edu/~koller/Papers/Koller+Sahami:ICML96.pdf}{Koller-Sahami metric (KS)} & 1996 & 1 & Citations \\
+\href{https://doi.org/10.1214/14-AOS1303}{Kolmogorov Filter (Kfilter)} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.1952.10483441}{Kruskal-Wallis} & 2015 & 2 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.1602.04938}{LIME (Images)} & 2019 & 1 & Wrong data domain, Citations \\
+\href{https://dl.acm.org/doi/pdf/10.5555/3546258.3546467}{LIME (Tabular)} & 2021 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.2407.02694}{LLM-Select} & 2025 & 0 & Citations \\
+\href{https://doi.org/10.1016/j.patcog.2025.111874}{LSSSMV-FS} & 2026 & 0 & Citations \\
+\href{https://doi.org/10.1145/2339530.2339673}{LUFS} & 2012 & 1 & Wrong data domain, Citations \\
 \href{https://proceedings.neurips.cc/paper_files/paper/2005/file/b5b03f06271f8917685d14cea7c6c50a-Paper.pdf}{Laplacian score} & 2005 & 5 & Yes \\
 \href{https://doi.org/10.1111/j.2517-6161.1996.tb02080.x}{Lasso (L1)} & 1996 & 8 & Yes \\
-\href{https://doi.org/10.48550/arXiv.1907.12207}{Lasso Net} & 2019 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1137/1.9781611972825.11}{LinkedFS} & 2012 & 1 & Wrong data domain, Too few citations \\
+\href{https://doi.org/10.48550/arXiv.1907.12207}{Lasso Net} & 2019 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1137/1.9781611972825.11}{LinkedFS} & 2012 & 1 & Wrong data domain, Citations \\
 \href{https://doi.org/10.1016/j.patrec.2007.08.012}{Localized Feature
 Selection Based on
 Scatter Separability
-(LFSBSS)} & 2008 & 1 & Too few citations \\
-\href{https://doi.org/10.1038/s42256-019-0138-9}{LossSHAP} & 2020 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1016/j.knosys.2010.03.016}{MA-C} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.future.2024.06.006}{MAFESE} & 2024 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2007.02.007}{MBEGA} & 2007 & 1 & Too few citations \\
-\href{https://doi.org/10.1145/1835804.1835848}{MCFS} & 2010 & 3 & Variation of another method \\
-\href{https://link.springer.com/chapter/10.1007/3-540-57868-4_57}{MDL} & 1994 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{MDL Lamp} & 2003 & 1 & Too few citations, Variation of another method \\
+(LFSBSS)} & 2008 & 1 & Citations \\
+\href{https://doi.org/10.1038/s42256-019-0138-9}{LossSHAP} & 2020 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1016/j.knosys.2010.03.016}{MA-C} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.future.2024.06.006}{MAFESE} & 2024 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.patcog.2007.02.007}{MBEGA} & 2007 & 1 & Citations \\
+\href{https://doi.org/10.1145/1835804.1835848}{MCFS} & 2010 & 3 & Variation \\
+\href{https://link.springer.com/chapter/10.1007/3-540-57868-4_57}{MDL} & 1994 & 2 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{MDL Lamp} & 2003 & 1 & Citations, Variation \\
 \href{https://doi.org/10.1109/72.298224}{MI (Battiti)} & 1994 & 6 & Yes \\
-\href{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}{MI (Guyon)} & 2003 & 2 & Variation of another method \\
-\href{https://doi.org/10.1109/72.977291}{MIFS-U} & 2002 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.1705.07857}{MM} & 2017 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/s11227-024-06762-x}{MOPSO} & 2025 & 0 & Too few citations \\
+\href{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}{MI (Guyon)} & 2003 & 2 & Variation \\
+\href{https://doi.org/10.1109/72.977291}{MIFS-U} & 2002 & 1 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.1705.07857}{MM} & 2017 & 1 & Citations \\
+\href{https://doi.org/10.1007/s11227-024-06762-x}{MOPSO} & 2025 & 0 & Citations \\
 \href{https://doi.org/10.1109/TPAMI.2005.159}{MRMR} & 2005 & 12 & Yes \\
-\href{https://doi.org/10.1137/1.9781611972832.30}{MVFS} & 2013 & 1 & Wrong data domain, Too few citations \\
+\href{https://doi.org/10.1137/1.9781611972832.30}{MVFS} & 2013 & 1 & Wrong data domain, Citations \\
 \href{http://ilpubs.stanford.edu:8090/208/}{Markov blanket} & 1996 & 3 & Yes \\
-\href{https://doi.org/10.1080/01621459.2014.887012}{Martingale Difference Correlation (MDC-SIS)} & 2013 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.jmva.2016.02.014}{Maximum Correlation (MC-SIS)} & 2016 & 1 & Too few citations \\
-\href{https://proceedings.mlr.press/v151/poignard22a/poignard22a.pdf}{Maximum Mean Discrepancy MMD} & 2022 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/ICMLA.2010.148}{Md (measure of monotone dependence)} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2014.920256}{Mean-Variance (MVSIS)} & 2015 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/ICCV.2017.371}{Meaningful Perturbations (MP)} & 2017 & 1 & Too few citations \\
+\href{https://doi.org/10.1080/01621459.2014.887012}{Martingale Difference Correlation (MDC-SIS)} & 2013 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.jmva.2016.02.014}{Maximum Correlation (MC-SIS)} & 2016 & 1 & Citations \\
+\href{https://proceedings.mlr.press/v151/poignard22a/poignard22a.pdf}{Maximum Mean Discrepancy MMD} & 2022 & 1 & Citations \\
+\href{https://doi.org/10.1109/ICMLA.2010.148}{Md (measure of monotone dependence)} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2014.920256}{Mean-Variance (MVSIS)} & 2015 & 1 & Citations \\
+\href{https://doi.org/10.1109/ICCV.2017.371}{Meaningful Perturbations (MP)} & 2017 & 1 & Citations \\
 \href{Bastian}{MetaFS} & 2025 & 0 & Our Method \\
-\href{https://doi.org/10.1007/978-3-540-35488-8}{MinRed} & 2006 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1412.6856}{Minimal image representation (MIR)} & 2014 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1016/j.inffus.2024.102901}{MsFDSs} & 2025 & 0 & Too few citations \\
+\href{https://doi.org/10.1007/978-3-540-35488-8}{MinRed} & 2006 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1412.6856}{Minimal image representation (MIR)} & 2014 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1016/j.inffus.2024.102901}{MsFDSs} & 2025 & 0 & Citations \\
 \href{https://www3.stat.sinica.edu.tw/sstest/oldpdf/A31n405.pdf}{Multi-response rank canonical correlation
-(mRCC)} & 2021 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.2501.06805}{Multi-viewFS} & 2025 & 0 & Too few citations \\
-\href{https://link.springer.com/chapter/10.1007/3-540-57868-4_57}{Myopic ReliefF} & 1994 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1609/aaai.v26i1.8289}{NDFS} & 2012 & 2 & Too few citations \\
-\href{https://doi.org/10.1016/j.eswa.2015.07.007}{NJMIM} & 2015 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/ICPR.1994.577060}{NP (node pruning)} & 1994 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/ICDM.2016.0127}{NetFS} & 2016 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.48550/arXiv.0912.2695}{Nonparametric Independence Screening (NIS)} & 2011 & 1 & Too few citations \\
-\href{https://realworld-sdm.github.io/paper/21.pdf}{ODIN-MBRL} & 2019 & 1 & Too few citations \\
-\href{https://realworld-sdm.github.io/paper/21.pdf}{ODIN-MFRL} & 2019 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/TKDE.2013.32}{OFS} & 2014 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1111/j.1541-0420.2007.00843.x}{OSCAR} & 2008 & 1 & Too few citations, Variation of another method \\
-\href{https://icml.cc/Conferences/2010/papers/238.pdf}{OSFS} & 2010 & 2 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1016/j.patcog.2025.111985}{ObDI-FS} & 2026 & 0 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1311.2901}{Occlusion} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/78.258082}{Orthogonal Matching Pursuit} & 1993 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.ejor.2010.02.032}{PSO 1} & 2010 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/TSMCB.2012.2227469}{PSO 2} & 2013 & 1 & Too few citations \\
-\href{https://doi.org/10.1021/jm0104668}{PSO 3} & 2002 & 1 & Too few citations \\
-\href{https://doi.org/10.1023/A:1010933404324}{PT-S} & 2001 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2014.998760}{Pairwise SIS (PSIS)} & 2015 & 1 & Too few citations \\
+(mRCC)} & 2021 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.2501.06805}{Multi-viewFS} & 2025 & 0 & Citations \\
+\href{https://link.springer.com/chapter/10.1007/3-540-57868-4_57}{Myopic ReliefF} & 1994 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1609/aaai.v26i1.8289}{NDFS} & 2012 & 2 & Citations \\
+\href{https://doi.org/10.1016/j.eswa.2015.07.007}{NJMIM} & 2015 & 2 & Citations, Variation \\
+\href{https://doi.org/10.1109/ICPR.1994.577060}{NP (node pruning)} & 1994 & 1 & Citations \\
+\href{https://doi.org/10.1109/ICDM.2016.0127}{NetFS} & 2016 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.48550/arXiv.0912.2695}{Nonparametric Independence Screening (NIS)} & 2011 & 1 & Citations \\
+\href{https://realworld-sdm.github.io/paper/21.pdf}{ODIN-MBRL} & 2019 & 1 & Citations \\
+\href{https://realworld-sdm.github.io/paper/21.pdf}{ODIN-MFRL} & 2019 & 1 & Citations \\
+\href{https://doi.org/10.1109/TKDE.2013.32}{OFS} & 2014 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1111/j.1541-0420.2007.00843.x}{OSCAR} & 2008 & 1 & Citations, Variation \\
+\href{https://icml.cc/Conferences/2010/papers/238.pdf}{OSFS} & 2010 & 2 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1016/j.patcog.2025.111985}{ObDI-FS} & 2026 & 0 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1311.2901}{Occlusion} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.1109/78.258082}{Orthogonal Matching Pursuit} & 1993 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.ejor.2010.02.032}{PSO 1} & 2010 & 1 & Citations \\
+\href{https://doi.org/10.1109/TSMCB.2012.2227469}{PSO 2} & 2013 & 1 & Citations \\
+\href{https://doi.org/10.1021/jm0104668}{PSO 3} & 2002 & 1 & Citations \\
+\href{https://doi.org/10.1023/A:1010933404324}{PT-S} & 2001 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2014.998760}{Pairwise SIS (PSIS)} & 2015 & 1 & Citations \\
 \href{https://doi.org/10.1007/978-3-540-87481-2_21}{Pearson Correlation Coefficient} & 2008 & 4 & Yes \\
-\href{https://doi.org/10.1023/A:1010933404324}{Permutation Test} & 2001 & 1 & Too few citations \\
-\href{https://doi.org/10.48550/arXiv.1702.04595}{PredDiﬀ} & 2017 & 1 & Too few citations \\
-\href{https://doi.org/10.1080/01621459.2020.1783274}{Projection Correlation (PC-Screen)} & 2019 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/SP.2016.42}{QII} & 2016 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/j.jmva.2015.10.010}{Quantile Correlation (QCSIS)} & 2016 & 1 & Too few citations \\
+\href{https://doi.org/10.1023/A:1010933404324}{Permutation Test} & 2001 & 1 & Citations \\
+\href{https://doi.org/10.48550/arXiv.1702.04595}{PredDiﬀ} & 2017 & 1 & Citations \\
+\href{https://doi.org/10.1080/01621459.2020.1783274}{Projection Correlation (PC-Screen)} & 2019 & 1 & Citations \\
+\href{https://doi.org/10.1109/SP.2016.42}{QII} & 2016 & 1 & Citations \\
+\href{https://doi.org/10.1016/j.jmva.2015.10.010}{Quantile Correlation (QCSIS)} & 2016 & 1 & Citations \\
 \href{https://doi.org/10.1023/A:1010933404324}{RF importance} & 2001 & 8 & Yes \\
-\href{https://doi.org/10.48550/arXiv.1806.07421}{RISE} & 2018 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/B978-1-55860-247-2.50037-1}{Relief} & 1992 & 9 & Variation of another method \\
-\href{https://doi.org/10.1109/ICTAI.2011.135}{Relief C} & 2011 & 1 & Too few citations \\
-\href{https://doi.org/10.1016/s0933-3657(98)00063-3}{Relief Kukar} & 1999 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-A} & 1994 & 0 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-B} & 1994 & 0 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-C} & 1994 & 0 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-D} & 1994 & 0 & Too few citations, Variation of another method \\
+\href{https://doi.org/10.48550/arXiv.1806.07421}{RISE} & 2018 & 1 & Citations \\
+\href{https://doi.org/10.1016/B978-1-55860-247-2.50037-1}{Relief} & 1992 & 9 & Variation \\
+\href{https://doi.org/10.1109/ICTAI.2011.135}{Relief C} & 2011 & 1 & Citations \\
+\href{https://doi.org/10.1016/s0933-3657(98)00063-3}{Relief Kukar} & 1999 & 2 & Citations, Variation \\
+\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-A} & 1994 & 0 & Citations, Variation \\
+\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-B} & 1994 & 0 & Citations, Variation \\
+\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-C} & 1994 & 0 & Citations, Variation \\
+\href{https://doi.org/10.1007/3-540-57868-4_57}{Relief-D} & 1994 & 0 & Citations, Variation \\
 \href{https://link.springer.com/content/pdf/10.1023/A:1008280620621.pdf}{ReliefF} & 1997 & 10 & Yes \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF averaged costs} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF avg probablity} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF cost-sensitive sampling} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF distance} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF equal K} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected costs} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected probability} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected rank} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1023/A:1025667309714}{ReliefF squared distance} & 2003 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/ACCESS.2021.3126429}{Repeated Elastic Net Technique (RENT)} & 2021 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.1012.4255}{Robust Rank Correlation (RRCS)} & 2012 & 1 & Too few citations \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF averaged costs} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF avg probablity} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF cost-sensitive sampling} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF distance} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF equal K} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected costs} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected probability} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF expected rank} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1023/A:1025667309714}{ReliefF squared distance} & 2003 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1109/ACCESS.2021.3126429}{Repeated Elastic Net Technique (RENT)} & 2021 & 1 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.1012.4255}{Robust Rank Correlation (RRCS)} & 2012 & 1 & Citations \\
 \href{https://doi.org/10.48550/arXiv.2004.00668}{SAGE (Shapley
-Additive Global importancE)} & 2020 & 1 & Too few citations, Variation of another method \\
+Additive Global importancE)} & 2020 & 1 & Citations, Variation \\
 \href{https://scikit-learn.org/stable/modules/feature_selection.html#sequential-feature-selection}{SBE (sequential backward elimination)} & 2025 & 8 & Yes \\
-\href{https://doi.org/10.1016/0167-8655(94)90127-9}{SFBE} & 1994 & 2 & Variation of another method, Too few citations \\
-\href{https://doi.org/10.1016/0167-8655(94)90127-9}{SFFS} & 1994 & 3 & Variation of another method \\
+\href{https://doi.org/10.1016/0167-8655(94)90127-9}{SFBE} & 1994 & 2 & Variation, Citations \\
+\href{https://doi.org/10.1016/0167-8655(94)90127-9}{SFFS} & 1994 & 3 & Variation \\
 \href{https://scikit-learn.org/stable/modules/feature_selection.html#sequential-feature-selection}{SFS (sequential forward selection)} & 2025 & 10 & Yes \\
-\href{https://doi.org/10.48550/arXiv.1705.07874}{SHAP} & 2017 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.2207.13522}{SIT-BY} & 2022 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/TSMCA.2008.2007977}{SOA} & 2009 & 1 & Too few citations \\
-\href{https://doi.org/10.1145/2576768.2598371}{SOD-LSC} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/TKDE.2011.222}{SPFS-SFS} & 2013 & 1 & Too few citations \\
-\href{https://doi.org/10.1023/A:1012487302797}{SVM-RFE} & 2002 & 6 & Variation of another method \\
-\href{Calzolari, Manuel. "manuel-calzolari/shapicant: Feature selection package based on SHAP and target permutation, for pandas and Spark." Accessed: Feb 1 (2020): 2024.}{Shapicant} & 2020 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1515/9781400881970-018}{Shapley Values} & 1953 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/TNNLS.2014.2314123}{Sparse-based filter method} & 2015 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1007/978-3-540-87481-2_21}{Spearman Correlation Coefficient} & 2008 & 2 & Too few citations \\
-\href{https://doi.org/10.1145/1273496.1273641}{Spectral FS (SPEC)} & 2007 & 3 & Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.math/0612857}{Sure Independence Screening (SIS)} & 2008 & 1 & Too few citations \\
-\href{https://doi.org/10.1198/jasa.2011.tm10563}{Sure Independent Ranking and Screening (SIRS)} & 2010 & 1 & Too few citations \\
+\href{https://doi.org/10.48550/arXiv.1705.07874}{SHAP} & 2017 & 1 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.2207.13522}{SIT-BY} & 2022 & 1 & Citations \\
+\href{https://doi.org/10.1109/TSMCA.2008.2007977}{SOA} & 2009 & 1 & Citations \\
+\href{https://doi.org/10.1145/2576768.2598371}{SOD-LSC} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.1109/TKDE.2011.222}{SPFS-SFS} & 2013 & 1 & Citations \\
+\href{https://doi.org/10.1023/A:1012487302797}{SVM-RFE} & 2002 & 6 & Variation \\
+\href{Calzolari, Manuel. "manuel-calzolari/shapicant: Feature selection package based on SHAP and target permutation, for pandas and Spark." Accessed: Feb 1 (2020): 2024.}{Shapicant} & 2020 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1515/9781400881970-018}{Shapley Values} & 1953 & 1 & Citations \\
+\href{https://doi.org/10.1109/TNNLS.2014.2314123}{Sparse-based filter method} & 2015 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1007/978-3-540-87481-2_21}{Spearman Correlation Coefficient} & 2008 & 2 & Citations \\
+\href{https://doi.org/10.1145/1273496.1273641}{Spectral FS (SPEC)} & 2007 & 3 & Variation \\
+\href{https://doi.org/10.48550/arXiv.math/0612857}{Sure Independence Screening (SIS)} & 2008 & 1 & Citations \\
+\href{https://doi.org/10.1198/jasa.2011.tm10563}{Sure Independent Ranking and Screening (SIRS)} & 2010 & 1 & Citations \\
 \href{https://experimentationlab.berkeley.edu/sites/default/files/NLD/References/11-Fourier_Transform_Spectral_Methods.pdf}{Symmetrical Uncertainty} & 1988 & 5 & Yes \\
 \href{Dominika}{TabFS} & 2026 & 0 & Our Method \\
-\href{https://cdn.aaai.org/AAAI/2008/AAAI08-107.pdf}{Trace Ratio} & 2008 & 1 & Too few citations, Variation of another method \\
+\href{https://cdn.aaai.org/AAAI/2008/AAAI08-107.pdf}{Trace Ratio} & 2008 & 1 & Citations, Variation \\
 \href{https://proceedings.neurips.cc/paper_files/paper/2010/file/d490d7b4576290fa60eb31b5fc917ad1-Paper.pdf}{Tree
-structured group Lasso} & 2010 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.48550/arXiv.2311.05877}{Tree Lasso} & 2023 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1109/TCBBIO.2025.3532297}{Ts-repso} & 2025 & 0 & Too few citations \\
-\href{https://doi.org/10.5591/978-1-57735-516-8/IJCAI11-267}{UDFS} & 2011 & 2 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1145/2806416.2806501}{USFS} & 2015 & 1 & Wrong data domain, Too few citations \\
-\href{https://doi.org/10.1080/01621459.2021.1918554}{Weighted Leverage Score (WLS)} & 2021 & 1 & Too few citations \\
-\href{http://www.cs.waikato.ac.nz/ml/weka/}{WrapperSubsetEval} & 2005 & 1 & Too few citations \\
-\href{https://doi.org/10.1145/2598394.2611383}{XCSCF\^{}2} & 2014 & 1 & Too few citations \\
-\href{https://doi.org/10.1109/CEC.2015.7257185}{bee colony approach FS} & 2015 & 1 & Too few citations \\
-\href{https://doi.org/10.1007/s13042-014-0276-7}{bumble bees mating optimization FS} & 2014 & 1 & Too few citations \\
+structured group Lasso} & 2010 & 1 & Citations, Variation \\
+\href{https://doi.org/10.48550/arXiv.2311.05877}{Tree Lasso} & 2023 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1109/TCBBIO.2025.3532297}{Ts-repso} & 2025 & 0 & Citations \\
+\href{https://doi.org/10.5591/978-1-57735-516-8/IJCAI11-267}{UDFS} & 2011 & 2 & Citations, Variation \\
+\href{https://doi.org/10.1145/2806416.2806501}{USFS} & 2015 & 1 & Wrong data domain, Citations \\
+\href{https://doi.org/10.1080/01621459.2021.1918554}{Weighted Leverage Score (WLS)} & 2021 & 1 & Citations \\
+\href{http://www.cs.waikato.ac.nz/ml/weka/}{WrapperSubsetEval} & 2005 & 1 & Citations \\
+\href{https://doi.org/10.1145/2598394.2611383}{XCSCF\^{}2} & 2014 & 1 & Citations \\
+\href{https://doi.org/10.1109/CEC.2015.7257185}{bee colony approach FS} & 2015 & 1 & Citations \\
+\href{https://doi.org/10.1007/s13042-014-0276-7}{bumble bees mating optimization FS} & 2014 & 1 & Citations \\
 \href{https://doi.org/10.1109/TAI.1995.479783}{chi squared} & 1995 & 6 & Yes \\
-\href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest}{f\_regression} & 2025 & 2 & Too few citations \\
-\href{https://doi.org/10.2202/1544-6115.1027}{limma} & 2004 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1016/j.eswa.2025.131084}{mRMR-MOBSTA} & 2026 & 0 & Too few citations \\
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest}{f\_regression} & 2025 & 2 & Citations \\
+\href{https://doi.org/10.2202/1544-6115.1027}{limma} & 2004 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1016/j.eswa.2025.131084}{mRMR-MOBSTA} & 2026 & 0 & Citations \\
 \href{https://doi.org/10.1023/A:1022631118932}{oneR} & 1993 & 3 & Yes \\
-\href{https://doi.org/10.1073/pnas.091062498}{sam} & 2001 & 1 & Too few citations, Variation of another method \\
-\href{https://doi.org/10.1016/j.patrec.2007.02.014}{signal-to-noise (SNR)} & 2007 & 1 & Too few citations \\
+\href{https://doi.org/10.1073/pnas.091062498}{sam} & 2001 & 1 & Citations, Variation \\
+\href{https://doi.org/10.1016/j.patrec.2007.02.014}{signal-to-noise (SNR)} & 2007 & 1 & Citations \\
 \href{Peck R, Devore JL. Statistics: the exploration & analysis of data. Cengage learning. 2011; pp.516–9.}{t-test} & 2011 & 5 & Yes \\
-\href{https://doi.org/10.1016/j.patrec.2007.02.014}{true positives (TP)} & 2007 & 1 & Too few citations \\
-\href{https://doi.org/10.1145/2939672.2939785}{xgb importance} & 2016 & 1 & Too few citations, Variation of another method \\
+\href{https://doi.org/10.1016/j.patrec.2007.02.014}{true positives (TP)} & 2007 & 1 & Citations \\
+\href{https://doi.org/10.1145/2939672.2939785}{xgb importance} & 2016 & 1 & Citations, Variation \\
 \end{longtable}

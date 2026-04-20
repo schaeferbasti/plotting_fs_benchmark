@@ -43,22 +43,28 @@ def make_table(df):
         name_cell = rf"\href{{{source}}}{{{name}}}"
 
         latex_row = f"{name_cell} & {year} & {appearances} & {decision} \\\\"
+        latex_row = latex_row.replace("Variation of another method", r"Variation")
+        latex_row = latex_row.replace("Too few citations", r"Citations")
+        latex_row = latex_row.replace("Wrong Data Domain", r"Wrong Domain")
         latex_rows.append(latex_row)
 
     latex_body = "\n".join(latex_rows)
 
-    latex = r"""\begin{longtable}{p{5cm}ccc}
-\caption{All FS Methods Overview. \label{all-methods-table}} \\
+    latex = r"""\begin{longtable}{p{6.5cm}ccc}
+\caption[\textbf{Feature selection methods overview.}]{%
+  \textbf{Feature selection methods overview.} We list the method name with a link to the source of the method, provide year and the number of appearances across the considered literature. In the "Decision" column we list the reason for excluding the method ("Citations" if there are below three citations, "Variation" if the method is a variation of another method, and "Wrong Domain" if the method is not suited for tabular data) or we put a yes if the method is included.
+  \label{all-methods-table}
+}\\
 \toprule
-Name & Year & \# appearances & Decision \\
+Feature Selection Method Name & Year & \# appearances & Decision \\
 \midrule
 \endfirsthead
 
+\caption[]{\textbf{Feature selection methods overview.} (continued)}\\
 \toprule
-Name & Year & \# appearances & Decision \\
+Feature Selection Method Name & Year & \# appearances & Decision \\
 \midrule
 \endhead
-
 \bottomrule
 \endlastfoot
 
