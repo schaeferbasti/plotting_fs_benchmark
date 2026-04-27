@@ -15,74 +15,74 @@
     \endhead
     \bottomrule
     \endlastfoot
-\href{https://www.kaggle.com/competitions/allstate-claims-severity}{allstate\-claims\-severity}\cite{Ferguson2016AllstateClaimsSeverity} & 131 & 188318 & / & regression & Public\\
-\href{https://github.com/CarolaHeinzel/BGA-Classification/blob/main/data/input-data/full-data.csv}{ancestry\-study}\cite{ruiz2023ancestry} & 105 & 635 & 7 & multiclass & Public\\
+\href{https://www.kaggle.com/competitions/allstate-claims-severity}{allstate-claims-severity}\cite{Ferguson2016AllstateClaimsSeverity} & 131 & 188318 & / & regression & Public\\
+\href{https://github.com/CarolaHeinzel/BGA_Classification/blob/main/data/input_data/full_data.csv}{ancestry-study}\cite{ruiz2023ancestry} & 105 & 635 & 7 & multiclass & Public\\
 \href{https://archive.ics.uci.edu/dataset/3/annealing}{anneal}\cite{uci1990annealing} & 39 & 898 & 5 & multiclass & CC BY 4\\
-\href{https://doi.org/10.24432/C5V60Q}{aps\-failure}\cite{ida2016challenge} & 171 & 76000 & 2 & binary & CC BY 4\\
-\href{https://doi.org/10.24432/C5TP4R}{audiology\-diagnosis}\cite{bareiss1990protos} & 69 & 199 & 24 & multiclass & /\\
+\href{https://doi.org/10.24432/C5V60Q}{aps-failure}\cite{ida2016challenge} & 171 & 76000 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.24432/C5TP4R}{audiology-diagnosis}\cite{bareiss1990protos} & 69 & 199 & 24 & multiclass & /\\
 \href{https://doi.org/10.24432/C5B01C}{automobile}\cite{Schlimmer1985Automobile} & 25 & 205 & 7 & ordinal & CC BY 4\\
-\href{https://www.kaggle.com/datasets/podsyp/is-this-a-good-customer}{bad\-customer\-detection}\cite{Podsyp2020IsThisAGoodCustomer} & 14 & 1723 & 2 & binary & CC0: Public Domain\\
-\href{https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset}{bank\-customer\-churn}\cite{Topre2022BankCustomerChurn} & 11 & 10000 & 2 & binary & Public\\
-\href{https://archive.ics.uci.edu/dataset/222/bank+marketing}{bank\-marketing}\cite{moro2014bank-marketing} & 13 & 45211 & 2 & binary & CC BY 4\\
+\href{https://www.kaggle.com/datasets/podsyp/is-this-a-good-customer}{bad-customer-detection}\cite{Podsyp2020IsThisAGoodCustomer} & 14 & 1723 & 2 & binary & CC0: Public Domain\\
+\href{https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset}{bank-customer-churn}\cite{Topre2022BankCustomerChurn} & 11 & 10000 & 2 & binary & Public\\
+\href{https://archive.ics.uci.edu/dataset/222/bank+marketing}{bank-marketing}\cite{moro2014bank-marketing} & 13 & 45211 & 2 & binary & CC BY 4\\
 \href{https://www.kaggle.com/c/bioresponse}{bioresponse}\cite{bioresponse2012hamner} & 1777 & 3751 & 2 & binary & Competition license\\
-\href{https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset}{body\-density\-prediction}\cite{penrose1985generalized} & 14 & 252 & / & regression & Public\\
-\href{https://www.openml.org/data/download/22044541/dataset}{brasilian\-houses}\cite{farias2020brasilian} & 13 & 10692 & / & regression & Public domain\\
+\href{https://www.kaggle.com/datasets/fedesoriano/body-fat-prediction-dataset}{body-density-prediction}\cite{penrose1985generalized} & 14 & 252 & / & regression & Public\\
+\href{https://www.openml.org/data/download/22044541/dataset}{brasilian-houses}\cite{farias2020brasilian} & 13 & 10692 & / & regression & Public domain\\
 \href{https://www.openml.org/d/40701}{churn}\cite{marcoulides2005churn} & 20 & 5000 & 2 & binary & MIT License\\
-\href{https://doi.org/10.24432/C5B31D}{clock\-protein\-period}\cite{Gul2021StructureBasedDC} & 1092 & 90 & 2 & binary & CC BY 4\\
-\href{https://doi.org/10.24432/C59313}{clock\-protein\-toxicity}\cite{Gul2021StructureBasedDC} & 1112 & 171 & 2 & binary & CC BY 4\\
-\href{http://archive.ics.uci.edu/dataset/125/insurance+company+benchmark+coil+2000}{coil\-2000\-insurance\-policies}\cite{putten2000coil} & 85 & 9822 & 2 & binary & /\\
-\href{https://www.openml.org/d/45087}{colon\-tumor}\cite{Alon1999BroadPO} & 1992 & 62 & 2 & binary & Public\\
-\href{https://doi.org/10.24432/C5FS30}{credit\-approval}\cite{quinlan1987simplifying} & 16 & 690 & 2 & binary & Public\\
-\href{https://doi.org/10.24432/C55S3H}{credit\-card\-clients\-default}\cite{Yeh2009TheCD} & 24 & 30000 & 2 & binary & /\\
-\href{https://www.kaggle.com/datasets/yakhyojon/customer-satisfaction-in-airline}{customer\-satisfaction\-in\-airline}\cite{yakhyojon2023airlinesatisfaction} & 22 & 129880 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C5332M}{drug\-induced\-autoimmunity\-prediction}\cite{huang2025interdia} & 178 & 597 & 2 & binary & CC BY 4\\
-\href{https://doi.org/10.24432/C5D88D}{forest\-fires}\cite{cortez2007data} & 13 & 517 & / & regression & Public\\
-\href{https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset}{framingham\-heart\-study}\cite{bhardwaj2022framingham} & 16 & 4240 & 2 & binary & Unknown\\
-\href{https://www.kaggle.com/competitions/GiveMeSomeCredit/overview}{give\-me\-some\-credit}\cite{cukierski2011credit} & 12 & 150000 & 2 & binary & Public\\
-\href{https://www.openml.org/d/45538}{hazelnut\-spread\-contami/t\-detection\-10GHz}\cite{urbinati2020hazelnut} & 31 & 2400 & 2 & binary & CC BY-SA\\
-\href{https://doi.org/10.24432/C52P4X}{heart\-disease\-cleveland}\cite{detrano1989international} & 14 & 303 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C52P4X}{heart\-disease\-hungary}\cite{detrano1989international} & 14 & 294 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C52P4X}{heart\-disease\-switzerland}\cite{detrano1989international} & 13 & 123 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C52P4X}{heart\-disease\-va\-long\-beach}\cite{detrano1989international} & 14 & 200 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C5B31D}{clock-protein-period}\cite{Gul2021StructureBasedDC} & 1092 & 90 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.24432/C59313}{clock-protein-toxicity}\cite{Gul2021StructureBasedDC} & 1112 & 171 & 2 & binary & CC BY 4\\
+\href{http://archive.ics.uci.edu/dataset/125/insurance+company+benchmark+coil+2000}{coil-2000-insurance-policies}\cite{putten2000coil} & 85 & 9822 & 2 & binary & /\\
+\href{https://www.openml.org/d/45087}{colon-tumor}\cite{Alon1999BroadPO} & 1992 & 62 & 2 & binary & Public\\
+\href{https://doi.org/10.24432/C5FS30}{credit-approval}\cite{quinlan1987simplifying} & 16 & 690 & 2 & binary & Public\\
+\href{https://doi.org/10.24432/C55S3H}{credit-card-clients-default}\cite{Yeh2009TheCD} & 24 & 30000 & 2 & binary & /\\
+\href{https://www.kaggle.com/datasets/yakhyojon/customer-satisfaction-in-airline}{customer-satisfaction-in-airline}\cite{yakhyojon2023airlinesatisfaction} & 22 & 129880 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C5332M}{drug-induced-autoimmunity-prediction}\cite{huang2025interdia} & 178 & 597 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.24432/C5D88D}{forest-fires}\cite{cortez2007data} & 13 & 517 & / & regression & Public\\
+\href{https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset}{framingham-heart-study}\cite{bhardwaj2022framingham} & 16 & 4240 & 2 & binary & Unknown\\
+\href{https://www.kaggle.com/competitions/GiveMeSomeCredit/overview}{give-me-some-credit}\cite{cukierski2011credit} & 12 & 150000 & 2 & binary & Public\\
+\href{https://www.openml.org/d/45538}{hazelnut-spread-contami/t-detection-10GHz}\cite{urbinati2020hazelnut} & 31 & 2400 & 2 & binary & CC BY-SA\\
+\href{https://doi.org/10.24432/C52P4X}{heart-disease-cleveland}\cite{detrano1989international} & 14 & 303 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C52P4X}{heart-disease-hungary}\cite{detrano1989international} & 14 & 294 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C52P4X}{heart-disease-switzerland}\cite{detrano1989international} & 13 & 123 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C52P4X}{heart-disease-va-long-beach}\cite{detrano1989international} & 14 & 200 & 2 & binary & CC0: Public Domain\\
 \href{https://www.kaggle.com/datasets/averkiyoliabev/home-equity-line-of-creditheloc}{heloc}\cite{oliabev2021heloc} & 24 & 10459 & 2 & binary & Public\\
-\href{https://doi.org/10.24432/C5Q59J}{hepatitis\-survival\-prediction}\cite{efron1981statistical} & 20 & 155 & 2 & binary & CC BY 4\\
-\href{https://doi.org/10.1109/IJCNN.2007.4371065}{hiva\-agnostic}\cite{guyon2007agnostic} & 1481 & 4229 & 2 & binary & Public\\
-\href{https://www.kaggle.com/competitions/homesite-quote-conversion}{homesite\-quote\-conversion}\cite{Darrel2015HomesiteQuoteConversion} & 296 & 260753 & 2 & binary & Competition license\\
-\href{https://doi.org/10.24432/C58W23}{horse\-colic\-survival}\cite{McLeish1989HorseColic} & 21 & 344 & 3 & multiclass & CC BY 4\\
-\href{https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists}{hr\-analytics}\cite{Arashnic2021HRAnalytics} & 13 & 19158 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C5GS4P}{in\-vehicle\-coupon\-recommendation}\cite{wang2017bayesian} & 24 & 12684 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.24432/C5Q59J}{hepatitis-survival-prediction}\cite{efron1981statistical} & 20 & 155 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.1109/IJCNN.2007.4371065}{hiva-agnostic}\cite{guyon2007agnostic} & 1481 & 4229 & 2 & binary & Public\\
+\href{https://www.kaggle.com/competitions/homesite-quote-conversion}{homesite-quote-conversion}\cite{Darrel2015HomesiteQuoteConversion} & 296 & 260753 & 2 & binary & Competition license\\
+\href{https://doi.org/10.24432/C58W23}{horse-colic-survival}\cite{McLeish1989HorseColic} & 21 & 344 & 3 & multiclass & CC BY 4\\
+\href{https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists}{hr-analytics}\cite{Arashnic2021HRAnalytics} & 13 & 19158 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C5GS4P}{in-vehicle-coupon-recommendation}\cite{wang2017bayesian} & 24 & 12684 & 2 & binary & CC BY 4\\
 \href{https://doi.org/10.24432/C5W01B}{ionosphere}\cite{Sigillito1989ClassificationOR} & 34 & 351 & 2 & binary & CC BY 4\\
-\href{https://kdd.org/kdd-cup/view/kdd-cup-2009/Data}{kdd\-cup\-09\-appetency}\cite{Guyon2009AnalysisOT} & 212 & 50000 & 2 & binary & CC0: Public Domain\\
-\href{https://doi.org/10.24432/C5CP4Q}{labor\-negotiations}\cite{Matwin1988Collective} & 17 & 57 & 2 & binary & CC BY 4\\
-\href{https://www.openml.org/d/1104}{leukemia\-allaml}\cite{Golub1999MolecularCC} & 7072 & 72 & 2 & binary & Public\\
-\href{https://doi.org/10.24432/C5WK5Q}{ljubljana\-primary\-tumor}\cite{Zwitter1987primarytumor} & 18 & 302 & 22 & multiclass & CC BY 4\\
-\href{https://www.openml.org/d/45093}{lung\-cancer}\cite{Bhattacharjee2001ClassificationOH} & 12601 & 203 & 5 & multiclass & Public\\
+\href{https://kdd.org/kdd-cup/view/kdd-cup-2009/Data}{kdd-cup-09-appetency}\cite{Guyon2009AnalysisOT} & 212 & 50000 & 2 & binary & CC0: Public Domain\\
+\href{https://doi.org/10.24432/C5CP4Q}{labor-negotiations}\cite{Matwin1988Collective} & 17 & 57 & 2 & binary & CC BY 4\\
+\href{https://www.openml.org/d/1104}{leukemia-allaml}\cite{Golub1999MolecularCC} & 7072 & 72 & 2 & binary & Public\\
+\href{https://doi.org/10.24432/C5WK5Q}{ljubljana-primary-tumor}\cite{Zwitter1987primarytumor} & 18 & 302 & 22 & multiclass & CC BY 4\\
+\href{https://www.openml.org/d/45093}{lung-cancer}\cite{Bhattacharjee2001ClassificationOH} & 12601 & 203 & 5 & multiclass & Public\\
 \href{https://doi.org/10.24432/C54598}{lymphography}\cite{Zwitter1988Lymphography} & 19 & 142 & 4 & multiclass & CC BY 4\\
-\href{https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign}{marketing\-campaign}\cite{uci1990annealing} & 26 & 2240 & 2 & binary & Public\\
-\href{https://www.kaggle.com/competitions/lish-moa/data}{mechanisms\-of\-action}\cite{lish2021moa} & 206 & 23814 & 2 & multiclass & Competition license\\
-\href{https://www.openml.org/d/43093}{miami\-housing}\cite{bourassa2021miami-housing} & 24 & 10459 & / & regression & CC\-BY-NC-SA\\
+\href{https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign}{marketing-campaign}\cite{uci1990annealing} & 26 & 2240 & 2 & binary & Public\\
+\href{https://www.kaggle.com/competitions/lish-moa/data}{mechanisms-of-action}\cite{lish2021moa} & 206 & 23814 & 2 & multiclass & Competition license\\
+\href{https://www.openml.org/d/43093}{miami-housing}\cite{bourassa2021miami_housing} & 24 & 10459 & / & regression & CC-BY-NC-SA\\
 \href{https://archive.ics.uci.edu/dataset/579/myocardial+infarction+complications}{mic}\cite{golovenkin2020trajectories} & 112 & 1700 & 2 & multiclass & CC BY 4\\
-\href{https://archive.ics.uci.edu/dataset/722/naticusdroid+android+permissions+dataset}{naticusdroid\-android\-permissions\-dataset}\cite{mathur2021naticusdroid} & 87 & 29332 & 2 & binary & CC BY 4\\
-\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci\-ovarian\-cancer}\cite{Petricoin2002UseOP} & 15148 & 253 & 2 & binary & Public\\
-\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci\-pancreatic\-cancer}\cite{Hingorani2003PreinvasiveAI} & 6771 & 181 & 2 & binary & Unknown\\
-\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci\-prostate\-cancer}\cite{Petricoin2002SerumPP} & 15154 & 322 & 2 & binary & Unknown\\
-\href{https://doi.org/10.24432/C5F88Q}{online\-shoppers\-purchasing\-intention\-dataset}\cite{sakar2019pruchasing-intention} & 18 & 12330 & 2 & binary & CC BY 4\\
-\href{https://www.kaggle.com/competitions/otto-group-product-classification-challenge}{otto\-group\-product\-classification\-challenge}\cite{Bossan2015OttoGroupProductClassificationChallenge} & 94 & 61878 & 9 & multiclass & Competition license\\
-\href{https://doi.org/10.24432/C5F600}{polish\-companies\-bankruptcy}\cite{Ziba2016EnsembleBT} & 65 & 5790 & 2 & binary & CC BY 4\\
-\href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction}{porto\-seguro}\cite{Howard2017PortoSegurosSafeDriverPrediction} & 38 & 595206 & 2 & binary & Public\\
-\href{https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success}{predict\-students\-dropout\-and\-academic\-success}\cite{martins2021studentperformance} & 37 & 4424 & 3 & multiclass & CC BY 4\\
-\href{https://api.openml.org/data/download/22112160/dataset}{prostate\-cancer}\cite{Singh2002GeneEC} & 12601 & 102 & 2 & binary & Public\\
-\href{https://kdd.ics.uci.edu/databases/kddcup98/kddcup98.html}{pva\-revenue\-prediction\-kddcup98}\cite{Parsa1998KDDCup1998} & 479 & 144095 & / & regression & Public\\
-\href{https://doi.org/10.24432/C5H60M}{qsar\-biodeg}\cite{mansouri2013qsar} & 42 & 1055 & 2 & binary & CC BY 4\\
-\href{https://archive.ics.uci.edu/dataset/508/qsar+oral+toxicity}{qsar\-oral\-toxicity}\cite{uci2019qsaroral} & 1025 & 8992 & 2 & binary & CC BY 4\\
-\href{https://www.openml.org/d/3050}{qsar\-tid\-11}\cite{Olier2018MetaQSAR} & 1025 & 5742 & / & regression & CC0: Public Domain\\
-\href{https://www.kaggle.com/c/santander-customer-transaction-prediction}{santander\-customer\-transaction\-prediction}\cite{Piedra2019SantanderCustomerTransactionPrediction} & 601 & 200000 & 2 & binary & Competition license\\
-\href{https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17}{sdss\-17}\cite{abazajian2009stars} & 12 & 100000 & 3 & multiclass & Public Domain\\
-\href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE4115}{smoking\-lung\-cancer}\cite{Spira2007AirwayEG} & 22216 & 187 & 2 & binary & Public\\
-\href{https://doi.org/10.24432/C5JG6Z}{soybean\-large}\cite{Michalski1980LearningBB} & 36 & 306 & 18 & multiclass & CC BY 4\\
-\href{https://www.openml.org/d/45101}{srbct\-prediction}\cite{Khan2001ClassificationAD} & 2309 & 83 & 4 & multiclass & Public\\
+\href{https://archive.ics.uci.edu/dataset/722/naticusdroid+android+permissions+dataset}{naticusdroid-android-permissions-dataset}\cite{mathur2021naticusdroid} & 87 & 29332 & 2 & binary & CC BY 4\\
+\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci-ovarian-cancer}\cite{Petricoin2002UseOP} & 15148 & 253 & 2 & binary & Public\\
+\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci-pancreatic-cancer}\cite{Hingorani2003PreinvasiveAI} & 6771 & 181 & 2 & binary & Unknown\\
+\href{https://home.ccr.cancer.gov/ncifdaproteomics/ppatterns.asp}{nci-prostate-cancer}\cite{Petricoin2002SerumPP} & 15154 & 322 & 2 & binary & Unknown\\
+\href{https://doi.org/10.24432/C5F88Q}{online-shoppers-purchasing-intention-dataset}\cite{sakar2019pruchasing_intention} & 18 & 12330 & 2 & binary & CC BY 4\\
+\href{https://www.kaggle.com/competitions/otto-group-product-classification-challenge}{otto-group-product-classification-challenge}\cite{Bossan2015OttoGroupProductClassificationChallenge} & 94 & 61878 & 9 & multiclass & Competition license\\
+\href{https://doi.org/10.24432/C5F600}{polish-companies-bankruptcy}\cite{Ziba2016EnsembleBT} & 65 & 5790 & 2 & binary & CC BY 4\\
+\href{https://www.kaggle.com/c/porto-seguro-safe-driver-prediction}{porto-seguro}\cite{Howard2017PortoSegurosSafeDriverPrediction} & 38 & 595206 & 2 & binary & Public\\
+\href{https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success}{predict-students-dropout-and-academic-success}\cite{martins2021studentperformance} & 37 & 4424 & 3 & multiclass & CC BY 4\\
+\href{https://api.openml.org/data/download/22112160/dataset}{prostate-cancer}\cite{Singh2002GeneEC} & 12601 & 102 & 2 & binary & Public\\
+\href{https://kdd.ics.uci.edu/databases/kddcup98/kddcup98.html}{pva-revenue-prediction-kddcup98}\cite{Parsa1998KDDCup1998} & 479 & 144095 & / & regression & Public\\
+\href{https://doi.org/10.24432/C5H60M}{qsar-biodeg}\cite{mansouri2013qsar} & 42 & 1055 & 2 & binary & CC BY 4\\
+\href{https://archive.ics.uci.edu/dataset/508/qsar+oral+toxicity}{qsar-oral-toxicity}\cite{uci2019qsaroral} & 1025 & 8992 & 2 & binary & CC BY 4\\
+\href{https://www.openml.org/d/3050}{qsar-tid-11}\cite{Olier2018MetaQSAR} & 1025 & 5742 & / & regression & CC0: Public Domain\\
+\href{https://www.kaggle.com/c/santander-customer-transaction-prediction}{santander-customer-transaction-prediction}\cite{Piedra2019SantanderCustomerTransactionPrediction} & 601 & 200000 & 2 & binary & Competition license\\
+\href{https://www.kaggle.com/datasets/fedesoriano/stellar-classification-dataset-sdss17}{sdss-17}\cite{abazajian2009stars} & 12 & 100000 & 3 & multiclass & Public Domain\\
+\href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE4115}{smoking-lung-cancer}\cite{Spira2007AirwayEG} & 22216 & 187 & 2 & binary & Public\\
+\href{https://doi.org/10.24432/C5JG6Z}{soybean-large}\cite{Michalski1980LearningBB} & 36 & 306 & 18 & multiclass & CC BY 4\\
+\href{https://www.openml.org/d/45101}{srbct-prediction}\cite{Khan2001ClassificationAD} & 2309 & 83 & 4 & multiclass & Public\\
 \href{https://archive.ics.uci.edu/dataset/464/superconductivty+data}{superconductivity}\cite{hamidieh2018superconductor} & 83 & 21263 & / & regression & CC BY 4\\
-\href{https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction}{taiwanese\-bankruptcy\-prediction}\cite{liang2016fi/cial} & 96 & 6819 & 2 & binary & CC BY 4\\
-\href{https://doi.org/10.24432/C5D010}{thyroid\-discordant}\cite{quinlan1987simplifying} & 27 & 3711 & 5 & multiclass & /\\
-\href{https://doi.org/10.24432/C56S3T}{wine\-quality}\cite{Cortez2009ModelingWP} & 12 & 6497 & / & regression & CC BY 4\\
+\href{https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction}{taiwanese-bankruptcy-prediction}\cite{liang2016fi/cial} & 96 & 6819 & 2 & binary & CC BY 4\\
+\href{https://doi.org/10.24432/C5D010}{thyroid-discordant}\cite{quinlan1987simplifying} & 27 & 3711 & 5 & multiclass & /\\
+\href{https://doi.org/10.24432/C56S3T}{wine-quality}\cite{Cortez2009ModelingWP} & 12 & 6497 & / & regression & CC BY 4\\
 \end{longtable}

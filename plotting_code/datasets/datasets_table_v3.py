@@ -82,7 +82,7 @@ def make_table(df):
         latex_row = f"{name_cell} & {int(row['# features'])} & {int(row['samples'])} & {row['# classes']} & {row['Problem Type']} & {license}\\\\"
         latex_row = latex_row.replace("nan", "/")
         latex_row = latex_row.replace(".0", "")
-        latex_row = latex_row.replace("_", "-")
+        latex_row = latex_row.replace("\_", "-")
         latex_rows.append(latex_row)
 
     latex_body = "\n".join(latex_rows)
