@@ -43,9 +43,10 @@ def make_table(df):
         name_cell = rf"\href{{{source}}}{{{name}}}"
 
         latex_row = f"{name_cell} & {year} & {appearances} & {decision} \\\\"
-        latex_row = latex_row.replace("Variation of another method", r"Variation")
-        latex_row = latex_row.replace("Too few citations", r"Citations")
-        latex_row = latex_row.replace("Wrong Data Domain", r"Wrong Domain")
+        latex_row = latex_row.replace("Variation of another method", r"\textcolor{red}{Variation}")
+        latex_row = latex_row.replace("Too few citations", r"\textcolor{red}{Citations}")
+        latex_row = latex_row.replace("Wrong data domain", r"\textcolor{red}{Wrong Domain}")
+        latex_row = latex_row.replace("Yes", r"\textcolor{green}{Yes}")
         latex_rows.append(latex_row)
 
     latex_body = "\n".join(latex_rows)

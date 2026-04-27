@@ -28,7 +28,7 @@ def make_table(df):
     ].copy()
 
     # ADDED "License" column
-    table_cols = ["in data-foundry", "Problem Type", "# features", "samples", "# classes", "License"]
+    table_cols = ["in data-foundry", "# features", "samples", "# classes", "Problem Type", "License"]
     df_table = df_filtered[table_cols].copy()
 
     df_table["Problem Type"] = df_table["Problem Type"].replace({
@@ -79,24 +79,33 @@ def make_table(df):
         else:
             name_cell = escaped_name
 
-        latex_row = f"{name_cell} & {row['Problem Type']} & {int(row['# features'])} & {int(row['samples'])} & {row['# classes']} & {license}\\\\"
+        latex_row = f"{name_cell} & {int(row['# features'])} & {int(row['samples'])} & {row['# classes']} & {row['Problem Type']} & {license}\\\\"
+        latex_row = latex_row.replace("nan", "/")
+        latex_row = latex_row.replace(".0", "")
+        latex_row = latex_row.replace("_", "-")
         latex_rows.append(latex_row)
 
     latex_body = "\n".join(latex_rows)
 
-    latex = rf"""\begin{{table}}[ht]
-\centering
-\scriptsize
-\begin{{tabular}}{{p{{5cm}}ccccc}}
-\toprule
-Name & Problem Type & \# features & \# samples & \# classes & License \\
-\midrule
+    latex = rf"""\begin{{longtable}}{{p{{4cm}}ccccp{{2cm}}}}
+    \caption[\textbf{{Dataset overview.}}]{{%
+    \textbf{{Dataset overview.}} Characteristics of datasets included in SelectArena.
+    \label{{appendix-table-datasets-overview-selected}}
+    }}\\
+    \toprule
+    Name & \# features & \# samples & \# classes & Problem & License \\
+    & & & & Type & \\
+    \midrule
+    \endfirsthead
+    \caption[]{{\textbf{{Dataset overview.}} (continued)}}\\
+    \toprule
+    Name & \# features & \# samples & \# classes & Problem & License \\
+    & & & & Type & \\    \midrule
+    \endhead
+    \bottomrule
+    \endlastfoot
 {latex_body}
-\bottomrule
-\end{{tabular}}
-\caption{{Characteristics of datasets included in SelectArena}}
-\label{{appendix-table-datasets-overview-selected}}
-\end{{table}}
+\end{{longtable}}
 """
     txt_path = OUTPUT_DIR / PLOT_NAME
     with open(txt_path, "w") as f:
