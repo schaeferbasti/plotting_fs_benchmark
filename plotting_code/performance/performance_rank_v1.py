@@ -6,7 +6,7 @@ from matplotlib.ticker import MultipleLocator
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_v1.png"
+PLOT_NAME = "performance_rank_v1.png"
 # TODO: Adapt title and labels
 PLOT_TITLE = "Performance (Global Rank)"
 X_LABEL = "Feature Selection Method"
