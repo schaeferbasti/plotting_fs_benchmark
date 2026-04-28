@@ -1,40 +1,68 @@
 from pathlib import Path
-
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from matplotlib.patches import Patch
-
-""" 
-Description:
-This plot shows the 
-"""
 
 # TODO: Adapt file and plot name
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_v1.png"
-
 # TODO: Adapt title and labels
-PLOT_TITLE = "Performance"
+PLOT_TITLE = "Performance (Global Rank)"
 X_LABEL = "Feature Selection Method"
-Y_LABEL = "Metric Error"
+Y_LABEL = "Mean Rank (1 = Best)"
+
+# Define which metrics mean "lower is better" vs "higher is better"
+# Adapt this dictionary to match the exact 'metric_name' strings in your CSV
+METRIC_DIRECTIONS = {
+    "log_loss": True,  # Lower error is better
+    "rmse": True,  # Lower error is better
+    "roc_auc": False,  # Higher performance is better
+}
+
+
+def calculate_global_ranks(df):
+    """Calculate the global rank of each FS method across all datasets and metrics."""
+    required_cols = ["metric", "feature_selection_method", "metric_error"]
+    df_clean = df.dropna(subset=required_cols).copy()
+
+    # 1. Adjust metric values so "Lower is ALWAYS Better"
+    def adjust_direction(row):
+        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)  # Default to True if unknown
+        if not is_lower_better:
+            return -row["metric_error"]  # Invert so lower becomes better
+        return row["metric_error"]
+
+    df_clean["adjusted_metric"] = df_clean.apply(adjust_direction, axis=1)
+
+    # 2. Calculate the Rank per Dataset and per Metric
+    # Group by dataset and metric_name, then rank the adjusted metric
+    df_clean["rank"] = df_clean.groupby(["metric"])["adjusted_metric"].rank(
+        method="min",  # Ties get the same minimum rank
+        ascending=True,  # 1 is best (lowest adjusted metric)
+        na_option="bottom"
+    )
+
+    # 3. Aggregate mean rank and std of rank per feature selection method
+    agg_df = df_clean.groupby("feature_selection_method")["rank"].agg(["mean", "std"]).reset_index()
+    agg_df.columns = ["feature_selection_method", "mean_rank", "std_rank"]
+
+    # Fill NaN stds with 0 (happens if a method was only evaluated once)
+    agg_df["std_rank"] = agg_df["std_rank"].fillna(0)
+
+    return agg_df
 
 
 # TODO: Adapt plotting function
 def plot(df):
-    # Group by feature selection method only
-    groups = df.dropna(subset=["feature_selection_method", "metric_error"])
+    # Get the globally ranked dataframe
+    agg_df = calculate_global_ranks(df)
 
-    # Aggregate mean performance across all models per method
-    agg_df = groups.groupby("feature_selection_method")["metric_error"].agg(["mean", "std"]).reset_index()
-    agg_df.columns = ["feature_selection_method", "mean_error", "std_error"]
-
-    # Sort by mean performance (best first: lower error = better)
-    agg_df = agg_df.sort_values("mean_error", ascending=True)
+    # Sort by rank (best first: lower mean_rank = better)
+    agg_df = agg_df.sort_values("mean_rank", ascending=True)
 
     methods = agg_df["feature_selection_method"].values
-    means = agg_df["mean_error"].values
-    stds = agg_df["std_error"].values
+    ranks = agg_df["mean_rank"].values
+    stds = agg_df["std_rank"].values
 
     fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -42,7 +70,7 @@ def plot(df):
 
     bars = ax.bar(
         x,
-        means,
+        ranks,
         yerr=stds,
         capsize=5,
         alpha=0.85,
@@ -53,7 +81,7 @@ def plot(df):
     ax.set_xticks(x)
     ax.set_xticklabels(methods, rotation=45, ha="right")
     ax.set_title(PLOT_TITLE)
-    ax.set_xlabel("Feature Selection Method")
+    ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
     ax.grid(True, alpha=0.3, axis="y")
 
