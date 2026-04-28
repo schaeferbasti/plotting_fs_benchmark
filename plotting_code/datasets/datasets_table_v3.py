@@ -88,8 +88,8 @@ def make_table(df):
     latex_body = "\n".join(latex_rows)
 
     latex = rf"""\begin{{longtable}}{{p{{4cm}}ccccp{{2cm}}}}
-    \caption[\textbf{{Dataset overview.}}]{{%
-    \textbf{{Dataset overview.}} Characteristics of datasets included in SelectArena.
+    \caption[\textbf{{Overview of selected datasets.}}]{{%
+    \textbf{{Overview of selected datasets.}} Characteristics of datasets included in SelectArena.
     \label{{appendix-table-datasets-overview-selected}}
     }}\\
     \toprule
@@ -97,7 +97,7 @@ def make_table(df):
     & & & & Type & \\
     \midrule
     \endfirsthead
-    \caption[]{{\textbf{{Dataset overview.}} (continued)}}\\
+    \caption[]{{\textbf{{Overview of selected datasets}} (continued).}}\\
     \toprule
     Name & \# features & \# samples & \# classes & Problem & License \\
     & & & & Type & \\    \midrule
