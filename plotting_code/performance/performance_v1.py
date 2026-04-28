@@ -21,32 +21,34 @@ METRIC_DIRECTIONS = {
 
 
 def calculate_global_ranks(df):
-    """Calculate the global rank of each FS method across all datasets and metrics."""
     required_cols = ["metric", "feature_selection_method", "metric_error"]
     df_clean = df.dropna(subset=required_cols).copy()
 
     # 1. Adjust metric values so "Lower is ALWAYS Better"
     def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)  # Default to True if unknown
+        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
         if not is_lower_better:
-            return -row["metric_error"]  # Invert so lower becomes better
+            return -row["metric_error"]
         return row["metric_error"]
 
     df_clean["adjusted_metric"] = df_clean.apply(adjust_direction, axis=1)
 
-    # 2. Calculate the Rank per Dataset and per Metric
-    # Group by dataset and metric_name, then rank the adjusted metric
-    df_clean["rank"] = df_clean.groupby(["metric"])["adjusted_metric"].rank(
-        method="min",  # Ties get the same minimum rank
-        ascending=True,  # 1 is best (lowest adjusted metric)
+    # 2. Average the adjusted metric per method, per dataset, per metric
+    # This collapses cross-validation splits and models so we only have ONE row per method
+    df_collapsed = df_clean.groupby(
+        ["metric", "feature_selection_method"]
+    )["adjusted_metric"].mean().reset_index()
+
+    # 3. Calculate the Rank
+    df_collapsed["rank"] = df_collapsed.groupby(["metric"])["adjusted_metric"].rank(
+        method="min",
+        ascending=True,
         na_option="bottom"
     )
 
-    # 3. Aggregate mean rank and std of rank per feature selection method
-    agg_df = df_clean.groupby("feature_selection_method")["rank"].agg(["mean", "std"]).reset_index()
+    # 4. Aggregate mean rank and std of rank per feature selection method
+    agg_df = df_collapsed.groupby("feature_selection_method")["rank"].agg(["mean", "std"]).reset_index()
     agg_df.columns = ["feature_selection_method", "mean_rank", "std_rank"]
-
-    # Fill NaN stds with 0 (happens if a method was only evaluated once)
     agg_df["std_rank"] = agg_df["std_rank"].fillna(0)
 
     return agg_df
