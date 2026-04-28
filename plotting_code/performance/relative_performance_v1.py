@@ -13,17 +13,12 @@ METRIC_DIRECTIONS = {
     "log_loss": True,  # Lower error is better
     "rmse": True,  # Lower error is better
     "roc_auc": False,  # Higher performance is better
-    "accuracy": False,
-    "f1": False
 }
 
 
 def calculate_relative_performance(df):
-    # Dynamically check if 'dataset' is in the CSV to group properly.
-    # If not, just group by 'metric'.
-    group_cols = [c for c in ["dataset", "metric"] if c in df.columns]
-    if not group_cols:
-        group_cols = ["metric"]
+    # Group by 'metric'.
+    group_cols = ["metric"]
 
     required_cols = group_cols + ["feature_selection_method", "metric_error"]
     df_clean = df.dropna(subset=required_cols).copy()
@@ -78,7 +73,7 @@ def plot_relative(df):
     agg_df = calculate_relative_performance(df)
 
     # Sort by score (best first: higher score = better)
-    agg_df = agg_df.sort_values("mean_score", ascending=False)
+    agg_df = agg_df.sort_values("mean_score", ascending=True)
 
     methods = agg_df["feature_selection_method"].values
     scores = agg_df["mean_score"].values
