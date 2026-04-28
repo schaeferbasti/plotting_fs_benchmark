@@ -2,6 +2,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from matplotlib.ticker import MultipleLocator
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
@@ -85,6 +86,8 @@ def plot(df):
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
+    ax.yaxis.set_major_locator(MultipleLocator(1))
+
     ax.grid(True, alpha=0.3, axis="y")
 
     plt.tight_layout()
