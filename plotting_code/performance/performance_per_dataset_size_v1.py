@@ -11,7 +11,7 @@ Description:
 Performance per dataset size, tight point clusters
 """
 
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_per_dataset_size_v1.png"
 
 PLOT_TITLE = "Performance by Dataset Size (FS Methods)"

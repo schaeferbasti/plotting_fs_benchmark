@@ -12,7 +12,7 @@ Performance per dataset size, grouped by FS family
 (one bar for scoring methods, one bar for subset methods)
 """
 
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_per_scoring_type_v1.png"
 
 PLOT_TITLE = "Performance by Dataset Size and FS Family"

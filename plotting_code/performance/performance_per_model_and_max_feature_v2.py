@@ -5,7 +5,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_per_model_per_max_features_v2.png"
 
 PLOT_TITLE = "Performance per Model and max_features"

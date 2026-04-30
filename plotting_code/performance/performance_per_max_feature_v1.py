@@ -11,7 +11,7 @@ This plot shows the
 """
 
 # TODO: Adapt file and plot name
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_per_max_feature_v1.png"
 
 # TODO: Adapt title and labels

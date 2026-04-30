@@ -8,7 +8,7 @@ from matplotlib.lines import Line2D
 from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.cm as cmx
 
-FILE_NAME = "dummy_performance_results.csv"
+FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_per_model_per_max_features_v4.png"
 
 PLOT_TITLE = "Performance per Model and max_features"
