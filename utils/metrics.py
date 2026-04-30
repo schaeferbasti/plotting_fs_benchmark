@@ -19,8 +19,9 @@ def compute_epv(df, original_features):
     pandas.Series
         EPV values for all rows
     """
-    num_features = original_features.apply(len)
-
+    num_features = original_features.apply(
+        lambda x: len(x) if hasattr(x, '__len__') else 0
+    )
     return (
         df["min_samples_per_class"]
         .where(df["min_samples_per_class"].notna(), df["num_samples"])
@@ -42,6 +43,7 @@ def compute_validity(selected_features, max_features):
     pandas.Series
         Validity values for all rows
     """
+    selected_features = selected_features.apply(lambda x: x if isinstance(x, list) else [])
     TP = selected_features.apply(
         lambda features: sum(not f.startswith("__noise_feature_") for f in features)
     )
@@ -49,7 +51,7 @@ def compute_validity(selected_features, max_features):
     return TP / max_features
 
 
-def compute_stability(selected_features, original_features):
+def compute_stability(selected_features, original_features, method_name="Unknown"):
     """
     Compute stability from repeated selected feature subsets using _getStability.
     https://github.com/nogueirs/JMLR2018/blob/master/python/stability/__init__.py.
@@ -71,29 +73,36 @@ def compute_stability(selected_features, original_features):
 
     for row_idx, features in enumerate(selected_features):
         for f in features:
-            Z[row_idx, feature_to_idx[f]] = 1
+            if f in feature_to_idx:
+                Z[row_idx, feature_to_idx[f]] = 1
 
-    return _getStability(Z)
+    # Pass the method name down
+    return _getStability(Z, method_name)
 
 
-def _getStability(Z):
-    ''' 
+def _getStability(Z, method_name="Unknown"):
+    '''
     Let us assume we have M>1 feature sets and d>0 features in total.
     This function computes the stability estimate as given in Definition 4 in  [1].
-    
+
     INPUT: A BINARY matrix Z (given as a list or as a numpy.ndarray of size M*d).
-           Each row of the binary matrix represents a feature set, where a 1 at the f^th position 
+           Each row of the binary matrix represents a feature set, where a 1 at the f^th position
            means the f^th feature has been selected and a 0 means it has not been selected.
-           
+
     OUTPUT: The stability of the feature selection procedure
     '''
-    Z=_checkInputType(Z)
-    M,d=Z.shape
-    hatPF=np.mean(Z,axis=0)
-    kbar=np.sum(hatPF)
-    denom=(kbar/d)*(1-kbar/d)
-    return 1-(M/(M-1))*np.mean(np.multiply(hatPF,1-hatPF))/denom
+    Z = _checkInputType(Z)
+    M, d = Z.shape
+    hatPF = np.mean(Z, axis=0)
+    kbar = np.sum(hatPF)
+    denom = (kbar / d) * (1 - kbar / d)
 
+    try:
+        return 1 - (M / (M - 1)) * np.mean(np.multiply(hatPF, 1 - hatPF)) / denom
+    except ZeroDivisionError:
+        # This happens if a method selects NO features or ALL features across all repeats
+        print(f"⚠️ Stability division by zero for method: {method_name} (kbar={kbar}, d={d})")
+        return np.nan
 
 def _checkInputType(Z):
     ''' This function checks that Z is of the rigt type and dimension.

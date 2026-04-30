@@ -53,7 +53,8 @@ def lasagna_plot(
     """
     if binary_mode not in {None, "threshold", "topk"}:
         raise ValueError("binary_mode must be one of: None, 'threshold', 'topk'")
-    
+    duplicates = df[df.duplicated(subset=["selector", "epv"], keep=False)]
+
     lasagna_df = (
         df.pivot(index="selector", columns="epv", values=values)
         .reindex(sorted(df["epv"].unique()), axis=1)
