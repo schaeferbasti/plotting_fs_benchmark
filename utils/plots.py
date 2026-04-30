@@ -17,7 +17,8 @@ def lasagna_plot(
     binary_mode="topk",
     binary_tol=0.03,
     binary_topk=3,
-    overlay=True
+    overlay=True,
+    mode = "stability"
 ):
     """
     Save a lasagna plot from a long dataframe and optionally add binary plots showing
@@ -55,10 +56,16 @@ def lasagna_plot(
         raise ValueError("binary_mode must be one of: None, 'threshold', 'topk'")
     duplicates = df[df.duplicated(subset=["selector", "epv"], keep=False)]
 
-    lasagna_df = (
-        df.pivot(index="selector", columns="epv", values=values)
-        .reindex(sorted(df["epv"].unique()), axis=1)
-    )
+    if mode == "validity":
+        lasagna_df = (
+            df.pivot(index="selector", columns="epv", values=values)
+            .reindex(sorted(df["epv"].unique()), axis=1)
+        )
+    else:
+        lasagna_df = (
+            df.pivot_table(index="selector", columns="epv", values=values, aggfunc="mean")
+            .reindex(sorted(df["epv"].unique()), axis=1)
+        )
 
     epvs = lasagna_df.columns.to_numpy()
     epv_edges = _compute_bin_edges(epvs)

@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 # TODO: Adapt file and plot name
-FILE_NAME = "extended_dummy_stability_results.csv"
+FILE_NAME = "stability_results.csv"
 PLOT_NAME = "stability_per_EPV_v1"
 
 # TODO: Adapt title and labels
@@ -50,7 +50,8 @@ def main():
         .apply(
             lambda g: compute_stability(
                 g["selected_features_parsed"],
-                g["original_features_parsed"]
+                g["original_features_parsed"],
+                method_name=g["selector"].iloc[0]
             )
         )
         .reset_index(name="stability")
