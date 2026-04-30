@@ -1,3 +1,5 @@
+import ast
+
 import pandas as pd
 import numpy as np
 import random
@@ -19,16 +21,24 @@ def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
     df = df.copy()
     df = df[df["feature_selection_method"] != "JMIFeatureSelector"]
 
+    def extract_model_cls(model_details):
+        if pd.isna(model_details):
+            return "Unknown"
+        details_dict = ast.literal_eval(str(model_details))
+        return details_dict.get('model_cls', "Unknown")
+
+    df["model_cls"] = df["model_details"].apply(extract_model_cls)
+
     # 2. Average the cross-validation splits to get ONE score per method per dataset
     df_collapsed = df.groupby(
-        ["tid", "metric", "feature_selection_method"]
+        ["metric", "feature_selection_method"]
     )["metric_error"].mean().reset_index()
 
     methods = df_collapsed["feature_selection_method"].unique()
 
     # 3. Pre-compute tasks to speed up bootstrapping
     tasks = []
-    for _, task_df in df_collapsed.groupby(["tid", "metric"]):
+    for _, task_df in df_collapsed.groupby(["metric"]):
         tasks.append(dict(zip(task_df["feature_selection_method"], task_df["metric_error"])))
 
     bootstrap_records = {m: [] for m in methods}
