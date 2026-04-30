@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 # TODO: Adapt file and plot name
-FILE_NAME = "extended_dummy_validity_results.csv"
+FILE_NAME = "validity_results.csv"
 PLOT_NAME = "validity_per_EPV_v1"
 
 # TODO: Adapt title and labels
@@ -26,6 +26,19 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_PATH = OUTPUT_DIR / PLOT_NAME
 
 
+def extract_noise(val):
+    try:
+        # If it is a string like "{'noise': 0.1, ...}", parse it
+        if isinstance(val, str):
+            parsed_dict = ast.literal_eval(val)
+        elif isinstance(val, dict):
+            parsed_dict = val
+        else:
+            return "unknown"
+        return parsed_dict.get("noise", "unknown")
+    except (ValueError, SyntaxError, AttributeError):
+        return "unknown"
+
 def main():
     
     sys.path.append(str(SCRIPT_DIR.resolve()))
@@ -34,6 +47,8 @@ def main():
     
     # TODO: adapt if not all rows, but only rows where repeat == 0
     df = pd.read_csv(RESULTS_FILE, low_memory=False)
+
+    df = df[df["method"].astype(str).str.startswith("FSBench")]
 
     df["selected_features_parsed"] = df["selected_features"].apply(ast.literal_eval)
     df["original_features_parsed"] = df["original_features"].apply(ast.literal_eval)
@@ -47,25 +62,34 @@ def main():
     # TODO: check if min_samples_per_class is nan for regression and if num_samples is for the whole dataset or per split
     df["epv"] = compute_epv(df, df["original_features_parsed"])
 
+    df["noise_level"] = df["mode_kwargs"].apply(extract_noise)
+
     # mean selection precision over max_features (cardinality)
     df_plot = (
-        df.groupby(["dataset", "selector", "epv"], as_index=False)["validity"]
+        df.groupby([    "noise_level", "selector", "epv"], as_index=False)["validity"]
         .mean()
     )
 
-    for binary_mode in ["threshold", "topk"]:
-        for overlay in [True, False]:
-            lasagna_plot(
-                df_plot,
-                values=METRIC,
-                plot_title=PLOT_TITLE,
-                x_label=X_LABEL,
-                y_label=Y_LABEL,
-                output_path=OUTPUT_PATH,
-                smoothing=SMOOTHING,
-                binary_mode=binary_mode,
-                overlay=overlay
-            )
+    for noise_level, df_noise in df_plot.groupby("noise_level"):
+
+        # Format the filename so floats like 0.1 become "0_1"
+        noise_str = str(noise_level).replace(".", "_")
+        noise_output_path = OUTPUT_DIR / f"{PLOT_NAME}_noise_{noise_str}"
+        noise_plot_title = f"{PLOT_TITLE} (Noise: {noise_level})"
+
+        for binary_mode in ["threshold", "topk"]:
+            for overlay in [True, False]:
+                lasagna_plot(
+                    df_noise,  # Pass only the chunk for this noise level
+                    values=METRIC,
+                    plot_title=noise_plot_title,
+                    x_label=X_LABEL,
+                    y_label=Y_LABEL,
+                    output_path=noise_output_path,
+                    smoothing=SMOOTHING,
+                    binary_mode=binary_mode,
+                    overlay=overlay
+                )
 
 
 if __name__ == "__main__":
