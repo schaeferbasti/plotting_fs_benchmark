@@ -1,57 +1,43 @@
+import ast
 from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
-# TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_rank_v1.png"
-# TODO: Adapt title and labels
+
 PLOT_TITLE = "Performance Distribution (Global Rank)"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Rank (1 = Best)"
 
-# Define which metrics mean "lower is better" vs "higher is better"
-METRIC_DIRECTIONS = {
-    "log_loss": True,  # Lower error is better
-    "rmse": True,  # Lower error is better
-    "roc_auc": False,  # Higher performance is better
-    "accuracy": False,
-    "f1": False
-}
-
 
 def calculate_raw_ranks(df):
-    required_cols = ["metric", "dataset", "feature_selection_method", "metric_error"]
+    df = df.copy()
 
-    if "dataset" not in df.columns:
-        required_cols.remove("dataset")
-        group_cols = ["metric"]
-    else:
-        group_cols = ["metric", "dataset"]
+    def extract_model_cls(model_details):
+        details_dict = ast.literal_eval(str(model_details))
+        return details_dict.get('model_cls', "Unknown")
 
-    df_clean = df.dropna(subset=required_cols).copy()
+    df["model_cls"] = df["model_details"].apply(extract_model_cls)
 
-    # 1. Adjust metric values so "Lower is ALWAYS Better"
-    def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
-        if not is_lower_better:
-            return -row["metric_error"]
-        return row["metric_error"]
+    # 3. AVERAGE PHASE
+    # Group ONLY by Dataset, Metric, and Method.
+    # Pandas averages over all splits, models, and budgets automatically.
+    df_collapsed = df.groupby(
+        ["tid", "metric", "feature_selection_method"]
+    )["metric_error"].mean().reset_index()
 
-    df_clean["adjusted_metric"] = df_clean.apply(adjust_direction, axis=1)
-
-    # 2. Average the adjusted metric per method, per dataset, per metric
-    df_collapsed = df_clean.groupby(
-        group_cols + ["feature_selection_method"]
-    )["adjusted_metric"].mean().reset_index()
-
-    # 3. Calculate the Rank across datasets
-    df_collapsed["rank"] = df_collapsed.groupby(group_cols)["adjusted_metric"].rank(
-        method="min",
+    # 4. RANKING PHASE
+    # Group ONLY by Dataset and Metric.
+    # Ranks the methods against each other for that specific dataset.
+    df_collapsed["rank"] = df_collapsed.groupby(
+        ["tid"]
+    )["metric_error"].rank(
+        method="average",
         ascending=True,
-        na_option="bottom"
+        na_option="keep"
     )
 
     return df_collapsed
@@ -60,10 +46,12 @@ def calculate_raw_ranks(df):
 def plot_boxplot(df):
     ranked_df = calculate_raw_ranks(df)
 
-    # Sort the boxes from best (left) to worst (right) by MEAN rank
-    mean_ranks = ranked_df.groupby("feature_selection_method")["rank"].mean().reset_index()
-    mean_ranks = mean_ranks.sort_values("rank", ascending=False)
-    sorted_methods = mean_ranks["feature_selection_method"].tolist()
+    # Sort the boxes from best (left) to worst (right) by MEDIAN rank
+    median_ranks = ranked_df.groupby("feature_selection_method")["rank"].median().reset_index()
+
+    # Sort ascending so the smallest/best median rank is on the left of the x-axis
+    median_ranks = median_ranks.sort_values("rank", ascending=True)
+    sorted_methods = median_ranks["feature_selection_method"].tolist()
 
     data_to_plot = []
     for method in sorted_methods:
@@ -72,24 +60,34 @@ def plot_boxplot(df):
 
     fig, ax = plt.subplots(figsize=(16, 8))
 
+    # --- ADD BACKGROUND SCATTER POINTS ---
+    np.random.seed(42)  # For reproducible jitter
+    for i, method_data in enumerate(data_to_plot):
+        # Drop NaNs so scatter doesn't complain
+        y = method_data[~np.isnan(method_data)]
+        # Add a little horizontal jitter so points don't completely overlap
+        x = np.random.normal(i + 1, 0.08, size=len(y))
+
+        # Plot points. zorder=1 ensures they stay behind the boxes
+        ax.scatter(x, y, alpha=0.3, s=15, color='gray', zorder=1, edgecolors='none')
+
     # ---- CUSTOMIZE BOXPLOT PROPS ----
-    boxprops = dict(linewidth=1.5, color="black", facecolor="#4C72B0", alpha=0.7)
+    boxprops = dict(linewidth=1.5, color="black", facecolor="#4C72B0", alpha=0.8)
 
-    # Hide the median line entirely
-    medianprops = dict(linewidth=0, visible=False)
-
-    # Make the mean look exactly like the traditional median line
+    # We show BOTH the median (as the green line) and the mean (as the orange line)
+    medianprops = dict(linewidth=2, visible=True, color="green")
     meanprops = dict(linestyle='-', linewidth=2, color='orange')
 
     # Create the boxplot
     bp = ax.boxplot(
         data_to_plot,
         patch_artist=True,
-        showmeans=True,  # Enable showing the mean
-        meanline=True,  # Force the mean to be a line, not a marker
-        meanprops=meanprops,  # Apply the solid orange styling
-        medianprops=medianprops,  # Apply the hidden median styling
-        flierprops=dict(marker='o', color='black', alpha=0.3, markersize=5),
+        showmeans=True,
+        meanline=True,
+        meanprops=meanprops,
+        medianprops=medianprops,
+        showfliers=False,  # <-- Turned off fliers since we draw ALL points via scatter
+        zorder=2,  # <-- Forces the boxes to draw on top of the scatter
         widths=0.6
     )
 
@@ -105,11 +103,14 @@ def plot_boxplot(df):
     ax.set_ylabel(Y_LABEL)
 
     ax.yaxis.set_major_locator(MultipleLocator(1))
-    ax.invert_yaxis()  # 1 is best, so put it at the top
+    ax.invert_yaxis()  # Puts Rank 1 at the top of the Y-axis
     ax.grid(True, alpha=0.3, axis="y")
 
-    # Add a custom legend to explicitly state the line is the mean
-    ax.plot([], [], color='orange', linestyle='-', linewidth=2, label='Mean')
+    # Add a custom legend to explicitly state the lines
+    ax.plot([], [], color='orange', linestyle='-', linewidth=2, label='Mean Rank')
+    ax.plot([], [], color='green', linestyle='-', linewidth=2, label='Median Rank')
+    # Add scatter proxy to legend
+    ax.scatter([], [], color='gray', alpha=0.5, s=30, label='Individual Datasets')
     ax.legend(loc="upper right")
 
     plt.tight_layout()
