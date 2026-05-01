@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from autorank import autorank, plot_stats, create_report
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_v2.png"
+PLOT_NAME = "critical_difference_v1.png"
 PLOT_TITLE = "Statistical Significance of Methods (Critical Difference Plot)"
 
 def prepare_data_for_autorank(df):
