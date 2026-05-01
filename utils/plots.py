@@ -52,20 +52,29 @@ def lasagna_plot(
         If True, draw white outlines on the original lasagna plot instead of creating
         separate binary plots.
     """
+
+    # --- DATA CLEANING ---
+    # Work on a copy to prevent modifying the original dataframe outside the function
+    df = df.copy()
+
+    if "selector" in df.columns:
+        # 1. Strip "FeatureSelector" from all method names
+        df["selector"] = df["selector"].str.replace("FeatureSelector", "", regex=False)
+
+        # 2. Rename specific methods to their acronyms/new names
+        df["selector"] = df["selector"].replace({
+            "Accuracy": "LOCO",
+            "SequentialBackwardElimination": "SBE",
+            "SequentialForwardSelection": "SFS"
+        })
+
     if binary_mode not in {None, "threshold", "topk"}:
         raise ValueError("binary_mode must be one of: None, 'threshold', 'topk'")
-    duplicates = df[df.duplicated(subset=["selector", "epv"], keep=False)]
 
-    if mode == "validity":
-        lasagna_df = (
-            df.pivot(index="selector", columns="epv", values=values)
-            .reindex(sorted(df["epv"].unique()), axis=1)
-        )
-    else:
-        lasagna_df = (
-            df.pivot_table(index="selector", columns="epv", values=values, aggfunc="mean")
-            .reindex(sorted(df["epv"].unique()), axis=1)
-        )
+    lasagna_df = (
+        df.pivot(index="selector", columns="epv", values=values)
+        .reindex(sorted(df["epv"].unique()), axis=1)
+    )
 
     epvs = lasagna_df.columns.to_numpy()
     epv_edges = _compute_bin_edges(epvs)
