@@ -1,3 +1,4 @@
+import ast
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -5,7 +6,7 @@ from matplotlib import pyplot as plt
 
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "relative_performance_v1.png"
-PLOT_TITLE = "Performance Relative to Random Baseline"
+PLOT_TITLE = "Performance Relative to Random Baseline (mix-max-scaling, avg across budgets & models)"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Relative Score (Percentage points better/worse than Random)"
 
@@ -17,54 +18,73 @@ METRIC_DIRECTIONS = {
 
 
 def calculate_relative_performance(df):
-    # Group by 'metric'.
-    group_cols = ["metric"]
+    df = df.copy()
 
-    required_cols = group_cols + ["feature_selection_method", "metric_error"]
-    df_clean = df.dropna(subset=required_cols).copy()
+    # --- DATA CLEANING ---
+    if "feature_selection_method" in df.columns:
+        # Strip "FeatureSelector" from all methods except the Random one,
+        # because we need exactly "RandomFeatureSelector" for the baseline extraction later.
+        mask = df["feature_selection_method"] != "RandomFeatureSelector"
+        df.loc[mask, "feature_selection_method"] = df.loc[mask, "feature_selection_method"].str.replace(
+            "FeatureSelector", "", regex=False)
 
-    # 1. Adjust metric values so "Higher is ALWAYS Better"
-    def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
-        if is_lower_better:
-            return -row["metric_error"]
-        return row["metric_error"]
+        # Rename specific methods to their acronyms/new names
+        df["feature_selection_method"] = df["feature_selection_method"].replace({
+            "Accuracy": "LOCO",
+            "SequentialBackwardElimination": "SBE",
+            "SequentialForwardSelection": "SFS"
+        })
 
-    df_clean["performance"] = df_clean.apply(adjust_direction, axis=1)
+        # Filter out JMI
+        df = df[df["feature_selection_method"] != "JMI"]
 
-    # 2. Average the performance per method, per task
-    df_collapsed = df_clean.groupby(
-        group_cols + ["feature_selection_method"]
-    )["performance"].mean().reset_index()
+    # ---------------------
 
-    # 3. Min-Max Scale the performance per task (0 = Worst, 100 = Best)
+    def extract_model_cls(model_details):
+        if pd.isna(model_details):
+            return "Unknown"
+        details_dict = ast.literal_eval(str(model_details))
+        return details_dict.get('model_cls', "Unknown")
+
+    df["model_cls"] = df["model_details"].apply(extract_model_cls)
+
+    # 1. AVERAGE PHASE
+    df_collapsed = df.groupby(
+        ["tid", "metric", "feature_selection_method"]
+    )["metric_error"].mean().reset_index()
+
+    # 2. Min-Max Scale the performance per task (100 = Best/Lowest Error, 0 = Worst/Highest Error)
     def min_max_scale(group):
         min_val = group.min()
         max_val = group.max()
         if max_val == min_val:
             return pd.Series(100.0, index=group.index)
-        return ((group - min_val) / (max_val - min_val)) * 100.0
+        return ((max_val - group) / (max_val - min_val)) * 100.0
 
-    df_collapsed["scaled_score"] = df_collapsed.groupby(group_cols)["performance"].transform(min_max_scale)
+    df_collapsed["scaled_score"] = df_collapsed.groupby(["tid", "metric"])["metric_error"].transform(min_max_scale)
 
-    # 4. Extract the RandomFeatureSelector baseline scores
+    # 3. Extract the RandomFeatureSelector baseline scores
     random_scores = df_collapsed[df_collapsed["feature_selection_method"] == "RandomFeatureSelector"][
-        group_cols + ["scaled_score"]]
+        ["tid", "metric", "scaled_score"]
+    ]
     random_scores = random_scores.rename(columns={"scaled_score": "random_score"})
 
-    # 5. Merge the baseline back and calculate the Relative Score
-    df_collapsed = df_collapsed.merge(random_scores, on=group_cols, how="left")
+    # 4. Merge the baseline back and calculate the Relative Score
+    df_collapsed = df_collapsed.merge(random_scores, on=["tid", "metric"], how="left")
 
-    # If a dataset didn't have a Random baseline run, assume 0 to prevent NaNs
+    # If a dataset didn't have a Random baseline run, assume baseline was 0
     df_collapsed["random_score"] = df_collapsed["random_score"].fillna(0)
 
-    # Subtract baseline: Now >0 is better than random, <0 is worse than random
+    # Subtract baseline
     df_collapsed["relative_score"] = df_collapsed["scaled_score"] - df_collapsed["random_score"]
 
-    # 6. Aggregate mean score and std per feature selection method
+    # 5. Aggregate mean score and std per feature selection method
     agg_df = df_collapsed.groupby("feature_selection_method")["relative_score"].agg(["mean", "std"]).reset_index()
     agg_df.columns = ["feature_selection_method", "mean_score", "std_score"]
     agg_df["std_score"] = agg_df["std_score"].fillna(0)
+
+    # 6. Drop the Random baseline from the final bar chart, since its relative score is always 0
+    agg_df = agg_df[agg_df["feature_selection_method"] != "RandomFeatureSelector"]
 
     return agg_df
 
