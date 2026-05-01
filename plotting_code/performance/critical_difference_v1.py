@@ -6,6 +6,9 @@ from matplotlib import pyplot as plt
 # IMPORTANT: pip install autorank
 from autorank import autorank, plot_stats, create_report
 
+from utils.average import average_per_dataset_and_method
+from utils.beautify import beautify_names, remove_jmi, add_model_name
+
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "critical_difference_v1.png"
 PLOT_TITLE = "Statistical Significance of Methods (Critical Difference Plot)"
@@ -16,44 +19,19 @@ def prepare_data_for_autorank(df):
     required by Autorank: Rows = Datasets, Columns = Feature Selection Methods.
     """
 
-    # --- DATA CLEANING ---
-    # 1. Filter out JMIFeatureSelector entirely
-    df = df[df["feature_selection_method"] != "JMIFeatureSelector"].copy()
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
 
-    # 2. Strip "FeatureSelector" from all remaining method names
-    df["feature_selection_method"] = df["feature_selection_method"].str.replace("FeatureSelector", "")
+    df = average_per_dataset_and_method(df)
 
-    # 3. Rename "Accuracy" to "LOCO"
-    df["feature_selection_method"] = df["feature_selection_method"].replace({"Accuracy": "LOCO"})
-    df["feature_selection_method"] = df["feature_selection_method"].replace({"SequentialBackwardElimination": "SBE"})
-    df["feature_selection_method"] = df["feature_selection_method"].replace({"SequentialForwardSelection": "SFS"})
-
-    # ---------------------
-
-    def extract_model_cls(model_details):
-        if pd.isna(model_details):
-            return "Unknown"
-        details_dict = ast.literal_eval(str(model_details))
-        return details_dict.get('model_cls', "Unknown")
-
-    df["model_cls"] = df["model_details"].apply(extract_model_cls)
-
-    # 3. AVERAGE PHASE
-    df_collapsed = df.groupby(
-        ["tid", "metric", "feature_selection_method"]
-    )["metric_error"].mean().reset_index()
-
-    df_wide = df_collapsed.pivot(
+    df = df.pivot(
         index="tid",
         columns="feature_selection_method",
         values="metric_error"
     )
 
-    # Drop any datasets/rows that don't have results for ALL methods
-    # Autorank requires paired data (every method must be evaluated on the same datasets)
-    df_wide = df_wide.dropna()
-
-    return df_wide
+    return df
 
 
 def plot_autorank(df):
