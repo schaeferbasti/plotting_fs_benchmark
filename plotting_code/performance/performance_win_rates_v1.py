@@ -1,3 +1,4 @@
+import ast
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -7,7 +8,7 @@ from matplotlib.ticker import MultipleLocator, PercentFormatter
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_win_rates_v1.png"
-PLOT_TITLE = "Method Win Rates"
+PLOT_TITLE = "Method Win Rates Per Dataset"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Win Rate (%)"
 
@@ -22,34 +23,42 @@ def calculate_win_rates(df):
     """
     Calculate win rates: proportion of datasets where each method has the best performance.
     """
-    required_cols = ["metric", "dataset", "feature_selection_method", "metric_error"]
-    if "dataset" not in df.columns:
-        required_cols.remove("dataset")
-        group_cols = ["metric"]
-    else:
-        group_cols = ["metric", "dataset"]
+    df = df.copy()
 
-    df_clean = df.dropna(subset=required_cols).copy()
+    # --- DATA CLEANING (Consistency with previous plots) ---
+    if "feature_selection_method" in df.columns:
+        df["feature_selection_method"] = df["feature_selection_method"].str.replace("FeatureSelector", "", regex=False)
 
-    # 1. Adjust metric values so "Lower is ALWAYS Better"
-    def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
-        if not is_lower_better:
-            return -row["metric_error"]
-        return row["metric_error"]
+        df["feature_selection_method"] = df["feature_selection_method"].replace({
+            "Accuracy": "LOCO",
+            "SequentialBackwardElimination": "SBE",
+            "SequentialForwardSelection": "SFS"
+        })
 
-    df_clean["adjusted_metric"] = df_clean.apply(adjust_direction, axis=1)
+        # Filter out JMI and Random to match previous plots
+        df = df[~df["feature_selection_method"].isin(["JMI", "Random"])]
 
-    # 2. Average CV splits per dataset/method
-    df_collapsed = df_clean.groupby(
-        group_cols + ["feature_selection_method"]
-    )["adjusted_metric"].mean().reset_index()
+    # -------------------------------------------------------
 
-    # 3. Identify the winner in each dataset (lowest adjusted_metric)
-    df_collapsed["is_winner"] = df_collapsed.groupby(group_cols)["adjusted_metric"].transform("min") == df_collapsed[
-        "adjusted_metric"]
+    def extract_model_cls(model_details):
+        if pd.isna(model_details):
+            return "Unknown"
+        details_dict = ast.literal_eval(str(model_details))
+        return details_dict.get('model_cls', "Unknown")
 
-    # 4. Calculate win rates per method
+    df["model_cls"] = df["model_details"].apply(extract_model_cls)
+
+    # 1. AVERAGE PHASE
+    df_collapsed = df.groupby(
+        ["tid", "metric", "feature_selection_method"]
+    )["metric_error"].mean().reset_index()
+
+    # 2. Identify the winner in each dataset
+    # FIX: Group by tid and metric, and check against metric_error!
+    df_collapsed["is_winner"] = df_collapsed.groupby(["tid", "metric"])["metric_error"].transform("min") == \
+                                df_collapsed["metric_error"]
+
+    # 3. Calculate win rates per method
     win_rates = df_collapsed.groupby("feature_selection_method")["is_winner"].agg([
         "sum", "count", "mean"
     ]).reset_index()
@@ -86,11 +95,7 @@ def plot_win_rates(df):
         linewidth=1.2
     )
 
-    # Add win counts as text labels on bars
-    for i, row in win_rates.iterrows():
-        ax.text(i, row["win_rate_pct"] + 0.5,
-                f'{int(row["wins"])}/{int(row["total_datasets"])}',
-                ha='center', va='bottom', fontsize=9, weight='bold')
+
 
     # Formatting
     ax.set_xticks(y_pos)
