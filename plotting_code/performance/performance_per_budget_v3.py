@@ -6,14 +6,14 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 
 from utils.beautify import beautify_names, remove_jmi_random, add_model_name
-from utils.scaling import min_max_scale
+from utils.scaling import min_max_scale, z_score_scale, median_max_scale
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_per_budget_v1.png"
+PLOT_NAME = "performance_per_budget_v3.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Performance per Budget Stage (min-max-scaling)"
+PLOT_TITLE = "Performance per Budget Stage (median-max scaling)"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Mean Metric Error"
 
@@ -32,7 +32,7 @@ def plot(df):
     # This filters out any rogue data anomalies or extra splits that caused ranks 6-10.
     df = df[df["budget_stage"] <= 5]
 
-    df = min_max_scale(df)
+    df = median_max_scale(df)
 
     # Pivot table based on the budget_stage (1, 2, 3, 4, 5)
     pivot = df.pivot_table(
