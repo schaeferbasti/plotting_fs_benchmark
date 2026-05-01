@@ -1,6 +1,6 @@
+import ast
 from pathlib import Path
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 # TODO: Adapt file and plot name
@@ -8,116 +8,133 @@ FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "pareto_performance_time_v1.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Pareto Front: Performance vs. Training Time"
+PLOT_TITLE = "Pareto Front: Error vs. Training Time"
 X_LABEL = "Mean Training Time (s)"
-Y_LABEL = "Mean Scaled Performance Score (Higher is Better)"
-
-METRIC_DIRECTIONS = {
-    "log_loss": True,  # Lower error is better
-    "rmse": True,  # Lower error is better
-    "roc_auc": False,  # Higher performance is better
-    "accuracy": False,  # Higher performance is better
-    "f1": False  # Higher performance is better
-}
+Y_LABEL = "Mean Metric Error (Lower is Better)"
 
 
-def calculate_scaled_performance_and_time(df):
-    # Ensure dataset, metric, method, error, and time columns are present
-    required_cols = ["metric", "feature_selection_method", "metric_error", "feature_selection_fit_time"]
+def calculate_ranks(df):
+    df = df.copy()
+    print(df["feature_selection_fit_time"].isna().sum())
 
-    df_clean = df.dropna(subset=required_cols).copy()
+    df = df[df["feature_selection_method"] != "JMIFeatureSelector"].copy()
+    df["feature_selection_method"] = df["feature_selection_method"].str.replace("FeatureSelector", "")
+    df["feature_selection_method"] = df["feature_selection_method"].replace({"Accuracy": "LOCO"})
+    df["feature_selection_method"] = df["feature_selection_method"].replace({"SequentialBackwardElimination": "SBE"})
+    df["feature_selection_method"] = df["feature_selection_method"].replace({"SequentialForwardSelection": "SFS"})
 
-    # 1. Adjust metric values so "Higher is ALWAYS Better"
-    def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
-        if is_lower_better:
-            return -row["metric_error"]  # Invert error so higher is better
-        return row["metric_error"]
+    def extract_model_cls(model_details):
+        if pd.isna(model_details):
+            return "Unknown"
+        details_dict = ast.literal_eval(str(model_details))
+        return details_dict.get('model_cls', "Unknown")
 
-    df_clean["performance"] = df_clean.apply(adjust_direction, axis=1)
+    df["model_cls"] = df["model_details"].apply(extract_model_cls)
 
-    # 2. Average the performance and time per method, per dataset, per metric
-    # This collapses CV splits/models
-    df_collapsed = df_clean.groupby(
-        ["metric", "feature_selection_method"]
-    ).agg(
-        performance=("performance", "mean"),
-        feature_selection_fit_time=("feature_selection_fit_time", "mean")
-    ).reset_index()
+    # 3. AVERAGE PHASE
+    df_collapsed = df.groupby(
+        ["tid", "metric", "feature_selection_method"]
+    )[["metric_error", "feature_selection_fit_time"]].mean().reset_index()
 
-    # 3. Min-Max Scale the performance per dataset/metric
-    def min_max_scale(group):
-        min_val = group.min()
-        max_val = group.max()
-        if max_val == min_val:
-            return pd.Series(100.0, index=group.index)
-        return ((group - min_val) / (max_val - min_val)) * 100.0
+    # 4. RANKING PHASE
+    # FIX: Only select the single column you want to rank
+    df_collapsed["rank"] = df_collapsed.groupby(
+        ["tid"]
+    )["metric_error"].rank(
+        method="average",
+        ascending=True,
+        na_option="keep"
+    )
 
-    df_collapsed["scaled_score"] = df_collapsed.groupby(["metric"])["performance"].transform(
-        min_max_scale)
-
-    # 4. Aggregate mean score and mean time per feature selection method across all datasets
+    # Get one overall mean score and mean time per method for the Pareto front
     agg_df = df_collapsed.groupby("feature_selection_method").agg(
-        mean_score=("scaled_score", "mean"),
+        mean_score=("metric_error", "mean"),
         mean_time=("feature_selection_fit_time", "mean")
     ).reset_index()
+
+    nan_methods = agg_df[agg_df["mean_time"].isna() | agg_df["mean_score"].isna()]
+    if not nan_methods.empty:
+        print("\n⚠️ WARNING: The following methods have NaN time or score and will be excluded from the plot:")
+        for _, row in nan_methods.iterrows():
+            print(f"  - {row['feature_selection_method']}")
 
     return agg_df
 
 
 def plot(df):
-    agg_df = calculate_scaled_performance_and_time(df)
+    agg_df = calculate_ranks(df)
 
-    # Compute Pareto front: MAXIMIZE score and MINIMIZE time
-    pareto_idx = []
-    for i, row_i in agg_df.iterrows():
+    # Extract values as plain numpy arrays to avoid any pandas index bugs
+    times = agg_df["mean_time"].to_numpy()
+    scores = agg_df["mean_score"].to_numpy()
+
+    pareto_idx_list = []
+    n_points = len(agg_df)
+
+    for i in range(n_points):
         dominated = False
-        for j, row_j in agg_df.iterrows():
+        for j in range(n_points):
             if i == j:
                 continue
 
-            # row_j dominates row_i if it is better or equal on BOTH objectives,
-            # and strictly better on AT LEAST ONE.
-            better_or_equal_score = row_j["mean_score"] >= row_i["mean_score"]
-            better_or_equal_time = row_j["mean_time"] <= row_i["mean_time"]
+            # To DOMINATE, point j must be at least as good in BOTH,
+            # and strictly better in AT LEAST ONE.
+            # Assuming MINIMIZE Time (Lower is Better)
+            # Assuming MINIMIZE Score (Lower is Better - e.g. Error)
+            # --> IF SCORE IS ACCURACY (Higher is Better), FLIP the score signs below!
 
-            strictly_better_score = row_j["mean_score"] > row_i["mean_score"]
-            strictly_better_time = row_j["mean_time"] < row_i["mean_time"]
+            time_j_better_or_eq = times[j] <= times[i]
+            score_j_better_or_eq = scores[j] <= scores[i]
 
-            if (better_or_equal_score and better_or_equal_time) and (strictly_better_score or strictly_better_time):
+            time_j_strictly_better = times[j] < times[i]
+            score_j_strictly_better = scores[j] < scores[i]
+
+            if (time_j_better_or_eq and score_j_better_or_eq) and (time_j_strictly_better or score_j_strictly_better):
                 dominated = True
-                break
+                break  # Point i is dominated by point j, stop checking
 
         if not dominated:
-            pareto_idx.append(i)
+            pareto_idx_list.append(i)
 
-    # Extract Pareto points and sort by time to draw a clean line
-    pareto = agg_df.loc[pareto_idx].sort_values("mean_time")
+    # -------------------------------------------------------------
+    # 2. EXTRACT DATAFRAMES
+    # -------------------------------------------------------------
+    # We use .iloc because pareto_idx_list contains absolute integer positions (0, 1, 2...)
+    pareto = agg_df.iloc[pareto_idx_list].sort_values("mean_time")
+
+    # Non-pareto is everything else
+    non_pareto = agg_df.drop(agg_df.index[pareto_idx_list])
+
+    # Now you can print to debug!
+    print(f"Total methods: {len(agg_df)}")
+    print(f"Pareto methods: {len(pareto)}")
+    print(f"Dominated methods: {len(non_pareto)}")
 
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    # Plot all methods (Non-Pareto + Pareto)
+    # 1. Plot Non-Pareto methods in gray (Background)
     ax.scatter(
-        agg_df["mean_time"],
-        agg_df["mean_score"],
+        non_pareto["mean_time"],
+        non_pareto["mean_score"],
         s=60,
         color="lightgray",
         edgecolor="gray",
         alpha=0.8,
-        label="Methods",
+        label="Dominated Methods",
+        zorder=1
     )
 
-    # Highlight Pareto front
+    # 2. Highlight Pareto front points in Red (Foreground)
     ax.scatter(
         pareto["mean_time"],
         pareto["mean_score"],
         s=80,
         color="tab:red",
-        label="Pareto front",
+        label="Pareto Front",
         zorder=3,
     )
 
-    # Draw line connecting Pareto points
+    # 3. Draw line connecting Pareto points
     ax.plot(
         pareto["mean_time"],
         pareto["mean_score"],
@@ -126,23 +143,45 @@ def plot(df):
         zorder=2,
     )
 
-    # Labels on Pareto points
-    for _, row in pareto.iterrows():
-        ax.annotate(
-            row["feature_selection_method"],
-            (row["mean_time"], row["mean_score"]),
-            textcoords="offset points",
-            xytext=(5, 5),
-            fontsize=9,
-            weight='bold'
-        )
+    # 4. Label ALL points, shifting labels to prevent overlap
+    labeled_positions = []
+
+    for idx, row in agg_df.iterrows():
+        method_name = row["feature_selection_method"].replace("FeatureSelector", "")
+        x, y = row["mean_time"], row["mean_score"]
+
+        # Shift overlapping labels
+        y_offset = 5
+        for (lx, ly) in labeled_positions:
+            if abs(x - lx) < (agg_df["mean_time"].max() * 0.05) and abs(y - ly) < (agg_df["mean_score"].max() * 0.05):
+                y_offset -= 12
+
+        labeled_positions.append((x, y))
+
+        # Check if the current row index is in the Pareto index list
+        if idx in pareto_idx_list:
+            ax.annotate(
+                method_name,
+                (x, y),
+                textcoords="offset points",
+                xytext=(5, y_offset),
+                fontsize=9,
+                weight='bold',
+                color="black"
+            )
+        else:
+            ax.annotate(
+                method_name,
+                (x, y),
+                textcoords="offset points",
+                xytext=(5, y_offset),
+                fontsize=8,
+                color="dimgray"
+            )
 
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
-
-    # Optional: If time varies wildly (e.g. 0.1s vs 1000s), uncomment the line below:
-    # ax.set_xscale("log")
 
     ax.legend()
     ax.grid(True, alpha=0.3)
