@@ -8,7 +8,7 @@ from utils.beautify import remove_jmi, beautify_names, add_model_name
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "pareto_performance_time_v1.png"
+PLOT_NAME = "pareto_rank_time_v1.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Pareto Front: Error vs. Training Time"
@@ -27,9 +27,17 @@ def calculate_ranks(df):
     # AVERAGE PHASE
     df = average_per_dataset_and_method(df)
 
+    # RANKING PHASE
+    # FIX: Only select the single column you want to rank
+    df["rank"] = df.groupby(["tid", "metric"])["metric_error"].rank(
+        method="average",
+        ascending=True,
+        na_option="keep"
+    )
+
     # Get one overall mean score and mean time per method for the Pareto front
     agg_df = df.groupby("feature_selection_method").agg(
-        mean_score=("metric_error", "mean"),
+        mean_score=("rank", "mean"),
         mean_time=("feature_selection_fit_time", "mean")
     ).reset_index()
 
