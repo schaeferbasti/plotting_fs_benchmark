@@ -8,9 +8,9 @@ from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "relative_performance_v3.png"
-PLOT_TITLE = "Improvability to Random Baseline"
+PLOT_TITLE = ""
 X_LABEL = ""
-Y_LABEL = "Improvability (Percentage points better/worse than Random)"
+Y_LABEL = "Improvability (%)"
 
 
 def calculate_relative_performance(df):

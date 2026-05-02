@@ -1,9 +1,7 @@
-import ast
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from utils.average import average_per_method, average_per_dataset_and_method
 from utils.beautify import remove_jmi, beautify_names, add_model_name
 from utils.scaling import tabarena_normalization
 
@@ -12,9 +10,9 @@ FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "pareto_performance_time_v1.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Pareto Front: Error vs. Training Time"
-X_LABEL = "Mean Training Time (s)"
-Y_LABEL = "Mean Score (Lower is Better)"
+PLOT_TITLE = ""
+X_LABEL = "Training Time (s)"
+Y_LABEL = "Normalized Score"
 
 
 def calculate_ranks(df):
