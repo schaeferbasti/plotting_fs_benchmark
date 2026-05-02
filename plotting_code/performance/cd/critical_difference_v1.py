@@ -61,9 +61,9 @@ def plot_autorank(df):
     print(f"✅ Autorank CD plot saved to {out}")
 
 
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/cd"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
