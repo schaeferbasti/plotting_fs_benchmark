@@ -18,6 +18,6 @@ def average_per_dataset_and_method(df):
 
 def average_per_method(df):
     df = df.groupby(
-        ["metric", "feature_selection_method"]
+        ["feature_selection_method"]
     )[["metric_error"]].mean().reset_index()
     return df
