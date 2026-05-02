@@ -24,11 +24,7 @@ def calculate_ranks(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
-    # AVERAGE PHASE
-    df = average_per_dataset_and_method(df)
-
     # RANKING PHASE
-    # FIX: Only select the single column you want to rank
     df["rank"] = df.groupby(["tid", "metric"])["metric_error"].rank(
         method="average",
         ascending=True,
@@ -178,9 +174,9 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/ranking"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 

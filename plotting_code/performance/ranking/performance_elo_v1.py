@@ -1,11 +1,11 @@
-import ast
-
 import pandas as pd
 import numpy as np
 import random
 import itertools
 from pathlib import Path
 from matplotlib import pyplot as plt
+
+from utils.beautify import beautify_names, remove_jmi, add_model_name
 
 FILE_NAME = "results_per_split.csv"
 PLOT_NAME = "performance_elo_v1.png"
@@ -19,26 +19,15 @@ def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
     random.seed(seed)
     np.random.seed(seed)
     df = df.copy()
-    df = df[df["feature_selection_method"] != "JMIFeatureSelector"]
 
-    def extract_model_cls(model_details):
-        if pd.isna(model_details):
-            return "Unknown"
-        details_dict = ast.literal_eval(str(model_details))
-        return details_dict.get('model_cls', "Unknown")
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
 
-    df["model_cls"] = df["model_details"].apply(extract_model_cls)
-
-    # 2. Average the cross-validation splits to get ONE score per method per dataset
-    df_collapsed = df.groupby(
-        ["metric", "feature_selection_method"]
-    )["metric_error"].mean().reset_index()
-
-    methods = df_collapsed["feature_selection_method"].unique()
-
+    methods = df["feature_selection_method"].unique().tolist()
     # 3. Pre-compute tasks to speed up bootstrapping
     tasks = []
-    for _, task_df in df_collapsed.groupby(["metric"]):
+    for _, task_df in df.groupby(["metric"]):
         tasks.append(dict(zip(task_df["feature_selection_method"], task_df["metric_error"])))
 
     bootstrap_records = {m: [] for m in methods}
@@ -154,9 +143,9 @@ def plot_elo_bars(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/ranking"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
