@@ -27,7 +27,7 @@ def calculate_ranks(df):
 
     df = tabarena_normalization(df)
 
-    agg_df = df.groupby("feature_selection_method", "tid").agg(
+    agg_df = df.groupby("feature_selection_method").agg(
         mean_score=("normalized_score", "mean"),
         mean_time=("feature_selection_fit_time", "mean")
     ).reset_index()
@@ -58,10 +58,10 @@ def plot(df):
             # --> IF SCORE IS ACCURACY (Higher is Better), FLIP the score signs below!
 
             time_j_better_or_eq = times[j] <= times[i]
-            score_j_better_or_eq = scores[j] <= scores[i]
+            score_j_better_or_eq = scores[j] >= scores[i]
 
             time_j_strictly_better = times[j] < times[i]
-            score_j_strictly_better = scores[j] < scores[i]
+            score_j_strictly_better = scores[j] > scores[i]
 
             if (time_j_better_or_eq and score_j_better_or_eq) and (time_j_strictly_better or score_j_strictly_better):
                 dominated = True
