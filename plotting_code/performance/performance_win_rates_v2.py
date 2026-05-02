@@ -5,14 +5,14 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator, PercentFormatter
 
-from utils.average import average_per_dataset_and_method
+from utils.average import average_per_dataset_and_method, average_per_method
 from utils.beautify import beautify_names, remove_jmi, add_model_name
 from utils.scaling import median_max_scale
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_win_rates_v1.png"
-PLOT_TITLE = "Method Win Rates Per Dataset"
+PLOT_NAME = "performance_win_rates_v2.png"
+PLOT_TITLE = "Method Win Rates"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Win Rate (%)"
 
@@ -28,13 +28,11 @@ def calculate_win_rates(df):
     df = add_model_name(df)
 
     df = median_max_scale(df)
-    df = average_per_dataset_and_method(df)
-
-
+    df = average_per_method(df)
 
     # 2. Identify the winner in each dataset
     # FIX: Group by tid and metric, and check against metric_error!
-    df["is_winner"] = df.groupby(["tid", "metric"])["metric_error"].transform("min") == \
+    df["is_winner"] = df.groupby(["metric"])["metric_error"].transform("min") == \
                                 df["metric_error"]
 
     # 3. Calculate win rates per method
