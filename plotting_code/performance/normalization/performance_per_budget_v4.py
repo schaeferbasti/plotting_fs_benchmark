@@ -5,15 +5,15 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 
-from utils.beautify import beautify_names, remove_jmi_random, add_model_name
-from utils.scaling import min_max_scale
+from utils.beautify import beautify_names, remove_jmi_random, add_model_name, remove_jmi
+from utils.scaling import min_max_scale, z_score_scale, median_max_scale, tabarena_normalization
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_per_budget_v1.png"
+PLOT_NAME = "performance_per_budget_v4.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Performance per Budget Stage (min-max-scaling)"
+PLOT_TITLE = "Performance per Budget Stage (median-max scaling)"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Mean Metric Error"
 
@@ -22,21 +22,17 @@ def plot(df):
     df = df.copy()
 
     df = beautify_names(df)
-    df = remove_jmi_random(df)
+    df = remove_jmi(df)
     df = add_model_name(df)
 
-    # Rank the budgets per dataset globally (1 = smallest max_features, 2 = next, etc.)
+    df = tabarena_normalization(df)
+
     df["budget_stage"] = df.groupby("tid")["max_features"].rank(method="dense").astype(int)
-
-    # FIX: Strictly enforce a maximum of 5 budget stages.
-    # This filters out any rogue data anomalies or extra splits that caused ranks 6-10.
     df = df[df["budget_stage"] <= 5]
-
-    df = min_max_scale(df)
 
     # Pivot table based on the budget_stage (1, 2, 3, 4, 5)
     pivot = df.pivot_table(
-        values='scaled_score',
+        values='normalized_score',
         index='feature_selection_method',
         columns='budget_stage',
         aggfunc='mean'
@@ -96,9 +92,9 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/normalization"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
