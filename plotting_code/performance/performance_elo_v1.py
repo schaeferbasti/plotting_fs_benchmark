@@ -8,7 +8,7 @@ from pathlib import Path
 from matplotlib import pyplot as plt
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_rank_v3.png"
+PLOT_NAME = "performance_elo_v1.png"
 
 PLOT_TITLE = "Global Feature Selection Performance (Bootstrapped Elo)"
 X_LABEL = "Feature Selection Method"
