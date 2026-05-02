@@ -53,7 +53,7 @@ def plot_relative(df):
 
     # FIX 1: Sort by improvement (best first: most POSITIVE value = best performance)
     # ascending=False puts the highest positive values at the beginning
-    agg_df = agg_df.sort_values("mean_improvability", ascending=False)
+    agg_df = agg_df.sort_values("mean_improvability", ascending=True)
 
     methods = agg_df["feature_selection_method"].values
     mean_improv = agg_df["mean_improvability"].values
