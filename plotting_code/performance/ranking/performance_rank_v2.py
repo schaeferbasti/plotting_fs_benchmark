@@ -1,4 +1,3 @@
-import ast
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -7,10 +6,9 @@ from matplotlib.ticker import MultipleLocator
 
 from utils.average import average_per_dataset_and_method
 from utils.beautify import add_model_name, remove_jmi, beautify_names
-from utils.scaling import median_max_scale
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_rank_v1.png"
+PLOT_NAME = "performance_rank_v2.png"
 
 PLOT_TITLE = "Rank per Dataset"
 X_LABEL = "Feature Selection Method"
@@ -24,12 +22,8 @@ def calculate_raw_ranks(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
-    df = median_max_scale(df)
     df = average_per_dataset_and_method(df)
 
-    # 4. RANKING PHASE
-    # Group ONLY by Dataset and Metric.
-    # Ranks the methods against each other for that specific dataset.
     df["rank"] = df.groupby(
         ["tid"]
     )["metric_error"].rank(
@@ -37,7 +31,6 @@ def calculate_raw_ranks(df):
         ascending=True,
         na_option="keep"
     )
-
     return df
 
 
@@ -113,9 +106,9 @@ def plot_boxplot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/ranking"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
