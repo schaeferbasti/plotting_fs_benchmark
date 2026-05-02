@@ -99,8 +99,9 @@ def plot(df):
     pivot = groups.pivot_table(
         values="metric_error",
         index="size_bin",
-        columns="feature_selection_method",
-        aggfunc="mean"
+        columns="feature_selection_method",   # ["feature_selection_method", "tid"],
+        aggfunc="mean",
+        observed=False
     ).fillna(np.nan)
 
     sizes = pivot.index
