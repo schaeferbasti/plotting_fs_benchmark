@@ -4,10 +4,11 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
+from utils.average import average_per_dataset_and_method
 from utils.beautify import add_model_name, remove_jmi, beautify_names
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_rank_v1.png"
+PLOT_NAME = "rank_v2.png"
 
 PLOT_TITLE = "Rank per Dataset"
 X_LABEL = "Feature Selection Method"
@@ -20,6 +21,8 @@ def calculate_raw_ranks(df):
     df = beautify_names(df)
     df = remove_jmi(df)
     df = add_model_name(df)
+
+    df = average_per_dataset_and_method(df)
 
     df["rank"] = df.groupby(
         ["tid"]
