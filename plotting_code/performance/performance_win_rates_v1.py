@@ -30,8 +30,6 @@ def calculate_win_rates(df):
     df = median_max_scale(df)
     df = average_per_dataset_and_method(df)
 
-
-
     # 2. Identify the winner in each dataset
     # FIX: Group by tid and metric, and check against metric_error!
     df["is_winner"] = df.groupby(["tid", "metric"])["metric_error"].transform("min") == \
