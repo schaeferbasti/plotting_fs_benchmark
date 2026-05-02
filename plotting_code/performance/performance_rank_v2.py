@@ -7,6 +7,10 @@ from matplotlib.ticker import MultipleLocator
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
 
+from utils.average import average_per_dataset_and_method, average_per_method
+from utils.beautify import beautify_names, remove_jmi, add_model_name
+from utils.scaling import median_max_scale
+
 # Set styling to match the light, clean look of the reference
 plt.style.use('seaborn-v0_8-whitegrid')
 plt.rcParams['font.family'] = 'serif'
@@ -20,60 +24,25 @@ PLOT_TITLE = ""  # The reference image has no title, just the legend
 X_LABEL = ""
 Y_LABEL = "Rank (1 = best)"
 
-# Dictionary to map methods to their categories (Filter, Wrapper, Embedded, etc.)
-# You may need to adjust these names to exactly match your feature_selection_method column
-METHOD_CATEGORIES = {
-    "RFE": "Wrapper",
-    "RFImportance": "Embedded",
-    "ElasticNet": "Embedded",
-    "Lasso": "Embedded",
-    "CART": "Embedded",
-    "MI": "Filter",
-    "ANOVA": "Filter",
-    "mRMR": "Filter",
-    "GainRatio": "Filter",
-    "ReliefF": "Filter",
-    "SFS": "Wrapper",
-    "LOCO": "Wrapper",
-    "MarkovBlanket": "Filter",
-    "Random": "Filter",
-    "LaplacianScore": "Filter"
-}
-
-# Styling mapping for categories
-CATEGORY_STYLES = {
-    "Filter": {"color": "#C6D8EB", "marker": "D", "label": "Filter"},  # Light Blue, Diamond
-    "Wrapper": {"color": "#FBE2C4", "marker": "*", "label": "Wrapper"},  # Light Orange, Star
-    "Embedded": {"color": "#C6D8EB", "marker": "X", "label": "Embedded"}  # Light Blue, Cross
-}
-
 
 def calculate_raw_ranks(df):
     df = df.copy()
 
-    def extract_model_cls(model_details):
-        if pd.isna(model_details):
-            return "Unknown"
-        details_dict = ast.literal_eval(str(model_details))
-        return details_dict.get('model_cls', "Unknown")
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
 
-    df["model_cls"] = df["model_details"].apply(extract_model_cls)
+    df = median_max_scale(df)
+    df = average_per_method(df)
 
-    # 3. AVERAGE PHASE
-    df_collapsed = df.groupby(
-        ["tid", "metric", "feature_selection_method"]
-    )["metric_error"].mean().reset_index()
-
-    # 4. RANKING PHASE
-    df_collapsed["rank"] = df_collapsed.groupby(
-        ["tid"]
+    df["rank"] = df.groupby(
+        ["metric"]
     )["metric_error"].rank(
         method="average",
         ascending=True,
         na_option="keep"
     )
-
-    return df_collapsed
+    return df
 
 
 def plot_boxplot(df):
@@ -107,10 +76,6 @@ def plot_boxplot(df):
         method_data = ranked_df[ranked_df["clean_method"] == method]["rank"].dropna().values
         data_to_plot.append(method_data)
 
-        category = METHOD_CATEGORIES.get(method, "Filter")  # Default to filter if not found
-        style = CATEGORY_STYLES[category]
-        box_colors.append(style["color"])
-        mean_markers.append(style["marker"])
 
     # 1. ADD JITTERED SCATTER POINTS (IN BACKGROUND)
     np.random.seed(42)
@@ -159,25 +124,6 @@ def plot_boxplot(df):
     # Subtle dashed grid lines on Y axis only
     ax.grid(True, axis='y', linestyle='--', alpha=0.7, color='#CCCCCC')
     ax.grid(False, axis='x')
-
-    # 5. CUSTOM TOP LEGEND
-    # Create proxy artists for the legend
-    leg_non_search = mpatches.Patch(facecolor=mcolors.to_rgba('#C6D8EB', alpha=0.6), edgecolor='black', linewidth=1.5,
-                                    label='Non-search-based')
-    leg_search = mpatches.Patch(facecolor=mcolors.to_rgba('#FBE2C4', alpha=0.6), edgecolor='black', linewidth=1.5,
-                                label='Search-based')
-
-    leg_filter = mlines.Line2D([], [], color='none', marker='D', markersize=10, markeredgecolor='black',
-                               markeredgewidth=1.5, label='Filter')
-    leg_wrapper = mlines.Line2D([], [], color='none', marker='*', markersize=12, markeredgecolor='black',
-                                markeredgewidth=1.5, label='Wrapper')
-    leg_embedded = mlines.Line2D([], [], color='none', marker='X', markersize=10, markeredgecolor='black',
-                                 markeredgewidth=1.5, label='Embedded')
-
-    # Place legend above the plot
-    ax.legend(handles=[leg_non_search, leg_search, leg_filter, leg_wrapper, leg_embedded],
-              loc='upper center', bbox_to_anchor=(0.5, 1.12), ncol=5, fontsize=12, frameon=True,
-              edgecolor='#AAAAAA', fancybox=True)
 
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
