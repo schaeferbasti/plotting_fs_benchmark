@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from utils.average import average_per_method, average_per_dataset_and_method
 from utils.beautify import remove_jmi, beautify_names, add_model_name
+from utils.scaling import tabarena_normalization
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
@@ -13,7 +14,7 @@ PLOT_NAME = "pareto_performance_time_v1.png"
 # TODO: Adapt title and labels
 PLOT_TITLE = "Pareto Front: Error vs. Training Time"
 X_LABEL = "Mean Training Time (s)"
-Y_LABEL = "Mean Rank (Lower is Better)"
+Y_LABEL = "Mean Score (Lower is Better)"
 
 
 def calculate_ranks(df):
@@ -24,12 +25,10 @@ def calculate_ranks(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
-    # AVERAGE PHASE
-    df = average_per_dataset_and_method(df)
+    df = tabarena_normalization(df)
 
-    # Get one overall mean score and mean time per method for the Pareto front
-    agg_df = df.groupby("feature_selection_method").agg(
-        mean_score=("metric_error", "mean"),
+    agg_df = df.groupby("feature_selection_method", "tid").agg(
+        mean_score=("normalized_score", "mean"),
         mean_time=("feature_selection_fit_time", "mean")
     ).reset_index()
 
@@ -170,9 +169,9 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/normalization"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
