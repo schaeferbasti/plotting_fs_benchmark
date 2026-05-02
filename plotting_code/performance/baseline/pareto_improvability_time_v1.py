@@ -24,27 +24,26 @@ def calculate_relative_performance(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
-    # 1. NORMALIZE FIRST! This ensures RMSE and Accuracy are on the same scale
-    # so that a difference of "0.1" means the same thing across all datasets.
     df = tabarena_normalization(df)
 
-    # 2. Average out the noise (models, budgets, splits) to get 1 score per method/dataset/metric
-    df_avg = df.groupby(["tid", "feature_selection_method", "feature_selection_fit_time"])["normalized_score"].mean().reset_index()
+    # NORMALIZE BOTH: Group ONLY by tid and method, but take the mean of BOTH score and time
+    df_avg = df.groupby(["tid", "feature_selection_method"])[
+        ["normalized_score", "feature_selection_fit_time"]
+    ].mean().reset_index()
 
-    # 3. Extract Random baseline
+    # Extract Random baseline (exactly 1 row per dataset now)
     random_scores = df_avg[df_avg["feature_selection_method"] == "Random"][
         ["tid", "normalized_score"]
     ]
     random_scores = random_scores.rename(columns={"normalized_score": "random_score"})
 
-    # 4. Merge back
+    # Merge safely
     df_merged = df_avg.merge(random_scores, on=["tid"], how="left")
 
-    # 5. Calculate Absolute Percentage Point Improvement for SCORES (Higher is better)
-    # Positive result = Model score is higher than Random score
+    # Calculate Improvement
     df_merged["improvability"] = (df_merged["normalized_score"] - df_merged["random_score"]) * 100
 
-
+    # Final aggregation across all datasets
     agg_df = df_merged.groupby("feature_selection_method").agg(
         mean_score=("improvability", "mean"),
         mean_time=("feature_selection_fit_time", "mean")
