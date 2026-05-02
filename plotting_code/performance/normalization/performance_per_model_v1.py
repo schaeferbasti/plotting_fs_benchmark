@@ -5,10 +5,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 
-""" 
-Description:
-This plot shows the 
-"""
+from utils.beautify import beautify_names, remove_jmi, add_model_name
+from utils.scaling import tabarena_normalization
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
@@ -17,19 +15,22 @@ PLOT_NAME = "performance_per_model_v1.png"
 # TODO: Adapt title and labels
 PLOT_TITLE = "Performance"
 X_LABEL = "Feature Selection Method"
-Y_LABEL = "Metric Error"
+Y_LABEL = "Score"
 
 
 # TODO: Adapt plotting function
 def plot(df):
-    df["model_name"] = df["model_details"].apply(extract_model_name)
+    df = df.copy()
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
 
-    groups = df.dropna(subset=["feature_selection_method", "metric_error", "model_name"])
+    df = tabarena_normalization(df)  # z_score / ...
 
-    pivot = groups.pivot_table(
-        values="metric_error",
+    pivot = df.pivot_table(
+        values="normalized_score",
         index="feature_selection_method",
-        columns="model_name",
+        columns="model_cls",
         aggfunc="mean"
     ).fillna(np.nan)
 
@@ -66,21 +67,10 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/normalization"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def extract_model_name(model_details):
-    """Clean model name from dict string"""
-    if pd.isna(model_details):
-        return "Unknown"
-    try:
-        details = eval(model_details)  # Safe for your format
-        return f"{details['model_cls']} ({details['model_type']})"
-    except:
-        return str(model_details)[:20] + "..."
 
 
 def main():
