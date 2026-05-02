@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from utils.beautify import beautify_names, remove_jmi, add_model_name
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_elo_v1.png"
+PLOT_NAME = "elo_v1.png"
 
 PLOT_TITLE = "Global Feature Selection Performance (Bootstrapped Elo)"
 X_LABEL = "Feature Selection Method"

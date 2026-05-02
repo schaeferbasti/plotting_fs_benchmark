@@ -6,72 +6,39 @@ import random
 from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 
+from utils.beautify import beautify_names, remove_jmi, add_model_name
+
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_per_model_v4.png"
+PLOT_NAME = "elo_per_model_v1.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Bootstrapped Elo Rating (Calibrated to Random Baseline)"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Elo Rating (Random = 1000, >1000 is Better)"
 
-METRIC_DIRECTIONS = {
-    "log_loss": True,
-    "rmse": True,
-    "roc_auc": False,
-    "accuracy": False,
-    "f1": False
-}
-
-
-def extract_model_name(model_details):
-    """Clean model name from dict string"""
-    if pd.isna(model_details):
-        return "Unknown"
-    try:
-        details = eval(model_details)
-        return f"{details['model_cls']} ({details['model_type']})"
-    except:
-        return str(model_details)[:20] + "..."
-
 
 def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
     random.seed(seed)
     np.random.seed(seed)
 
-    df["model_name"] = df["model_details"].apply(extract_model_name)
+    df = df.copy()
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
 
-    group_cols = [c for c in ["metric", "dataset"] if c in df.columns]
-    if not group_cols:
-        group_cols = ["metric"]
-
-    required_cols = group_cols + ["feature_selection_method", "metric_error", "model_name"]
-    df_clean = df.dropna(subset=required_cols).copy()
-
-    # 1. Adjust metric values so "Higher is ALWAYS Better"
-    def adjust_direction(row):
-        is_lower_better = METRIC_DIRECTIONS.get(row["metric"], True)
-        return -row["metric_error"] if is_lower_better else row["metric_error"]
-
-    df_clean["performance"] = df_clean.apply(adjust_direction, axis=1)
-
-    # 2. Average CV splits (one row per dataset, metric, method, and model)
-    df_collapsed = df_clean.groupby(
-        group_cols + ["feature_selection_method", "model_name"]
-    )["performance"].mean().reset_index()
-
-    models = sorted(df_collapsed["model_name"].unique())
-    methods = sorted(df_collapsed["feature_selection_method"].unique())
+    models = sorted(df["model_cls"].unique())
+    methods = sorted(df["feature_selection_method"].unique())
 
     results = []
 
     for model in models:
-        model_df = df_collapsed[df_collapsed["model_name"] == model]
+        model_df = df[df["model_cls"] == model]
 
         # Pre-compute tasks to speed up bootstrapping
         tasks = []
-        for _, task_df in model_df.groupby(group_cols):
-            tasks.append(dict(zip(task_df["feature_selection_method"], task_df["performance"])))
+        for _, task_df in model_df.groupby("tid"):
+            tasks.append(dict(zip(task_df["feature_selection_method"], task_df["metric_error"])))
 
         bootstrap_ratings = {m: [] for m in methods}
 
@@ -98,9 +65,9 @@ def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
                     exp2 = 1 - exp1
 
                     # Match outcome
-                    if p1 > p2:
+                    if p1 < p2:
                         s1, s2 = 1, 0
-                    elif p1 < p2:
+                    elif p1 > p2:
                         s1, s2 = 0, 1
                     else:
                         s1, s2 = 0.5, 0.5
@@ -111,8 +78,8 @@ def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
 
             # 4. Calibrate to RandomFeatureSelector = 1000
             offset = 0
-            if "RandomFeatureSelector" in ratings:
-                offset = 1000 - ratings["RandomFeatureSelector"]
+            if "Random" in ratings:
+                offset = 1000 - ratings["Random"]
 
             for m in methods:
                 if m in ratings:
@@ -123,7 +90,7 @@ def calculate_bootstrapped_elo(df, k_factor=32, n_bootstraps=200, seed=42):
             if bootstrap_ratings[m]:
                 arr = np.array(bootstrap_ratings[m])
                 results.append({
-                    "model_name": model,
+                    "model_cls": model,
                     "feature_selection_method": m,
                     "elo_mean": np.mean(arr),
                     "elo_ci_lower": np.percentile(arr, 2.5),
@@ -140,11 +107,7 @@ def plot(df):
     avg_elo = df_elo.groupby("feature_selection_method")["elo_mean"].mean().sort_values(ascending=False)
     methods = avg_elo.index.tolist()
 
-    # --- REMOVE RANDOM FEATURE SELECTOR FROM PLOTTED BARS ---
-    if "RandomFeatureSelector" in methods:
-        methods.remove("RandomFeatureSelector")
-
-    model_names = sorted(df_elo["model_name"].unique())
+    model_names = sorted(df_elo["model_cls"].unique())
 
     fig, ax = plt.subplots(figsize=(16, 8))
 
@@ -159,7 +122,7 @@ def plot(df):
 
     for j, model in enumerate(model_names):
         # Extract model data and align with 'methods' order
-        model_df = df_elo[df_elo["model_name"] == model].set_index("feature_selection_method")
+        model_df = df_elo[df_elo["model_cls"] == model].set_index("feature_selection_method")
         model_df = model_df.reindex(methods).fillna({"elo_mean": 1000, "elo_ci_lower": 1000, "elo_ci_upper": 1000})
 
         means = model_df["elo_mean"].values
@@ -188,7 +151,7 @@ def plot(df):
 
     # Dynamically scale Y-axis but guarantee the 1000 baseline is easily visible
     # We ignore the RandomFeatureSelector stats when calculating the y-limits now
-    filtered_elo = df_elo[df_elo["feature_selection_method"] != "RandomFeatureSelector"]
+    filtered_elo = df_elo[df_elo["feature_selection_method"] != "Random"]
     min_elo = filtered_elo["elo_ci_lower"].min()
     max_elo = filtered_elo["elo_ci_upper"].max()
     ax.set_ylim(min(min_elo - 50, 950), max(max_elo + 50, 1050))
@@ -209,9 +172,9 @@ def plot(df):
 
 
 # Do nothing below
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/ranking"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
