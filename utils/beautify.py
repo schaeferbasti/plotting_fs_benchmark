@@ -11,7 +11,7 @@ def beautify_names(df):
     # Rename specific methods to their acronyms/new names
     df["feature_selection_method"] = df["feature_selection_method"].replace({
         "Accuracy": "LOCO",
-        "SequentialBackwardElimination": "SBE",
+        "SequentialBackwardElimination": "RFE",
         "SequentialForwardSelection": "SFS"
     })
     return df
