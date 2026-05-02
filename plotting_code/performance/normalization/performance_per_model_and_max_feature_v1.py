@@ -6,46 +6,37 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.colors import LinearSegmentedColormap
-import matplotlib.cm as cmx
+
+from utils.beautify import beautify_names, remove_jmi, add_model_name
+from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "performance_per_model_per_max_features_v4.png"
+PLOT_NAME = "performance_per_model_per_max_features_v1.png"
 
 PLOT_TITLE = "Performance per Model and max_features"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Mean Metric Error"
 
 
-def extract_model_name(model_details):
-    if pd.isna(model_details):
-        return "Unknown"
-    try:
-        d = ast.literal_eval(model_details)
-        model_cls = d.get("model_cls", "Unknown")
-        model_type = d.get("model_type", "")
-        return f"{model_cls} ({model_type})" if model_type else model_cls
-    except (ValueError, SyntaxError):
-        return "Unknown"
-
-
 def plot(df):
     df = df.copy()
-    df["model_name"] = df["model_details"].apply(extract_model_name)
 
-    groups = df.dropna(
-        subset=["feature_selection_method", "metric_error", "model_name", "max_features"]
-    )
+    df = beautify_names(df)
+    df = remove_jmi(df)
+    df = add_model_name(df)
+
+    df = tabarena_normalization(df)
 
     agg = (
-        groups.groupby(["feature_selection_method", "model_name", "max_features"], as_index=False)
+        df.groupby(["feature_selection_method", "model_cls", "max_features"], as_index=False)
         .agg(
-            mean_metric_error=("metric_error", "mean"),
-            std_metric_error=("metric_error", "std"),
+            mean_metric_error=("normalized_score", "mean"),
+            std_metric_error=("normalized_score", "std"),
         )
     )
 
     methods = sorted(agg["feature_selection_method"].unique())
-    models = sorted(agg["model_name"].unique())
+    models = sorted(agg["model_cls"].unique())
     max_feats = sorted(agg["max_features"].unique())
 
     base_colors = plt.get_cmap("Set2", len(models))
@@ -98,7 +89,7 @@ def plot(df):
     for model in models:
         for mf in max_feats:
             subset = agg[
-                (agg["model_name"] == model) &
+                (agg["model_cls"] == model) &
                 (agg["max_features"] == mf)
             ]
 
@@ -126,18 +117,6 @@ def plot(df):
                     alpha=0.9,
                     zorder=3 + models.index(model),
                 )
-
-                """ax.errorbar(
-                    x_vals,
-                    y_vals,
-                    yerr=y_err,
-                    fmt="none",
-                    ecolor=color_intensity,
-                    elinewidth=0.8,
-                    alpha=0.45,
-                    capsize=1.5,
-                    zorder=2,
-                )"""
 
     ax.set_xticks(x_base)
     ax.set_xticklabels(methods, rotation=45, ha="right")
@@ -182,9 +161,9 @@ def plot(df):
     plt.close()
 
 
-SCRIPT_DIR = Path(__file__).parent / "../../"
+SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/normalization"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
