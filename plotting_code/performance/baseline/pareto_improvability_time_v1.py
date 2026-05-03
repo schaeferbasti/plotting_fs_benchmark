@@ -11,7 +11,7 @@ PLOT_NAME = "pareto_improvability_time_v1.png"
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
 X_LABEL = "Training Time (s)"
-Y_LABEL = "Improvability against Best (%)"
+Y_LABEL = "Gap to Best (%)"
 
 
 def calculate_relative_performance(df):
