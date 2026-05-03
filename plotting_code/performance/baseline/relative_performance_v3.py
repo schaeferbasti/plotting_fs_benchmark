@@ -20,30 +20,41 @@ def calculate_relative_performance(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
-    # 1. NORMALIZE FIRST! This ensures RMSE and Accuracy are on the same scale
-    # so that a difference of "0.1" means the same thing across all datasets.
-    df = tabarena_normalization(df)
+    # 1. Average budget, models (and splits)
+    df_avg = (
+        df.groupby(["tid", "feature_selection_method"])["metric_error"]
+        .mean()
+        .reset_index()
+    )
 
-    # 2. Average out the noise (models, budgets, splits) to get 1 score per method/dataset/metric
-    df_avg = df.groupby(["tid", "feature_selection_method"])["normalized_score"].mean().reset_index()
+    # 2. Best error per dataset
+    best_errors = (
+        df_avg.groupby("tid")["metric_error"]
+        .min()
+        .reset_index()
+        .rename(columns={"metric_error": "best_error"})
+    )
 
-    # 3. Extract Random baseline
-    random_scores = df_avg[df_avg["feature_selection_method"] == "Random"][
-        ["tid", "normalized_score"]
+    # 3. Merge best error back
+    df_merged = df_avg.merge(best_errors, on="tid", how="left")
+
+    # 4. Improvability = how much error remains until best, relative to own error
+    df_merged["improvability"] = (
+        (df_merged["metric_error"] - df_merged["best_error"])
+        / (df_merged["metric_error"])
+    ) * 100
+
+    # 5. Aggregate across datasets
+    agg_df = (
+        df_merged.groupby("feature_selection_method")["improvability"]
+        .agg(["mean", "std"])
+        .reset_index()
+    )
+    agg_df.columns = [
+        "feature_selection_method",
+        "mean_improvability",
+        "std_improvability",
     ]
-    random_scores = random_scores.rename(columns={"normalized_score": "random_score"})
-
-    # 4. Merge back
-    df_merged = df_avg.merge(random_scores, on=["tid"], how="left")
-
-    # 5. Calculate Absolute Percentage Point Improvement for SCORES (Higher is better)
-    # Positive result = Model score is higher than Random score
-    df_merged["improvability"] = (df_merged["normalized_score"] - df_merged["random_score"]) * 100
-
-    # 6. Aggregate across all datasets
-    agg_df = df_merged.groupby("feature_selection_method")["improvability"].agg(["mean", "std"]).reset_index()
-    agg_df.columns = ["feature_selection_method", "mean_improvability", "std_improvability"]
-    agg_df = agg_df[agg_df["feature_selection_method"] != "Random"]
 
     return agg_df
 
@@ -63,7 +74,7 @@ def plot_relative(df):
     x = np.arange(len(methods))
 
     # FIX 2: Color code: Green if positive (better than random), Red if negative (worse)
-    colors = ["#55A868" if score >= 0 else "#C44E52" for score in mean_improv]
+    colors = ["#4C72B0" if score >= 0 else "#4C72B0" for score in mean_improv]
 
     bars = ax.bar(
         x,

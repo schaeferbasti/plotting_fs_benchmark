@@ -3,15 +3,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from utils.beautify import remove_jmi, beautify_names, add_model_name
+from utils.scaling import tabarena_normalization
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "pareto_improvability_time_v1.png"
+PLOT_NAME = "pareto_improvability_time_v2.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
 X_LABEL = "Training Time (s)"
-Y_LABEL = "Improvability against Best (%)"
+Y_LABEL = "Improvability over Random (%)"
 
 
 def calculate_relative_performance(df):
@@ -29,20 +30,22 @@ def calculate_relative_performance(df):
     )
 
     # 2. Best error per dataset
-    best_errors = (
-        df_avg.groupby("tid")["metric_error"]
-        .min()
+    random_errors = df_avg[df_avg["feature_selection_method"] == "Random"].copy()
+
+    random_baseline = (
+        random_errors.groupby("tid")["metric_error"]
+        .mean()
         .reset_index()
-        .rename(columns={"metric_error": "best_error"})
+        .rename(columns={"metric_error": "random_error"})
     )
 
     # 3. Merge best error back
-    df_merged = df_avg.merge(best_errors, on="tid", how="left")
+    df_merged = df_avg.merge(random_baseline, on="tid", how="left")
 
     # 4. Improvability = how much error remains until best, relative to own error
     df_merged["improvability"] = (
-        (df_merged["metric_error"] - df_merged["best_error"])
-        / (df_merged["metric_error"])
+        (df_merged["random_error"] - df_merged["metric_error"])
+        / (df_merged["random_error"])
     ) * 100
 
     # Final aggregation across all datasets
@@ -77,10 +80,10 @@ def plot(df):
             # --> IF SCORE IS ACCURACY (Higher is Better), FLIP the score signs below!
 
             time_j_better_or_eq = times[j] <= times[i]
-            score_j_better_or_eq = scores[j] <= scores[i]
+            score_j_better_or_eq = scores[j] >= scores[i]
 
             time_j_strictly_better = times[j] < times[i]
-            score_j_strictly_better = scores[j] < scores[i]
+            score_j_strictly_better = scores[j] > scores[i]
 
             if (time_j_better_or_eq and score_j_better_or_eq) and (time_j_strictly_better or score_j_strictly_better):
                 dominated = True
@@ -171,22 +174,23 @@ def plot(df):
                 fontsize=8,
                 color="dimgray"
             )
+
     ax.annotate(
         "optimal",
-        xy=(0.0, 0.0),  # arrow tip near bottom-left
-        xytext=(0.001, 0.065),  # text a bit inside the plot
+        xy=(0.0, 1.0),  # arrow tip near top-left
+        xytext=(0.001, 0.95),  # text a bit inside the plot
         xycoords="axes fraction",
         textcoords="axes fraction",
         arrowprops=dict(
             arrowstyle="->",
             color="green",
-            lw=1
+            lw=1.5
         ),
         fontsize=11,
         fontweight="bold",
         color="green",
         ha="left",
-        va="bottom"
+        va="top"
     )
 
     ax.set_title(PLOT_TITLE)
