@@ -10,13 +10,13 @@ FILE_NAME = "validity_results.csv"
 PLOT_NAME = "validity_per_EPV_v1"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Validity vs. Selection Difficulty"
+PLOT_TITLE = ""
 X_LABEL = "Selection Difficulty"
 Y_LABEL = ""
 
 # TODO: Adapt lasagna plot metric and smoothing
 METRIC = "validity"
-SMOOTHING = 20
+SMOOTHING = 10
 
 # Do nothing below
 SCRIPT_DIR = Path(__file__).parent / "../../"
@@ -66,7 +66,7 @@ def main():
 
     # mean selection precision over max_features (cardinality)
     df_plot = (
-        df.groupby([    "noise_level", "selector", "epv"], as_index=False)["validity"]
+        df.groupby(["noise_level", "selector", "epv"], as_index=False)["validity"]
         .mean()
     )
 
@@ -75,20 +75,22 @@ def main():
         # Format the filename so floats like 0.1 become "0_1"
         noise_str = str(noise_level).replace(".", "_")
         noise_output_path = OUTPUT_DIR / f"{PLOT_NAME}_noise_{noise_str}"
-        noise_plot_title = f"{PLOT_TITLE} (Noise: {noise_level})"
+        noise_label = f"{X_LABEL} (Noise: {noise_level})"
 
         for binary_mode in ["threshold", "topk"]:
             for overlay in [True, False]:
                 lasagna_plot(
                     df_noise,  # Pass only the chunk for this noise level
                     values=METRIC,
-                    plot_title=noise_plot_title,
-                    x_label=X_LABEL,
+                    plot_title=PLOT_TITLE,
+                    x_label=noise_label,
                     y_label=Y_LABEL,
                     output_path=noise_output_path,
                     smoothing=SMOOTHING,
                     binary_mode=binary_mode,
-                    overlay=overlay
+                    overlay=overlay,
+                    mode="validity",
+                    sort_methods="mean_value"
                 )
 
 

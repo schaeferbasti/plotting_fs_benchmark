@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib import cm
 
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Rectangle, Patch
 from scipy.ndimage import gaussian_filter1d
 
 
@@ -18,7 +19,8 @@ def lasagna_plot(
     binary_tol=0.03,
     binary_topk=3,
     overlay=True,
-    mode = "stability"
+    mode="validity",
+    sort_methods="mean_value"
 ):
     """
     Save a lasagna plot from a long dataframe and optionally add binary plots showing
@@ -51,6 +53,8 @@ def lasagna_plot(
     overlay : bool
         If True, draw white outlines on the original lasagna plot instead of creating
         separate binary plots.
+    sort_methods: str
+        If "alphabetical", sort methods A-Z. If "mean_value", sort by mean value across EPVs.
     """
 
     # --- DATA CLEANING ---
@@ -64,7 +68,7 @@ def lasagna_plot(
         # 2. Rename specific methods to their acronyms/new names
         df["selector"] = df["selector"].replace({
             "Accuracy": "LOCO",
-            "SequentialBackwardElimination": "SBE",
+            "SequentialBackwardElimination": "RFE",
             "SequentialForwardSelection": "SFS"
         })
 
@@ -75,6 +79,16 @@ def lasagna_plot(
         df.pivot(index="selector", columns="epv", values=values)
         .reindex(sorted(df["epv"].unique()), axis=1)
     )
+
+    if sort_methods == "alphabetical":
+        # Sorts A to Z. Because of ax.invert_yaxis() later, 'A' goes to the top.
+        lasagna_df = lasagna_df.sort_index(ascending=True)
+
+    elif sort_methods == "mean_value":
+        # Calculates the mean stability for each method across all EPVs.
+        # Sorts descending, so the highest mean is placed at the top.
+        row_means = lasagna_df.mean(axis=1)
+        lasagna_df = lasagna_df.loc[row_means.sort_values(ascending=False).index]
 
     epvs = lasagna_df.columns.to_numpy()
     epv_edges = _compute_bin_edges(epvs)
@@ -128,6 +142,42 @@ def lasagna_plot(
                 epv_edges
             )
 
+    cmap = cm.get_cmap("Blues")
+    color_low = cmap(0.1)
+    color_high = cmap(0.9)
+
+    # Create the patch elements for the legend
+    legend_elements = [
+        Patch(facecolor=color_high, edgecolor='black', label='High Stability'),
+        Patch(facecolor=color_low, edgecolor='black', label='Low Stability')
+    ]
+
+    # Add the legend
+    if mode == "stability":
+        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
+        cbar.set_ticks([])
+        cbar.ax.set_title("stable", pad=10, fontsize=10)
+        cbar.ax.text(
+            0.5, -0.05,
+            "unstable",
+            transform=cbar.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=10
+        )
+    else:
+        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6, aspect=30)
+        cbar.ax.set_title("valid", pad=10, fontsize=10)
+        cbar.set_ticks([])
+        cbar.ax.text(
+            0.5, -0.05,
+            "unvalid",
+            transform=cbar.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=10
+        )
+
     suffix = _build_suffix(
         overlay=overlay,
         binary_mode=binary_mode if overlay else None,
@@ -165,6 +215,16 @@ def lasagna_plot(
         ax.invert_yaxis()
         ax.invert_xaxis()
 
+        binary_legend_elements = [
+            Patch(facecolor=cmap(1.0), edgecolor='black', label='Within Threshold'),
+            Patch(facecolor=cmap(0.0), edgecolor='black', label='Outside Threshold')
+        ]
+        if mode == "validity":
+            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(1.0, 0.11))
+        else:
+            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(0.15, 0.0))
+
+
         suffix = _build_suffix(
             overlay=False,
             binary_mode="threshold",
@@ -201,6 +261,15 @@ def lasagna_plot(
         ax.set_xticks([])
         ax.invert_yaxis()
         ax.invert_xaxis()
+
+        binary_legend_elements = [
+            Patch(facecolor=cmap(1.0), edgecolor='black', label='Within Top-3'),
+            Patch(facecolor=cmap(0.0), edgecolor='black', label='Outside Top-3')
+        ]
+        if mode =="validity":
+            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(0.15, 0.11))
+        else:
+            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(0.15, 0.0))
 
         suffix = _build_suffix(
             overlay=False,
