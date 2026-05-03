@@ -154,31 +154,10 @@ def plot(df):
 
         labeled_positions.append((x, y))
 
-        # Check if the current row index is in the Pareto index list
-        if idx in pareto_idx_list:
-            ax.annotate(
-                method_name,
-                (x, y),
-                textcoords="offset points",
-                xytext=(5, y_offset),
-                fontsize=9,
-                weight='bold',
-                color="black"
-            )
-        else:
-            ax.annotate(
-                method_name,
-                (x, y),
-                textcoords="offset points",
-                xytext=(5, y_offset),
-                fontsize=8,
-                color="dimgray"
-            )
-
     ax.annotate(
         "optimal",
         xy=(0.0, 1.0),  # arrow tip near top-left
-        xytext=(0.001, 0.95),  # text a bit inside the plot
+        xytext=(0.001, 0.97),  # text a bit inside the plot
         xycoords="axes fraction",
         textcoords="axes fraction",
         arrowprops=dict(
@@ -191,6 +170,39 @@ def plot(df):
         color="green",
         ha="left",
         va="top"
+    )
+
+    # 4. Label ALL points automatically using adjustText
+    from adjustText import adjust_text
+
+    texts = []
+
+    for idx, row in agg_df.iterrows():
+        method_name = row["feature_selection_method"].replace("FeatureSelector", "")
+        x, y = row["mean_time"], row["mean_score"]
+
+        # 1. Add center alignment (ha='center', va='center') so arrows stop at the edge
+        if idx in pareto_idx_list:
+            t = ax.text(
+                x, y, method_name,
+                fontsize=14, weight='bold', color="black",
+                ha='center', va='center'
+            )
+        else:
+            t = ax.text(
+                x, y, method_name,
+                fontsize=14, color="dimgray",
+                ha='center', va='center'
+            )
+
+        texts.append(t)
+
+    # 2. Adjust texts
+    adjust_text(
+        texts,
+        arrowprops=dict(arrowstyle="-", color='black', lw=1, alpha=0.7),
+        expand=(1.15, 1.15),
+        min_arrow_len=20, zorder=3
     )
 
     ax.set_title(PLOT_TITLE)
