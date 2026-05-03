@@ -12,7 +12,7 @@ PLOT_NAME = "pareto_improvability_time_v3.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
-X_LABEL = "Time (s) per 1k samples"
+X_LABEL = "Feature Selection Time (s) per 1k samples"
 Y_LABEL = "Improvement over Random (%)"
 
 
@@ -51,7 +51,7 @@ def calculate_relative_performance(df):
     df_val = pd.read_csv(SCRIPT_DIR / "result_files" / "validity_results.csv", low_memory=False)
     df = add_num_samples_from_validity(df, df_val)
 
-    df["time_per_1k"] = df["feature_selection_fit_time"] / df["num_samples"] * 1000
+    df["time_per_1k"] = (df["feature_selection_fit_time"] / df["num_samples"]) * 1000
 
     # 1. Average budget, models (and splits)
     df_avg = (
@@ -86,7 +86,8 @@ def calculate_relative_performance(df):
     ).reset_index()
 
     # Drop 'Random' from the final aggregated dataframe so it isn't plotted
-    agg_df = agg_df[agg_df["feature_selection_method"] != "Random"].reset_index(drop=True)
+    agg_df = agg_df[agg_df["feature_selection_method"] != "LaplacianScore"].reset_index(drop=True)
+    # agg_df = agg_df[agg_df["feature_selection_method"] != "Random"].reset_index(drop=True)
 
 
     return agg_df
@@ -237,7 +238,7 @@ def plot(df):
     adjust_text(
         texts,
         arrowprops=dict(arrowstyle="-", color='black', lw=1, alpha=0.7),
-        expand=(1.2, 1.2),
+        expand=(1.3, 1.3),
         min_arrow_len=9, zorder=3
     )
 

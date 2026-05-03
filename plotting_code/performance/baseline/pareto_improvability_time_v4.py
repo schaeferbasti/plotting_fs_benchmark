@@ -100,7 +100,7 @@ def calculate_relative_performance(df):
 
     # Drop 'Random' from the final aggregated dataframe so it isn't plotted
     agg_df = agg_df[agg_df["feature_selection_method"] != "LaplacianScore"].reset_index(drop=True)
-    agg_df = agg_df[agg_df["feature_selection_method"] != "Random"].reset_index(drop=True)
+    # agg_df = agg_df[agg_df["feature_selection_method"] != "Random"].reset_index(drop=True)
 
     return agg_df
 
@@ -259,6 +259,8 @@ def plot(df):
     ax.set_ylabel(Y_LABEL)
     ax.set_yscale("linear")
     ax.set_xscale("linear")
+
+    # ax.invert_xaxis()
 
     ax.legend()
     ax.grid(True, alpha=0.3)
