@@ -151,6 +151,24 @@ def plot(df):
                 color="dimgray"
             )
 
+    ax.annotate(
+        "optimal",
+        xy=(0.0, 1.0),  # arrow tip near top-left
+        xytext=(0.001, 0.95),  # text a bit inside the plot
+        xycoords="axes fraction",
+        textcoords="axes fraction",
+        arrowprops=dict(
+            arrowstyle="->",
+            color="green",
+            lw=1.5
+        ),
+        fontsize=11,
+        fontweight="bold",
+        color="green",
+        ha="left",
+        va="top"
+    )
+
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
