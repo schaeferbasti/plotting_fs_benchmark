@@ -11,7 +11,7 @@ PLOT_NAME = "pareto_improvability_time_v2.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
-X_LABEL = "Training Time (s)"
+X_LABEL = "Feature Selection Time (s)"
 Y_LABEL = "Improvement over Random (%)"
 
 
