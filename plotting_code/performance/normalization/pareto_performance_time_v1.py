@@ -11,8 +11,8 @@ PLOT_NAME = "pareto_performance_time_v1.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
-X_LABEL = "Training Time (s)"
-Y_LABEL = "Normalized Score"
+X_LABEL = "Feature Selection Time (s)"
+Y_LABEL = "Score (up to 1)"
 
 
 def calculate_ranks(df):
