@@ -142,7 +142,7 @@ def plot(df):
     print(f"Pareto methods: {len(pareto)}")
     print(f"Dominated methods: {len(non_pareto)}")
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(8, 5))
 
     ax.set_yscale("linear")  # or "log" if needed
     ax.set_xscale("log")  # or "log" if needed
