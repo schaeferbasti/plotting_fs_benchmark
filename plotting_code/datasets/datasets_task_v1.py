@@ -7,7 +7,7 @@ import textwrap  # <-- NEW: Import textwrap
 
 # TODO: Adapt file and plot name
 FILE_NAME = "data_foundry.csv"
-PLOT_NAME = "dataset_task_v1.png"
+PLOT_NAME = "dataset_task_v1.svg"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"

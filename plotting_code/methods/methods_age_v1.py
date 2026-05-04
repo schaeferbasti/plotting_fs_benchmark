@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 # TODO: Adapt file and plot name
 FILE_NAME = "method_curation.csv"
-PLOT_NAME = "method_age_v1.png"
+PLOT_NAME = "method_age_v1.svg"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"

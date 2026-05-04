@@ -7,7 +7,7 @@ from utils.average import average_per_dataset_and_method
 from utils.beautify import beautify_names, remove_jmi, add_model_name
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "critical_difference_v1.png"
+PLOT_NAME = "critical_difference_v1.svg"
 PLOT_TITLE = ""
 
 def prepare_data_for_autorank(df):
@@ -41,7 +41,7 @@ def plot_autorank(df):
 
     # 3. Create the figure with desired dimensions: (width, height)
     # Using (4, 8) makes it narrow (4 inches) and tall (8 inches)
-    fig, ax = plt.subplots(figsize=(4, 12))
+    fig, ax = plt.subplots(figsize=(3, 12))
 
     # 4. Plot stats into the pre-defined ax
     # Autorank will draw the plot inside this specific axis

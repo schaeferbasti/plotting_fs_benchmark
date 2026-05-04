@@ -238,7 +238,7 @@ def lasagna_plot(
     )
 
     plt.tight_layout()
-    plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+    plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
     plt.close()
 
     if binary_mode == "threshold" and not overlay:
@@ -310,7 +310,7 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
         plt.close()
 
     if binary_mode == "topk" and not overlay:
@@ -381,7 +381,7 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
         plt.close()
 
 
