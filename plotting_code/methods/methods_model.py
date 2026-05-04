@@ -5,8 +5,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 # TODO: Adapt file and plot name
-FILE_NAME = "data_foundry.csv"
-PLOT_NAME = "dataset_age_v1.png"
+FILE_NAME = "method_curation.csv"
+PLOT_NAME = "method_age_v1.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"
@@ -15,14 +15,21 @@ Y_LABEL = "Metric Error"
 
 # TODO: Adapt plotting function
 def plot(df):
-    df["dataset_year"] = pd.to_numeric(df["Year"], errors="coerce")
+    # Parse Year columns (try both Paper and Code years)
+    df = df[df["Final Decision "] == "Yes"].copy()
+
+    df["year_paper"] = pd.to_numeric(df["Year (Paper)"], errors="coerce")
+    df["year_code"] = pd.to_numeric(df["Year (Code)"], errors="coerce")
+
+    # Use paper year if available, otherwise code year
+    df["dataset_year"] = df["year_paper"].fillna(df["year_code"])
 
     # Filter valid years
     years = df["dataset_year"].dropna()
 
     # Bin into decades (adjust bins as needed for your data)
-    bins = [1980, 1990, 2000, 2010, 2020, 2030]
-    labels = ["1980s", "1990s", "2000s", "2010s", "2020s"]
+    bins = [1900, 1980, 1990, 2000, 2010, 2020]
+    labels = ["earlier", "1980s", "1990s", "2000s", "2010s"]
     year_bins = pd.cut(years, bins=bins, labels=labels, right=False, include_lowest=True)
 
     # Count datasets per bin
@@ -36,8 +43,9 @@ def plot(df):
 
     ax.set_xticks(bins_pos)
     ax.set_xticklabels(bin_counts.index, rotation=0)
-    ax.set_title("Dataset Publication Decade")
-    ax.set_ylabel("Number of Datasets")
+    ax.set_title("Method Publication Decade")
+    ax.set_xlabel("Publication Decade")
+    ax.set_ylabel("Number of Methods")
     ax.grid(True, alpha=0.3, axis="y")
 
     plt.tight_layout()
@@ -49,7 +57,7 @@ def plot(df):
 # Do nothing below
 SCRIPT_DIR = Path(__file__).parent / "../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files/curation" / FILE_NAME
-OUTPUT_DIR = SCRIPT_DIR / "generated_plots/datasets"
+OUTPUT_DIR = SCRIPT_DIR / "generated_plots/methods"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 

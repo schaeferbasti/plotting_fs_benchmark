@@ -21,7 +21,7 @@ def plot(df):
     # Count datasets per task
     task_counts = df["Problem Type"].value_counts()
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(4, 4))
 
     # Bar plot of counts per task
     bins_pos = np.arange(len(task_counts))

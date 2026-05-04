@@ -9,7 +9,7 @@ FILE_NAME = "data_foundry.csv"
 PLOT_NAME = "dataset_features_samples_v1.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Dataset Characteristics (Samples vs Features)"
+PLOT_TITLE = ""
 X_LABEL = "Number of Samples"
 Y_LABEL = "Number of Features"
 
@@ -27,7 +27,7 @@ def plot(df):
     df_class = dataset_data[dataset_data["n_classes"].notna()]
     df_reg = dataset_data[dataset_data["n_classes"].isna()]
 
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(8, 8))
 
     # 1. Plot Classification datasets (Color-coded by num_classes)
     if not df_class.empty:

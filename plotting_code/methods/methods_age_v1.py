@@ -28,14 +28,14 @@ def plot(df):
     years = df["dataset_year"].dropna()
 
     # Bin into decades (adjust bins as needed for your data)
-    bins = [1900, 1980, 1990, 2000, 2010, 2020]
-    labels = ["earlier", "1980s", "1990s", "2000s", "2010s"]
+    bins = [1980, 1990, 2000, 2010]
+    labels = ["1980s", "1990s", "2000s"]
     year_bins = pd.cut(years, bins=bins, labels=labels, right=False, include_lowest=True)
 
     # Count datasets per bin
     bin_counts = year_bins.value_counts().sort_index()
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(4, 4))
 
     # Bar plot of counts per decade
     bins_pos = np.arange(len(bin_counts))
@@ -44,7 +44,6 @@ def plot(df):
     ax.set_xticks(bins_pos)
     ax.set_xticklabels(bin_counts.index, rotation=0)
     ax.set_title("Method Publication Decade")
-    ax.set_xlabel("Publication Decade")
     ax.set_ylabel("Number of Methods")
     ax.grid(True, alpha=0.3, axis="y")
 
