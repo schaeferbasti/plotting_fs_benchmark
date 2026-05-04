@@ -27,7 +27,7 @@ def plot(df):
     df_class = dataset_data[dataset_data["n_classes"].notna()]
     df_reg = dataset_data[dataset_data["n_classes"].isna()]
 
-    fig, ax = plt.subplots(figsize=(8, 8))
+    fig, ax = plt.subplots(figsize=(8, 7))
 
     # 1. Plot Classification datasets (Color-coded by num_classes)
     if not df_class.empty:
@@ -46,7 +46,7 @@ def plot(df):
         )
 
         # Add a colorbar specifically for the classification scatter
-        cbar = fig.colorbar(scatter_class, ax=ax, pad=0.02)
+        cbar = fig.colorbar(scatter_class, ax=ax, pad=0.02, shrink=0.6)
         cbar.set_label("Number of Classes", rotation=270, labelpad=15)
 
     # 2. Plot Regression datasets (Solid Green)
@@ -72,12 +72,7 @@ def plot(df):
     ax.set_yscale("log")
 
     # Display the standard legend (shows Classification vs Regression dots)
-    ax.legend(loc="lower right")
-
-    # Add dataset count annotation
-    ax.text(0.02, 0.98, f"N = {len(dataset_data)} datasets",
-            transform=ax.transAxes, va="top", ha="left",
-            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8))
+    ax.legend(loc="upper right")
 
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME

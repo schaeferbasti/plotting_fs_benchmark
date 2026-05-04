@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+import textwrap  # <-- NEW: Import textwrap
 
 # TODO: Adapt file and plot name
 FILE_NAME = "data_foundry.csv"
@@ -12,6 +13,7 @@ PLOT_NAME = "dataset_task_v1.png"
 PLOT_TITLE = "Dummy Plot"
 X_LABEL = "Feature Selection Method"
 Y_LABEL = "Metric Error"
+
 
 # TODO: Adapt plotting function
 def plot(df):
@@ -27,10 +29,14 @@ def plot(df):
     bins_pos = np.arange(len(task_counts))
     ax.bar(bins_pos, task_counts.values, color="#4C72B0", alpha=0.8, edgecolor="black")
 
+    # --- NEW CODE: Use textwrap to format labels ---
+    # Wraps text so that no single line is longer than ~12 characters
+    multi_line_labels = [label.replace(" ", "\n") for label in task_counts.index]
+
     ax.set_xticks(bins_pos)
-    ax.set_xticklabels(task_counts.index, rotation=45, ha="right")
-    ax.set_title("Datasets by Task")
-    ax.set_xlabel("Task")
+    ax.set_xticklabels(multi_line_labels, rotation=0, ha="center", va="top", fontsize=8)  # Slightly smaller font
+
+    ax.set_title("Datasets by Problem Type")
     ax.set_ylabel("Number of Datasets")
     ax.grid(True, alpha=0.3, axis="y")
 
