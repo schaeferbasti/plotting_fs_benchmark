@@ -11,7 +11,7 @@ PLOT_NAME = "validity_per_EPV_v1"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
-X_LABEL = "Selection Difficulty"
+X_LABEL = "Selection Difficulty (EPV)"
 Y_LABEL = ""
 
 # TODO: Adapt lasagna plot metric and smoothing
@@ -75,7 +75,7 @@ def main():
         # Format the filename so floats like 0.1 become "0_1"
         noise_str = str(noise_level).replace(".", "_")
         noise_output_path = OUTPUT_DIR / f"{PLOT_NAME}_noise_{noise_str}"
-        noise_label = f"{X_LABEL} (Noise: {noise_level})"
+        noise_label = f"{X_LABEL} - Noise: {noise_level}"
 
         for binary_mode in ["threshold", "topk"]:
             for overlay in [True, False]:

@@ -91,6 +91,9 @@ def lasagna_plot(
         lasagna_df = lasagna_df.loc[row_means.sort_values(ascending=False).index]
 
     epvs = lasagna_df.columns.to_numpy()
+
+    # plot_epv_distribution(epvs)
+
     epv_edges = _compute_bin_edges(epvs)
     epvs_dense_edges = np.linspace(epv_edges[0], epv_edges[-1], 1001)
     epvs_dense = 0.5 * (epvs_dense_edges[:-1] + epvs_dense_edges[1:])
@@ -121,10 +124,35 @@ def lasagna_plot(
     ax.set_title(plot_title)
     ax.set_xlabel(x_label)
     ax.set_ylabel(y_label)
+    min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+
+    tick_positions = []
+    tick_labels = []
+
+    last_pos = -float('inf')
+
+    # Iterate through all available epvs
+    for val in epvs:
+        if (val - last_pos) >= min_distance:
+            tick_positions.append(val)
+            tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
+            last_pos = val
+
+    # Force the very last EPV to be included so the right edge has a label
+    if epvs[-1] not in tick_positions:
+        # If adding the last one makes it overlap the second-to-last, replace the second-to-last
+        if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
+            tick_positions.pop()
+            tick_labels.pop()
+        tick_positions.append(epvs[-1])
+        tick_labels.append(f"{epvs[-1]:.1f}")
+
+    # Apply them to the axis
+    ax.set_xticks(tick_positions)
+    ax.set_xticklabels(tick_labels, rotation=0, ha="center")
 
     ax.set_yticks(np.arange(len(lasagna_df.index)))
     ax.set_yticklabels(lasagna_df.index)
-    ax.set_xticks([])
     ax.invert_yaxis()
     ax.invert_xaxis()
 
@@ -154,7 +182,7 @@ def lasagna_plot(
 
     # Add the legend
     if mode == "stability":
-        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
+        """cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
         cbar.set_ticks([])
         cbar.ax.set_title("stable", pad=10, fontsize=10)
         cbar.ax.text(
@@ -164,9 +192,21 @@ def lasagna_plot(
             ha="center",
             va="top",
             fontsize=10
+        )"""
+        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04)
+        cbar.ax.set_title("stable", pad=12, fontsize=11)
+        cbar.set_ticks([0.0, 1.0])
+        cbar.ax.tick_params(length=0, labelsize=10)
+        cbar.ax.text(
+            0.5, -0.05,
+            "unstable",
+            transform=cbar.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=12
         )
     else:
-        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6, aspect=30)
+        """cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6, aspect=30)
         cbar.ax.set_title("valid", pad=10, fontsize=10)
         cbar.set_ticks([])
         cbar.ax.text(
@@ -176,6 +216,18 @@ def lasagna_plot(
             ha="center",
             va="top",
             fontsize=10
+        )"""
+        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
+        cbar.ax.set_title("valid", pad=12, fontsize=11)
+        cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        cbar.ax.tick_params(length=0, labelsize=10)
+        cbar.ax.text(
+            0.5, -0.05,
+            "unvalid",
+            transform=cbar.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=12
         )
 
     suffix = _build_suffix(
@@ -211,7 +263,32 @@ def lasagna_plot(
 
         ax.set_yticks(np.arange(len(binary_df.index)))
         ax.set_yticklabels(binary_df.index)
-        ax.set_xticks([])
+        min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+
+        tick_positions = []
+        tick_labels = []
+
+        last_pos = -float('inf')
+
+        # Iterate through all available epvs
+        for val in epvs:
+            if (val - last_pos) >= min_distance:
+                tick_positions.append(val)
+                tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
+                last_pos = val
+
+        # Force the very last EPV to be included so the right edge has a label
+        if epvs[-1] not in tick_positions:
+            # If adding the last one makes it overlap the second-to-last, replace the second-to-last
+            if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
+                tick_positions.pop()
+                tick_labels.pop()
+            tick_positions.append(epvs[-1])
+            tick_labels.append(f"{epvs[-1]:.1f}")
+
+        # Apply them to the axis
+        ax.set_xticks(tick_positions)
+        ax.set_xticklabels(tick_labels, rotation=0, ha="center")
         ax.invert_yaxis()
         ax.invert_xaxis()
 
@@ -258,7 +335,32 @@ def lasagna_plot(
 
         ax.set_yticks(np.arange(len(binary_df.index)))
         ax.set_yticklabels(binary_df.index)
-        ax.set_xticks([])
+        min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+
+        tick_positions = []
+        tick_labels = []
+
+        last_pos = -float('inf')
+
+        # Iterate through all available epvs
+        for val in epvs:
+            if (val - last_pos) >= min_distance:
+                tick_positions.append(val)
+                tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
+                last_pos = val
+
+        # Force the very last EPV to be included so the right edge has a label
+        if epvs[-1] not in tick_positions:
+            # If adding the last one makes it overlap the second-to-last, replace the second-to-last
+            if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
+                tick_positions.pop()
+                tick_labels.pop()
+            tick_positions.append(epvs[-1])
+            tick_labels.append(f"{epvs[-1]:.1f}")
+
+        # Apply them to the axis
+        ax.set_xticks(tick_positions)
+        ax.set_xticklabels(tick_labels, rotation=0, ha="center")
         ax.invert_yaxis()
         ax.invert_xaxis()
 
@@ -351,3 +453,26 @@ def _add_discrete_overlay(ax, df, x_edges, linewidth=1, linestyle="-"):
                 )
                 ax.add_patch(rect)
                 start = None
+
+
+def plot_epv_distribution(epvs):
+    fig, ax = plt.subplots(figsize=(12, 8))  # Short and wide figure
+
+    # Create an array of zeros the same length as epvs for the y-axis
+    y_zeros = np.zeros_like(epvs)
+
+    # Plot the 1D scatter
+    ax.scatter(epvs, y_zeros, color="blue", alpha=0.5, s=50, edgecolors="black")
+
+    # Clean up the plot
+    ax.set_yticks([])  # Hide the y-axis ticks since they are all 0
+    ax.set_xlabel("EPV (Selection Difficulty)")
+    ax.set_title("Distribution of EPV Values")
+
+    # Hide the top, left, and right spines so it looks like a single axis line
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+    plt.tight_layout()
+    plt.show()
