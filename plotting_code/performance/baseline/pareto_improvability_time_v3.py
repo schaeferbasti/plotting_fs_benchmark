@@ -144,6 +144,9 @@ def plot(df):
 
     fig, ax = plt.subplots(figsize=(12, 6))
 
+    ax.set_yscale("linear")  # or "log" if needed
+    ax.set_xscale("log")  # or "log" if needed
+
     # 1. Plot Non-Pareto methods in gray (Background)
     ax.scatter(
         non_pareto["mean_time"],
@@ -192,9 +195,9 @@ def plot(df):
         labeled_positions.append((x, y))
 
     ax.annotate(
-        "optimal",
+        "ideal",
         xy=(0.0, 1.0),  # arrow tip near top-left
-        xytext=(0.03, 0.99),  # text a bit inside the plot
+        xytext=(0.03, 0.96),  # text a bit inside the plot
         xycoords="axes fraction",
         textcoords="axes fraction",
         arrowprops=dict(
@@ -245,8 +248,6 @@ def plot(df):
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
-    ax.set_yscale("linear")  # or "log" if needed
-    ax.set_xscale("linear")  # or "log" if needed
 
     ax.legend()
     ax.grid(True, alpha=0.3)
