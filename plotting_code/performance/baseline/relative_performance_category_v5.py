@@ -6,8 +6,8 @@ from matplotlib import pyplot as plt
 from utils.beautify import beautify_names, add_model_name, remove_jmi
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_category_v2.png"
-PLOT_TITLE = "LightGBM Mean"
+PLOT_NAME = "relative_performance_category_v5.png"
+PLOT_TITLE = "LightGBM Max"
 X_LABEL = ""
 Y_LABEL = "Improvement over Random (%)"
 
@@ -21,22 +21,13 @@ def calculate_relative_performance(df):
 
     df = df[df["model_cls"] == "LGBModel"].copy()
 
-    if df.empty:
-        print("⚠️ Warning: Dataframe is empty after filtering for LightGBM!")
-
     category_mapping = {
+        # Filters
         "ANOVA": "correlation",
-        "CART": "tree",
         "ElasticNet": "regularization",
-        "GainRatio": "info-theory",
         "LaplacianScore": "distance",
-        "Lasso": "regularization",
-        "LOCO": "backward-search",
-        "MarkovBlanket": "correlation",
-        "mRMR": "info-theory",
         "MutualInformation": "info-theory",
         "Random": "random",
-        "ReliefF": "correlation",
         "RFImportance": "tree",
         "RFE": "backward-search",
         "SFS": "forward-search",
@@ -44,31 +35,29 @@ def calculate_relative_performance(df):
 
     df["feature_selection_method_category"] = df["feature_selection_method"].map(category_mapping)
 
-    # Average budget, models (and splits)
-    df_avg = (
-        df.groupby(["tid", "feature_selection_method_category"])["metric_error"]
+    random_df = df[df["feature_selection_method_category"] == "random"]
+    random_baseline = (
+        random_df.groupby("tid")["metric_error"]
         .mean()
         .reset_index()
+        .rename(columns={"metric_error": "random_error"})
     )
 
-    random_baseline = df_avg[df_avg["feature_selection_method_category"] == "random"].copy()
-
-    random_baseline = random_baseline[["tid", "metric_error"]].rename(columns={"metric_error": "random_error"})
-
-    df_merged = df_avg.merge(random_baseline, on="tid", how="left")
-
+    df_merged = df.merge(random_baseline, on="tid", how="left")
 
     df_merged["improvability"] = (
          (df_merged["random_error"] - df_merged["metric_error"])
-         / (df_merged["random_error"])
+         / df_merged["random_error"]
     ) * 100
 
-    # Aggregate across datasets
+
+
     agg_df = (
         df_merged.groupby("feature_selection_method_category")["improvability"]
         .agg(["mean", "std"])
         .reset_index()
     )
+
     agg_df.columns = [
         "feature_selection_method_category",
         "mean_improvability",
