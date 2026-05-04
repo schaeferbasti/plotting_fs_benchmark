@@ -1,4 +1,6 @@
 import ast
+
+import numpy as np
 import pandas as pd
 import sys
 
@@ -10,13 +12,13 @@ FILE_NAME = "stability_results.csv"
 PLOT_NAME = "stability_per_EPV_v1"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Stability vs. Selection Difficulty"
+PLOT_TITLE = ""
 X_LABEL = "Selection Difficulty"
 Y_LABEL = ""
 
 # TODO: Adapt lasagna plot metric and smoothing
 METRIC = "stability"
-SMOOTHING = 20
+SMOOTHING = 10
 
 # Do nothing below
 SCRIPT_DIR = Path(__file__).parent / "../../"
@@ -25,7 +27,7 @@ OUTPUT_DIR = SCRIPT_DIR / "generated_plots/stability"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_PATH = OUTPUT_DIR / PLOT_NAME
 
-def overwrite_min_samples_from_validity(df_stability, df_validity):
+def overwrite_min_samples_from_validity(df_stability, df_validity, df_results):
     """
     Overwrites 'min_samples_per_class' in df_stability using the true values
     from df_validity, matched solely on 'data_foundry_task_id'.
@@ -47,6 +49,27 @@ def overwrite_min_samples_from_validity(df_stability, df_validity):
     # it safely falls back to whatever value it originally had in stability.
     df_stab["min_samples_per_class"] = new_min_samples.fillna(df_stab["min_samples_per_class"])
 
+    # 5. Extract the clean 'tid' from the 'data_foundry_task_id' string
+    df_stab["temp_tid"] = df_stab["data_foundry_task_id"].apply(
+        lambda x: int(str(x).split("|")[1]) if pd.notna(x) and "|" in str(x) else np.nan
+    )
+
+    # 6. Create a mapping dictionary for {tid: problem_type} from results_per_split.csv
+    # We drop duplicates to ensure we have exactly one problem_type per tid
+    res_dedup = df_results.dropna(subset=["tid", "problem_type"]).drop_duplicates(subset=["tid"], keep="first")
+    problem_type_mapping = res_dedup.set_index("tid")["problem_type"].to_dict()
+
+    # 7. Map the problem_type onto our stability dataframe
+    df_stab["temp_problem_type"] = df_stab["temp_tid"].map(problem_type_mapping)
+
+    # 8. Find all rows where the problem type is regression and force min_samples_per_class to NaN
+    # We use .str.lower() to make the check case-insensitive (handles 'Regression' or 'regression')
+    is_regression = df_stab["temp_problem_type"].str.lower() == "regression"
+    df_stab.loc[is_regression, "min_samples_per_class"] = np.nan
+
+    # 9. Clean up the temporary helper columns, so we return the dataframe in its original shape
+    df_stab = df_stab.drop(columns=["temp_tid", "temp_problem_type"])
+
     return df_stab
 
 
@@ -57,6 +80,7 @@ def main():
 
     df_validity = pd.read_csv(SCRIPT_DIR / "result_files/validity_results.csv", low_memory=False)
     df_stability = pd.read_csv(RESULTS_FILE, low_memory=False)
+    df_results = pd.read_csv(SCRIPT_DIR / "result_files/results_per_split.csv", low_memory=False)
 
     stab_datasets = set(df_stability["data_foundry_task_id"].dropna().unique())
     val_datasets = set(df_validity["data_foundry_task_id"].dropna().unique())
@@ -68,7 +92,7 @@ def main():
     print(f"Total datasets in validity: {len(val_datasets)}")
     print(f"Datasets in stability but NOT in validity ({len(missing_in_validity)} total):")
 
-    df = overwrite_min_samples_from_validity(df_stability, df_validity)
+    df = overwrite_min_samples_from_validity(df_stability, df_validity, df_results)
 
     unique_counts = df.groupby("data_foundry_task_id")["min_samples_per_class"].nunique(dropna=False)
 
@@ -102,8 +126,6 @@ def main():
     else:
         print("✅ All datasets have consistent EPV values.")
 
-
-
     # TODO: adapt if stability estimation is not over all repeats
     df_plot = (
         df.groupby(["dataset", "selector", "epv", "max_features"])
@@ -117,11 +139,6 @@ def main():
         .reset_index(name="stability")
     )
 
-    # mean stability over max_features (cardinality)
-    """df_plot = (
-        df_plot.groupby(["dataset", "selector", "epv"], as_index=False)["stability"]
-        .mean()
-    )"""
     df_plot = (
         df_plot.groupby(["selector", "epv"], as_index=False)["stability"]
         .mean()
@@ -138,7 +155,9 @@ def main():
                 output_path=OUTPUT_PATH,
                 smoothing=SMOOTHING,
                 binary_mode=binary_mode,
-                overlay=overlay
+                overlay=overlay,
+                mode="stability",
+                sort_methods="mean_value"
             )
 
 

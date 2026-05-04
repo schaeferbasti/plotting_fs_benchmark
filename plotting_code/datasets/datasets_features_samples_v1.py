@@ -9,42 +9,72 @@ FILE_NAME = "data_foundry.csv"
 PLOT_NAME = "dataset_features_samples_v1.png"
 
 # TODO: Adapt title and labels
-PLOT_TITLE = "Dummy Plot"
-X_LABEL = "Feature Selection Method"
-Y_LABEL = "Metric Error"
+PLOT_TITLE = "Dataset Characteristics (Samples vs Features)"
+X_LABEL = "Number of Samples"
+Y_LABEL = "Number of Features"
 
-# TODO: Adapt plotting function
+
 def plot(df):
-    # Parse number of features and samples (adjust column names as needed)
+    # Parse number of features, samples, and classes
     df["n_features"] = pd.to_numeric(df["# features"], errors="coerce")
     df["n_samples"] = pd.to_numeric(df["samples"], errors="coerce")
+    df["n_classes"] = pd.to_numeric(df["# classes"], errors="coerce")
 
-    # Filter valid data
+    # Filter valid data for the axes
     dataset_data = df.dropna(subset=["n_features", "n_samples"])
+
+    # Split into Classification (has classes) and Regression (NaN classes)
+    df_class = dataset_data[dataset_data["n_classes"].notna()]
+    df_reg = dataset_data[dataset_data["n_classes"].isna()]
 
     fig, ax = plt.subplots(figsize=(12, 8))
 
-    # Scatter plot: samples (x) vs features (y)
-    scatter = ax.scatter(
-        dataset_data["n_samples"],
-        dataset_data["n_features"],
-        alpha=0.7,
-        s=80,
-        edgecolors="black",
-        linewidth=1,
-        c="tab:blue"
-    )
+    # 1. Plot Classification datasets (Color-coded by num_classes)
+    if not df_class.empty:
+        scatter_class = ax.scatter(
+            df_class["n_samples"],
+            df_class["n_features"],
+            c=df_class["n_classes"],
+            cmap="Blues",
+            vmin=0,  # Set to 0 so '2' isn't purely white/invisible, making it light blue
+            vmax=df_class["n_classes"].max(),
+            alpha=0.8,
+            s=80,
+            edgecolors="black",
+            linewidth=1,
+            label="Classification"
+        )
 
-    ax.set_xlabel("Number of Samples")
-    ax.set_ylabel("Number of Features")
-    ax.set_title("Dataset Characteristics (Samples vs Features)")
+        # Add a colorbar specifically for the classification scatter
+        cbar = fig.colorbar(scatter_class, ax=ax, pad=0.02)
+        cbar.set_label("Number of Classes", rotation=270, labelpad=15)
+
+    # 2. Plot Regression datasets (Solid Green)
+    if not df_reg.empty:
+        scatter_reg = ax.scatter(
+            df_reg["n_samples"],
+            df_reg["n_features"],
+            color="#55A868",  # A nice visible green
+            alpha=0.8,
+            s=80,
+            edgecolors="black",
+            linewidth=1,
+            label="Regression"
+        )
+
+    ax.set_xlabel(X_LABEL)
+    ax.set_ylabel(Y_LABEL)
+    ax.set_title(PLOT_TITLE)
     ax.grid(True, alpha=0.3)
 
-    # Log scale for better visualization (common for dataset characteristics)
+    # Log scale for better visualization
     ax.set_xscale("log")
     ax.set_yscale("log")
 
-    # Add dataset count
+    # Display the standard legend (shows Classification vs Regression dots)
+    ax.legend(loc="lower right")
+
+    # Add dataset count annotation
     ax.text(0.02, 0.98, f"N = {len(dataset_data)} datasets",
             transform=ax.transAxes, va="top", ha="left",
             bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8))
@@ -53,6 +83,8 @@ def plot(df):
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out, dpi=150, bbox_inches="tight")
     plt.close()
+
+    print(f"✅ Plot saved to {out}")
 
 
 # Do nothing below
