@@ -40,6 +40,9 @@ def plot(df):
     ax.set_ylabel("Number of Datasets")
     ax.grid(True, alpha=0.3, axis="y")
 
+    from matplotlib.ticker import MaxNLocator
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out, dpi=150, bbox_inches="tight")
