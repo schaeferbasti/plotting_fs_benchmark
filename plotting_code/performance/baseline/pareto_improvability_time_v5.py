@@ -8,7 +8,7 @@ from utils.beautify import remove_jmi, beautify_names, add_model_name
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "pareto_improvability_time_v5.png"
+PLOT_NAME = "pareto_improvability_time_v5.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
@@ -163,7 +163,7 @@ def plot(df):
     print(f"Pareto methods: {len(pareto)}")
     print(f"Dominated methods: {len(non_pareto)}")
 
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(8, 4))
 
     ax.set_yscale("linear")  # or "log" if needed
     ax.set_xscale("log")  # or "log" if needed
@@ -226,7 +226,7 @@ def plot(df):
             color="green",
             lw=1.5
         ),
-        fontsize=14,
+        fontsize=12,
         fontweight="bold",
         color="green",
         ha="left",
@@ -246,13 +246,13 @@ def plot(df):
         if idx in pareto_idx_list:
             t = ax.text(
                 x, y, method_name,
-                fontsize=14, weight='bold', color="black",
+                fontsize=12, weight='bold', color="black",
                 ha='center', va='center'
             )
         else:
             t = ax.text(
                 x, y, method_name,
-                fontsize=14, color="dimgray",
+                fontsize=12, color="dimgray",
                 ha='center', va='center'
             )
 
@@ -262,7 +262,7 @@ def plot(df):
     adjust_text(
         texts,
         arrowprops=dict(arrowstyle="-", color='black', lw=1, alpha=0.7),
-        expand=(1.3, 1.3),
+        expand=(1.5, 1.5),
         min_arrow_len=9, zorder=3
     )
 
