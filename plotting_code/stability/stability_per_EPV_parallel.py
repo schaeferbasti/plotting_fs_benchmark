@@ -110,15 +110,28 @@ def main():
             print(f"  - Dataset {ds_id}: {conflicting_vals}")
 
     df["selected_features_parsed"] = df["selected_features"].apply(ast.literal_eval)
-    df["original_features_parsed"] = df["original_features"].apply(ast.literal_eval)
+    print("✅ Successfully parsed 'selected_features' columns into lists.")
+
+    unique_lists = df["original_features"].dropna().unique()
+    # 2. Parse only the unique ones (fast because it's a small array)
+    parsed_dict = {val: ast.literal_eval(val) for val in unique_lists}
+    # 3. Map them back to the millions of rows instantly
+    df["original_features_parsed"] = df["original_features"].map(parsed_dict)
+    print("✅ Successfully parsed 'original_features' columns into lists.")
 
     # TODO: check if pattern holds for non-dummy data
     df["selector"] = df["method"].str.split("__").str[1]
     df["dataset"] = df["data_foundry_task_id"].str.split("|").str[2].str.split("/").str[0]
 
     # TODO: check if min_samples_per_class is nan for regression and if num_samples is for the whole dataset or per split
-    df["epv"] = compute_epv(df, df["original_features_parsed"])
+    unique_datasets = df.drop_duplicates(subset=["data_foundry_task_id"]).copy()
 
+    # Compute the EPV just for these unique rows
+    unique_datasets["epv"] = compute_epv(unique_datasets, unique_datasets["original_features_parsed"])
+
+    # Map those calculated EPVs back to the full dataframe
+    epv_mapping = unique_datasets.set_index("data_foundry_task_id")["epv"].to_dict()
+    df["epv"] = df["data_foundry_task_id"].map(epv_mapping)
     unique_epv_counts = df.groupby("data_foundry_task_id")["epv"].nunique(dropna=False)
     inconsistent_datasets = unique_epv_counts[unique_epv_counts > 1]
 
@@ -127,19 +140,64 @@ def main():
     else:
         print("✅ All datasets have consistent EPV values.")
 
-    # TODO: adapt if stability estimation is not over all repeats
-    df = df.groupby(["data_foundry_task_id", "selector", "max_features"]).head(5)
+    remote_tqdm = ray.remote(tqdm_ray.tqdm)
 
-    df_plot = (
-        df.apply(
-            lambda g: compute_stability(
-                g["selected_features_parsed"],
-                g["original_features_parsed"],
-                method_name=g["selector"].iloc[0]
+    # 2. Define the Ray remote function, passing the progress bar actor
+    @ray.remote
+    def process_group_chunk(chunk_df, pbar):
+        # Perform the exact same groupby-apply on this smaller chunk
+        res = (
+            chunk_df.groupby(["dataset", "selector", "epv", "max_features"])
+            .apply(
+                lambda g: compute_stability(
+                    g["selected_features_parsed"],
+                    g["original_features_parsed"],
+                    method_name=g["selector"].iloc[0]
+                )
             )
+            .reset_index(name="stability")
         )
-        .reset_index(name="stability")
-    )
+
+        # Tell the progress bar that this chunk is finished!
+        pbar.update.remote(1)
+
+        return res
+
+    print("Starting parallel processing with Ray...")
+
+    df['group_id'] = df["dataset"] + "_" + df["selector"] + "_" + df["epv"].astype(str) + "_" + df[
+        "max_features"].astype(str)
+    unique_groups = df['group_id'].unique()
+
+    num_cpus = int(ray.cluster_resources().get("CPU", 1))
+    print(f"Detected {num_cpus} CPUs.")
+
+    # Split into chunks
+    group_chunks = np.array_split(unique_groups,
+                                  num_cpus * 4)  # Split into even more chunks for smoother progress tracking
+
+    # Filter out empty chunks that array_split might generate
+    group_chunks = [chunk for chunk in group_chunks if len(chunk) > 0]
+    total_chunks = len(group_chunks)
+
+    # 3. Initialize the global remote progress bar
+    bar_actor = remote_tqdm.remote(desc="Processing chunks", total=total_chunks)
+
+    # 4. Dispatch tasks to Ray workers, passing the bar_actor
+    futures = []
+    for group_chunk in group_chunks:
+        df_chunk = df[df['group_id'].isin(group_chunk)]
+        futures.append(process_group_chunk.remote(df_chunk, bar_actor))
+
+    # 5. Gather all results
+    results = ray.get(futures)
+
+    # 6. Close the progress bar
+    ray.get(bar_actor.close.remote())
+
+    # 7. Combine back into a single dataframe
+    df_plot = pd.concat(results, ignore_index=True)
+
 
     df_plot = (
         df_plot.groupby(["selector", "epv"], as_index=False)["stability"]
