@@ -12,7 +12,8 @@ def beautify_names(df):
     df["feature_selection_method"] = df["feature_selection_method"].replace({
         "Accuracy": "LOCO",
         "SequentialBackwardElimination": "RFE",
-        "SequentialForwardSelection": "SFS"
+        "SequentialForwardSelection": "SFS",
+        "ANOVA": "F-Statistics"
     })
     return df
 

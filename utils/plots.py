@@ -72,7 +72,8 @@ def lasagna_plot(
         df["selector"] = df["selector"].replace({
             "Accuracy": "LOCO",
             "SequentialBackwardElimination": "RFE",
-            "SequentialForwardSelection": "SFS"
+            "SequentialForwardSelection": "SFS",
+            "ANOVA": "F-Statistics"
         })
 
     if binary_mode not in {None, "threshold", "topk"}:
