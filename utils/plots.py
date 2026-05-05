@@ -1,3 +1,6 @@
+import matplotlib
+
+matplotlib.use('MacOSX')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -91,6 +94,7 @@ def lasagna_plot(
         lasagna_df = lasagna_df.loc[row_means.sort_values(ascending=False).index]
 
     epvs = lasagna_df.columns.to_numpy()
+    epvs = np.log(epvs)
 
     # plot_epv_distribution(epvs)
 
@@ -124,33 +128,16 @@ def lasagna_plot(
     ax.set_title(plot_title)
     ax.set_xlabel(x_label)
     ax.set_ylabel(y_label)
-    min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+    step = max(1, len(epvs) // 5)
 
-    tick_positions = []
-    tick_labels = []
+    tick_positions = epvs[::step]
 
-    last_pos = -float('inf')
+    # make sure both ends are included
+    tick_positions = np.unique(np.concatenate(([epvs[0]], tick_positions, [epvs[-1]])))
+    tick_labels = [f"{np.exp(val):.1f}" for val in tick_positions]
 
-    # Iterate through all available epvs
-    for val in epvs:
-        if (val - last_pos) >= min_distance:
-            tick_positions.append(val)
-            tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
-            last_pos = val
-
-    # Force the very last EPV to be included so the right edge has a label
-    if epvs[-1] not in tick_positions:
-        # If adding the last one makes it overlap the second-to-last, replace the second-to-last
-        if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
-            tick_positions.pop()
-            tick_labels.pop()
-        tick_positions.append(epvs[-1])
-        tick_labels.append(f"{epvs[-1]:.1f}")
-
-    # Apply them to the axis
     ax.set_xticks(tick_positions)
     ax.set_xticklabels(tick_labels, rotation=0, ha="center")
-
     ax.set_yticks(np.arange(len(lasagna_df.index)))
     ax.set_yticklabels(lasagna_df.index)
     ax.invert_yaxis()
@@ -238,7 +225,7 @@ def lasagna_plot(
     )
 
     plt.tight_layout()
-    plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
+    plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
     plt.close()
 
     if binary_mode == "threshold" and not overlay:
@@ -263,30 +250,14 @@ def lasagna_plot(
 
         ax.set_yticks(np.arange(len(binary_df.index)))
         ax.set_yticklabels(binary_df.index)
-        min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+        step = max(1, len(epvs) // 5)
 
-        tick_positions = []
-        tick_labels = []
+        tick_positions = epvs[::step]
 
-        last_pos = -float('inf')
+        # make sure both ends are included
+        tick_positions = np.unique(np.concatenate(([epvs[0]], tick_positions, [epvs[-1]])))
+        tick_labels = [f"{np.exp(val):.1f}" for val in tick_positions]
 
-        # Iterate through all available epvs
-        for val in epvs:
-            if (val - last_pos) >= min_distance:
-                tick_positions.append(val)
-                tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
-                last_pos = val
-
-        # Force the very last EPV to be included so the right edge has a label
-        if epvs[-1] not in tick_positions:
-            # If adding the last one makes it overlap the second-to-last, replace the second-to-last
-            if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
-                tick_positions.pop()
-                tick_labels.pop()
-            tick_positions.append(epvs[-1])
-            tick_labels.append(f"{epvs[-1]:.1f}")
-
-        # Apply them to the axis
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, rotation=0, ha="center")
         ax.invert_yaxis()
@@ -310,7 +281,7 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
         plt.close()
 
     if binary_mode == "topk" and not overlay:
@@ -335,30 +306,14 @@ def lasagna_plot(
 
         ax.set_yticks(np.arange(len(binary_df.index)))
         ax.set_yticklabels(binary_df.index)
-        min_distance = (epvs.max() - epvs.min()) / 8.0  # Allow roughly 8 ticks max across the axis
+        step = max(1, len(epvs) // 5)
 
-        tick_positions = []
-        tick_labels = []
+        tick_positions = epvs[::step]
 
-        last_pos = -float('inf')
+        # make sure both ends are included
+        tick_positions = np.unique(np.concatenate(([epvs[0]], tick_positions, [epvs[-1]])))
+        tick_labels = [f"{np.exp(val):.1f}" for val in tick_positions]
 
-        # Iterate through all available epvs
-        for val in epvs:
-            if (val - last_pos) >= min_distance:
-                tick_positions.append(val)
-                tick_labels.append(f"{val:.1f}")  # 1 decimal place (e.g., "2799.7")
-                last_pos = val
-
-        # Force the very last EPV to be included so the right edge has a label
-        if epvs[-1] not in tick_positions:
-            # If adding the last one makes it overlap the second-to-last, replace the second-to-last
-            if len(tick_positions) > 0 and (epvs[-1] - tick_positions[-1]) < min_distance * 0.5:
-                tick_positions.pop()
-                tick_labels.pop()
-            tick_positions.append(epvs[-1])
-            tick_labels.append(f"{epvs[-1]:.1f}")
-
-        # Apply them to the axis
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, rotation=0, ha="center")
         ax.invert_yaxis()
@@ -381,7 +336,7 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.svg", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
         plt.close()
 
 
