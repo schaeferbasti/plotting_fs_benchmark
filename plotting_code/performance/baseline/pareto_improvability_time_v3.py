@@ -8,7 +8,7 @@ from utils.beautify import remove_jmi, beautify_names, add_model_name
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "pareto_improvability_time_v3.svg"
+PLOT_NAME = "pareto_improvability_time_v3.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
