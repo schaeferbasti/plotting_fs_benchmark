@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Plot settings
 PLOT_NAME = "method_coupling_v1.svg"
-PLOT_TITLE = "Method Coupling"
+PLOT_TITLE = "Model Coupling"
 
 
 def plot_coupling():

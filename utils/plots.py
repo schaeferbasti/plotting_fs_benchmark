@@ -73,7 +73,7 @@ def lasagna_plot(
             "Accuracy": "LOCO",
             "SequentialBackwardElimination": "RFE",
             "SequentialForwardSelection": "SFS",
-            "ANOVA": "F-Statistics"
+            "ANOVA": "F-test"
         })
 
     if binary_mode not in {None, "threshold", "topk"}:

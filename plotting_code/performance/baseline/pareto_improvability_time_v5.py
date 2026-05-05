@@ -8,36 +8,57 @@ from utils.beautify import remove_jmi, beautify_names, add_model_name
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "pareto_improvability_time_v3.png"
+PLOT_NAME = "pareto_improvability_time_v5.png"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
-X_LABEL = "Feature Selection Time (s) per 1k Samples"
+X_LABEL = "Feature Selection Time (s) per 1k Features"
 Y_LABEL = "Improvement over Random (%)"
 
+import ast
 
-def add_num_samples_from_validity(df_performance, df_validity):
+
+def add_num_features_from_validity(df_performance, df_validity):
     df_performance = df_performance.copy()
     df_val = df_validity.copy()
 
-
-    # 2. Extract the clean 'tid' from the long 'data_foundry_task_id' string
+    # 2. Extract the clean 'tid'
     df_val["tid"] = df_val["data_foundry_task_id"].apply(
         lambda x: int(str(x).split("|")[1]) if pd.notna(x) and "|" in str(x) else np.nan
     )
 
-    # 3. Create a clean mapping dictionary: {tid: dataset_size}
-    val_dedup = df_val.dropna(subset=["tid", "num_samples"]).drop_duplicates(subset=["tid"], keep="first")
-    size_mapping = val_dedup.set_index("tid")["num_samples"].to_dict()
+    # 3. Create a clean mapping dictionary
+    val_dedup = df_val.dropna(subset=["tid", "original_features"]).drop_duplicates(subset=["tid"], keep="first")
+
+    # NEW: Safely evaluate the string to a list, then get the length
+    def get_list_length(val):
+        if isinstance(val, str):
+            try:
+                # Converts "[1, 2, 3]" to a real python list [1, 2, 3]
+                parsed_list = ast.literal_eval(val)
+                return len(parsed_list)
+            except (ValueError, SyntaxError):
+                # Fallback if it fails to parse
+                return np.nan
+        elif isinstance(val, list):
+            # Just in case it is already a list
+            return len(val)
+        return np.nan
+
+    val_dedup["num_features"] = val_dedup["original_features"].apply(get_list_length)
+
+    # Create mapping, dropping any NaNs where parsing failed
+    val_dedup = val_dedup.dropna(subset=["num_features"])
+    size_mapping = val_dedup.set_index("tid")["num_features"].to_dict()
 
     # 4. Map the dataset sizes onto the performance dataframe
     df_performance["tid"] = df_performance["tid"].astype(int)
-    df_performance["num_samples"] = df_performance["tid"].map(size_mapping)
+    df_performance["num_features"] = df_performance["tid"].map(size_mapping)
 
     # (Optional) Print a warning if any datasets couldn't be matched
-    missing_sizes = df_performance["num_samples"].isna().sum()
+    missing_sizes = df_performance["num_features"].isna().sum()
     if missing_sizes > 0:
-        print(f"⚠️ Warning: Could not find original number of samples for {missing_sizes} rows.")
+        print(f"⚠️ Warning: Could not find original number of features for {missing_sizes} rows.")
 
     return df_performance
 
@@ -49,9 +70,9 @@ def calculate_relative_performance(df):
     df = add_model_name(df)
 
     df_val = pd.read_csv(SCRIPT_DIR / "result_files" / "validity_results.csv", low_memory=False)
-    df = add_num_samples_from_validity(df, df_val)
+    df = add_num_features_from_validity(df, df_val)
 
-    df["time_per_1k"] = (df["feature_selection_fit_time"] / df["num_samples"]) * 1000
+    df["time_per_1k"] = (df["feature_selection_fit_time"] / df["num_features"]) * 1000
 
     # 1. Average budget, models (and splits)
     df_avg = (
