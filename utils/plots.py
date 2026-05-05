@@ -73,7 +73,8 @@ def lasagna_plot(
             "Accuracy": "LOCO",
             "SequentialBackwardElimination": "RFE",
             "SequentialForwardSelection": "SFS",
-            "ANOVA": "F-test"
+            "ANOVA": "F-test",
+            "ReliefF": "(R)ReliefF",
         })
 
     if binary_mode not in {None, "threshold", "topk"}:
@@ -114,7 +115,7 @@ def lasagna_plot(
     # smoothing
     Z = gaussian_filter1d(Z, sigma=smoothing, axis=1, mode="nearest")
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(8, 3.5))
 
     im = ax.pcolormesh(
         epvs_dense_edges,
@@ -123,7 +124,9 @@ def lasagna_plot(
         cmap="Blues",
         vmin=0,
         vmax=1,
-        shading="flat"
+        shading="flat",
+        alpha=1.0,
+        rasterized=True
     )
 
     ax.set_title(plot_title)
@@ -170,52 +173,30 @@ def lasagna_plot(
 
     # Add the legend
     if mode == "stability":
-        """cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
-        cbar.set_ticks([])
-        cbar.ax.set_title("stable", pad=10, fontsize=10)
-        cbar.ax.text(
-            0.5, -0.05,
-            "unstable",
-            transform=cbar.ax.transAxes,
-            ha="center",
-            va="top",
-            fontsize=10
-        )"""
-        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04)
-        cbar.ax.set_title("stable", pad=12, fontsize=11)
-        cbar.set_ticks([0.0, 1.0])
-        cbar.ax.tick_params(length=0, labelsize=10)
-        cbar.ax.text(
-            0.5, -0.05,
-            "unstable",
-            transform=cbar.ax.transAxes,
-            ha="center",
-            va="top",
-            fontsize=12
-        )
-    else:
-        """cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6, aspect=30)
-        cbar.ax.set_title("valid", pad=10, fontsize=10)
-        cbar.set_ticks([])
-        cbar.ax.text(
-            0.5, -0.05,
-            "unvalid",
-            transform=cbar.ax.transAxes,
-            ha="center",
-            va="top",
-            fontsize=10
-        )"""
         cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
-        cbar.ax.set_title("valid", pad=12, fontsize=11)
+        cbar.ax.set_title("stable", pad=12, fontsize=10)
         cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
         cbar.ax.tick_params(length=0, labelsize=10)
         cbar.ax.text(
             0.5, -0.05,
-            "unvalid",
+            "unstable",
             transform=cbar.ax.transAxes,
             ha="center",
             va="top",
-            fontsize=12
+            fontsize=10
+        )
+    else:
+        cbar = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.04, shrink=0.6)
+        cbar.ax.set_title("valid", pad=12, fontsize=10)
+        cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        cbar.ax.tick_params(length=0, labelsize=10)
+        cbar.ax.text(
+            0.5, -0.05,
+            "invalid",
+            transform=cbar.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=10
         )
 
     suffix = _build_suffix(
@@ -226,14 +207,14 @@ def lasagna_plot(
     )
 
     plt.tight_layout()
-    plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+    plt.savefig(f"{output_path}_{suffix}.pdf", dpi=300, bbox_inches="tight")
     plt.close()
 
     if binary_mode == "threshold" and not overlay:
         binary_df = _compute_binary_threshold(lasagna_df, binary_tol)
         binary_Z = binary_df.to_numpy()
 
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(8, 3.5))
 
         im = ax.pcolormesh(
             epv_edges,
@@ -242,7 +223,9 @@ def lasagna_plot(
             cmap="Blues",
             vmin=0,
             vmax=1,
-            shading="flat"
+            shading="flat",
+            alpha=1.0,
+            rasterized=True
         )
 
         ax.set_title(plot_title)
@@ -282,14 +265,14 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.pdf", dpi=300, bbox_inches="tight")
         plt.close()
 
     if binary_mode == "topk" and not overlay:
         binary_df = _compute_binary_topk(lasagna_df, binary_topk)
         binary_Z = binary_df.to_numpy()
 
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(8, 3.5))
 
         im = ax.pcolormesh(
             epv_edges,
@@ -298,7 +281,9 @@ def lasagna_plot(
             cmap="Blues",
             vmin=0,
             vmax=1,
-            shading="flat"
+            shading="flat",
+            alpha=1.0,
+            rasterized=True
         )
 
         ax.set_title(plot_title)
@@ -337,7 +322,7 @@ def lasagna_plot(
         )
 
         plt.tight_layout()
-        plt.savefig(f"{output_path}_{suffix}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{output_path}_{suffix}.pdf", dpi=300, bbox_inches="tight")
         plt.close()
 
 
@@ -412,7 +397,7 @@ def _add_discrete_overlay(ax, df, x_edges, linewidth=1, linestyle="-"):
 
 
 def plot_epv_distribution(epvs):
-    fig, ax = plt.subplots(figsize=(12, 8))  # Short and wide figure
+    fig, ax = plt.subplots(figsize=(8, 3.5))  # Short and wide figure
 
     # Create an array of zeros the same length as epvs for the y-axis
     y_zeros = np.zeros_like(epvs)
