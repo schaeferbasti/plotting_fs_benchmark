@@ -2,7 +2,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 # Plot settings
-PLOT_NAME = "method_coupling_v1.svg"
+PLOT_NAME = "method_coupling_v1.png"
 PLOT_TITLE = "Model Coupling"
 
 
