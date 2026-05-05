@@ -1,6 +1,6 @@
-import matplotlib
+# import matplotlib
 
-matplotlib.use('MacOSX')
+# matplotlib.use('MacOSX')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
