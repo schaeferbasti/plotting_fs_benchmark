@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 # TODO: Adapt file and plot name
 FILE_NAME = "data_foundry.csv"
-PLOT_NAME = "dataset_features_samples_v1.svg"
+PLOT_NAME = "dataset_features_samples_v1.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
@@ -27,7 +27,7 @@ def plot(df):
     df_class = dataset_data[dataset_data["n_classes"].notna()]
     df_reg = dataset_data[dataset_data["n_classes"].isna()]
 
-    fig, ax = plt.subplots(figsize=(8, 7))
+    fig, ax = plt.subplots(figsize=(4.5, 3.7))
 
     # 1. Plot Classification datasets (Color-coded by num_classes)
     if not df_class.empty:
@@ -36,7 +36,7 @@ def plot(df):
             df_class["n_features"],
             c=df_class["n_classes"],
             cmap="Blues",
-            vmin=0,  # Set to 0 so '2' isn't purely white/invisible, making it light blue
+            vmin=2,
             vmax=df_class["n_classes"].max(),
             alpha=0.8,
             s=80,
@@ -47,14 +47,14 @@ def plot(df):
 
         # Add a colorbar specifically for the classification scatter
         cbar = fig.colorbar(scatter_class, ax=ax, pad=0.02, shrink=0.6)
-        cbar.set_label("Number of Classes", rotation=270, labelpad=15)
+        cbar.set_label("Number of Classes", rotation=90, labelpad=7)
 
     # 2. Plot Regression datasets (Solid Green)
     if not df_reg.empty:
         scatter_reg = ax.scatter(
             df_reg["n_samples"],
             df_reg["n_features"],
-            color="#55A868",  # A nice visible green
+            color="red",  # A nice visible green
             alpha=0.8,
             s=80,
             edgecolors="black",
