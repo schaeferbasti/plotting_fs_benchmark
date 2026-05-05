@@ -16,6 +16,13 @@ def average_per_dataset_and_method(df):
     )[["metric_error", "feature_selection_fit_time"]].mean().reset_index()
     return df
 
+def average_per_dataset_model_and_method(df):
+    df["tid_model"] = df["tid"].astype(str) + "_" + df["model_cls"].astype(str)
+    df = df.groupby(
+        ["tid_model", "metric", "feature_selection_method"]
+    )[["metric_error"]].mean().reset_index()
+    return df
+
 def average_per_method(df):
     df = df.groupby(
         ["feature_selection_method"]
