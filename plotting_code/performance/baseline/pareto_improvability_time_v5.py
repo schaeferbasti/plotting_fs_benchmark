@@ -218,7 +218,7 @@ def plot(df):
     ax.annotate(
         "ideal",
         xy=(0.0, 1.0),  # arrow tip near top-left
-        xytext=(0.03, 0.96),  # text a bit inside the plot
+        xytext=(0.02, 0.89),  # text a bit inside the plot
         xycoords="axes fraction",
         textcoords="axes fraction",
         arrowprops=dict(
