@@ -99,7 +99,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
     methods_sorted = [beautify(m) for m in np.array(methods)[order]]
     pt, lo, hi = point_elo[order], lo[order], hi[order]
 
-    fig, ax = plt.subplots(figsize=(8, 4))
+    fig, ax = plt.subplots(figsize=(12, 4))
 
     # We will use an array of indices for the x-axis
     x = np.arange(len(methods))
