@@ -8,10 +8,10 @@ from utils.beautify import beautify_names, add_model_name, remove_jmi
 from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_per_model_v1.pdf"
+PLOT_NAME = "relative_performance_per_model_v2.pdf"
 PLOT_TITLE = ""
 X_LABEL = ""
-Y_LABEL = "Improvability (%)"
+Y_LABEL = "Improvement over Random (%)"
 
 
 def calculate_relative_performance(df):

@@ -8,10 +8,10 @@ from utils.beautify import beautify_names, add_model_name, remove_jmi
 from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_per_model_v1.pdf"
+PLOT_NAME = "relative_performance_per_model_v4.pdf"
 PLOT_TITLE = ""
 X_LABEL = ""
-Y_LABEL = "Improvability (%)"
+Y_LABEL = "Improvability over Random (%) Normalized by the Avg. Improvement per Model"
 
 
 def calculate_relative_performance(df):
@@ -58,7 +58,8 @@ def calculate_relative_performance(df):
     if "Random" in pivot.index:
         pivot = pivot.drop(index="Random")
     pivot.loc["All Methods"] = pivot.mean(axis=0)
-
+    all_method_avg_per_model = pivot.loc["All Methods"]
+    pivot = pivot.div(all_method_avg_per_model, axis="columns")
 
     return pivot
 

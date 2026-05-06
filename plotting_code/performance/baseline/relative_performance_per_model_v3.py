@@ -5,13 +5,12 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Patch
 
 from utils.beautify import beautify_names, add_model_name, remove_jmi
-from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_per_model_v1.pdf"
+PLOT_NAME = "relative_performance_per_model_v3.pdf"
 PLOT_TITLE = ""
 X_LABEL = ""
-Y_LABEL = "Improvability (%)"
+Y_LABEL = "Improvement over Random (%) Normalized by the Avg. Improvement of each Method"
 
 
 def calculate_relative_performance(df):
@@ -58,7 +57,8 @@ def calculate_relative_performance(df):
     if "Random" in pivot.index:
         pivot = pivot.drop(index="Random")
     pivot.loc["All Methods"] = pivot.mean(axis=0)
-
+    method_avg = pivot.mean(axis=1)
+    pivot = pivot.div(method_avg, axis="index")
 
     return pivot
 
@@ -73,6 +73,18 @@ def plot_relative(df):
     model_names = sorted(pivot.columns)
 
     fig, ax = plt.subplots(figsize=(8, 5))
+    custom_palette = [
+        "#0072B2",  # Okabe-Ito Blue
+        "#F0E442",  # Okabe-Ito Yellow
+        "#E69F00",  # Okabe-Ito Orange
+        "#009E73",  # Okabe-Ito Green
+        "#CC79A7",  # Okabe-Ito Purple
+        "#D55E00",  # Okabe-Ito Red
+        "#56B4E9",  # Okabe-Ito Sky Blue
+    ]
+
+    # Map each model to a color in the palette
+    colors = {m: custom_palette[i % len(custom_palette)] for i, m in enumerate(model_names)}
 
     colors = {
         "LGBModel": "#0072B2",  # Light Blue
@@ -81,7 +93,6 @@ def plot_relative(df):
         "TabICLv2Model": "#D55E00",  # Red
     }
 
-    # --- NEW: Create x coordinates, but add a gap of 0.5 for the last item ---
     x = np.arange(len(methods), dtype=float)
     x[-1] += 0.5
 
