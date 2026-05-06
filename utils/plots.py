@@ -255,10 +255,7 @@ def lasagna_plot(
             Patch(facecolor=cmap(1.0), edgecolor='black', label='Within Threshold'),
             Patch(facecolor=cmap(0.0), edgecolor='black', label='Outside Threshold')
         ]
-        if mode == "validity":
-            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(1.0, 0.11))
-        else:
-            ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(0.15, 0.0))
+        ax.legend(handles=binary_legend_elements, loc='upper right', bbox_to_anchor=(1.005, 0.2))
 
 
         suffix = _build_suffix(
