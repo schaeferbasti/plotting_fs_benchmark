@@ -69,16 +69,26 @@ def calculate_relative_performance(df):
 def plot_relative(df):
     pivot = calculate_relative_performance(df)
 
+    model_rename_map = {
+        "LGBModel": "LGBM",
+        "LinearModel": "LM",
+        "RFModel": "RF",
+        "TabICLv2Model": "TabICLv2"
+    }
+
+    # Apply the renaming to the columns of the pivot table
+    pivot = pivot.rename(columns=model_rename_map)
+
     methods = sorted(pivot.index)
     model_names = sorted(pivot.columns)
 
-    fig, ax = plt.subplots(figsize=(8, 3.9))
+    fig, ax = plt.subplots(figsize=(8, 4.2))
 
     colors = {
-        "LGBModel": "#0072B2",  # Light Blue
-        "LinearModel": "#F0E442",  # Yellow
-        "RFModel": "#009E73",  # Green
-        "TabICLv2Model": "#D55E00",  # Red
+        "LGBM": "#0072B2",  # Light Blue
+        "LM": "#F0E442",  # Yellow
+        "RF": "#009E73",  # Green
+        "TabICLv2": "#D55E00",  # Red
     }
 
     # Standard x coordinates (no gap needed anymore since "All Methods" is gone)
@@ -120,8 +130,13 @@ def plot_relative(df):
 
     # Create Legend
     legend_elements = [Patch(facecolor=colors.get(m, "#333333"), label=m) for m in model_names]
-    ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75), loc="upper left", title="Model")
-
+    ax.legend(
+        handles=legend_elements,
+        loc="upper right",  # Anchor to the bottom-left corner
+        title="Model",
+        framealpha=0.5,  # Make the legend background slightly transparent
+        edgecolor="black"  # Give it a clean border
+    )
     for side in ['left', 'bottom', 'right', 'top']:
         ax.spines[side].set_color("black")
         ax.spines[side].set_alpha(0.3)
