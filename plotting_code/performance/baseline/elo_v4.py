@@ -168,7 +168,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
 
     # --- ADD DUAL COLORBARS ---
     if stability_scores is not None and validity_scores is not None:
-        cax_stab = fig.add_axes([0.92, 0.10, 0.02, 0.3])
+        cax_stab = fig.add_axes([0.92, 0.0, 0.01, 0.3])
         sm_stab = plt.cm.ScalarMappable(cmap=cmap_stability, norm=plt.Normalize(vmin=0, vmax=1))
         sm_stab.set_array([])
         cbar_stab = fig.colorbar(sm_stab, cax=cax_stab)
@@ -176,14 +176,14 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
         cbar_stab.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
         cbar_stab.ax.tick_params(length=0, labelsize=10)
         cbar_stab.ax.text(
-            0.5, -0.05,
+            0.5, -0.1,
             "unstable",
             transform=cbar_stab.ax.transAxes,
             ha="center",
             va="top",
             fontsize=10
         )
-        cax_val = fig.add_axes([0.92, 0.55, 0.02, 0.3])
+        cax_val = fig.add_axes([0.92, 0.55, 0.01, 0.3])
         sm_val = plt.cm.ScalarMappable(cmap=cmap_validity, norm=plt.Normalize(vmin=0, vmax=1))
         sm_val.set_array([])
         cbar_val = fig.colorbar(sm_val, cax=cax_val)
@@ -191,7 +191,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
         cbar_val.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
         cbar_val.ax.tick_params(length=0, labelsize=10)
         cbar_val.ax.text(
-            0.5, -0.05,
+            0.5, -0.1,
             "invalid",
             transform=cbar_val.ax.transAxes,
             ha="center",
