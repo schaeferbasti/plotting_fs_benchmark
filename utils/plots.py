@@ -96,7 +96,9 @@ def lasagna_plot(
         # Calculates the mean stability for each method across all EPVs.
         # Sorts descending, so the highest mean is placed at the top.
         row_means = lasagna_df.mean(axis=1)
+        print(row_means)
         lasagna_df = lasagna_df.loc[row_means.sort_values(ascending=False).index]
+        print(lasagna_df)
 
     epvs = lasagna_df.columns.to_numpy()
     epvs = np.log(epvs)
@@ -181,7 +183,7 @@ def lasagna_plot(
         cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
         cbar.ax.tick_params(length=0, labelsize=10)
         cbar.ax.text(
-            0.5, -0.05,
+            0.5, -0.1,
             "unstable",
             transform=cbar.ax.transAxes,
             ha="center",
@@ -194,7 +196,7 @@ def lasagna_plot(
         cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
         cbar.ax.tick_params(length=0, labelsize=10)
         cbar.ax.text(
-            0.5, -0.05,
+            0.5, -0.1,
             "invalid",
             transform=cbar.ax.transAxes,
             ha="center",
