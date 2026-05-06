@@ -39,7 +39,7 @@ def plot(df):
 
     # Bar plot of counts per decade
     bins_pos = np.arange(len(bin_counts))
-    ax.bar(bins_pos, bin_counts.values, color="#0072B2", alpha=0.8, edgecolor="black")
+    ax.bar(bins_pos, bin_counts.values, color="#0072B2", alpha=0.8)
 
     ax.set_xticks(bins_pos)
     ax.set_xticklabels(bin_counts.index, rotation=45, fontsize=12)
