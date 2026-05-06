@@ -7,10 +7,10 @@ from matplotlib.patches import Patch
 from utils.beautify import beautify_names, add_model_name, remove_jmi
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_per_model_v3.pdf"
+PLOT_NAME = "relative_performance_per_model_v5.pdf"
 PLOT_TITLE = ""
 X_LABEL = ""
-Y_LABEL = "Improvement over Random (%)" # Normalized by the Avg. Improvement of each Method
+Y_LABEL = "Improvement from Method Average (%)" # Normalized by the Avg. Improvement of each Method
 
 
 def calculate_relative_performance(df):
@@ -19,7 +19,6 @@ def calculate_relative_performance(df):
     df = beautify_names(df)
     df = remove_jmi(df)
     df = add_model_name(df)
-
 
     # 1. Average budget, models (and splits)
     df_avg = (
@@ -43,9 +42,9 @@ def calculate_relative_performance(df):
 
     # 4. Improvability = how much error remains until best, relative to own error
     df_merged["improvability"] = (
-        (df_merged["random_error"] - df_merged["metric_error"])
-        / (df_merged["random_error"])
-    ) * 100
+                                         (df_merged["random_error"] - df_merged["metric_error"])
+                                         / (df_merged["random_error"])
+                                 ) * 100
 
     pivot = df_merged.pivot_table(
         values="improvability",
@@ -56,9 +55,13 @@ def calculate_relative_performance(df):
 
     if "Random" in pivot.index:
         pivot = pivot.drop(index="Random")
-    pivot.loc["All Methods"] = pivot.mean(axis=0)
+
+    # We no longer calculate or append an "All Methods" row here,
+    # because the baseline is now 0.0 by definition!
+
+    # Normalization: SUBTRACT the method average instead of dividing by it
     method_avg = pivot.mean(axis=1)
-    pivot = pivot.div(method_avg, axis="index")
+    pivot = pivot.sub(method_avg, axis="index")
 
     return pivot
 
@@ -66,25 +69,10 @@ def calculate_relative_performance(df):
 def plot_relative(df):
     pivot = calculate_relative_performance(df)
 
-    # Sort methods, ensuring "All Methods" is at the end
-    methods = sorted([m for m in pivot.index if m != "All Methods"])
-    methods.append("All Methods")
-
+    methods = sorted(pivot.index)
     model_names = sorted(pivot.columns)
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    custom_palette = [
-        "#0072B2",  # Okabe-Ito Blue
-        "#F0E442",  # Okabe-Ito Yellow
-        "#E69F00",  # Okabe-Ito Orange
-        "#009E73",  # Okabe-Ito Green
-        "#CC79A7",  # Okabe-Ito Purple
-        "#D55E00",  # Okabe-Ito Red
-        "#56B4E9",  # Okabe-Ito Sky Blue
-    ]
-
-    # Map each model to a color in the palette
-    colors = {m: custom_palette[i % len(custom_palette)] for i, m in enumerate(model_names)}
+    fig, ax = plt.subplots(figsize=(8, 3.9))
 
     colors = {
         "LGBModel": "#0072B2",  # Light Blue
@@ -93,40 +81,46 @@ def plot_relative(df):
         "TabICLv2Model": "#D55E00",  # Red
     }
 
+    # Standard x coordinates (no gap needed anymore since "All Methods" is gone)
     x = np.arange(len(methods), dtype=float)
-    x[-1] += 0.5
 
-    width = 0.8 / len(model_names)
+    total_width = 0.8
+    width_per_model = total_width / len(model_names)
 
+    # Plot the divergent bars extending from 0.0
     for j, model in enumerate(model_names):
         values = pivot[model].reindex(methods).values
 
-        # Plot the bars and save them to a variable
-        bars = ax.bar(x + j * width, values, width=width, color=colors[model], label=model)
+        # Calculate exactly where this bar should sit on the x-axis
+        offset = -(total_width / 2) + (j + 0.5) * width_per_model
 
-        # --- NEW: Add a bounding box around the "All Methods" bar (which is the last one) ---
-        #bars[-1].set_edgecolor("black")
-        #bars[-1].set_linewidth(2)
-        # Optional: You can even add a hatch pattern to make it pop more
-        # bars[-1].set_hatch("//")
+        # The bottom of the bar is 0.0 (the default for ax.bar)
+        ax.bar(
+            x + offset,
+            values,  # The value is already the delta from the average!
+            width=width_per_model * 0.9,
+            color=colors.get(model, "#333333"),
+            linewidth=0.5,
+            label=model
+        )
 
-    # Align the ticks perfectly with the shifted x-coordinates
-    ax.set_xticks(x + width * (len(model_names) - 1) / 2)
+    # Align the ticks perfectly with the x-coordinates
+    ax.set_xticks(x)
     ax.set_xticklabels(methods, rotation=45, ha="right")
 
-    # --- NEW: Add a subtle vertical dashed line to separate the average ---
-    # Placed right between the last individual method and the shifted "All Methods"
-    separator_x = x[-2] + 1
-    ax.axvline(x=separator_x, color="gray", linestyle="--", alpha=0.7)
+    # Draw a prominent horizontal line at 0.0 to act as the divergent baseline
+    ax.axhline(y=0.0, color="black", linestyle="-", alpha=0.8, linewidth=1)
 
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
+
+    # Update ylabel to reflect the new math
     ax.set_ylabel(Y_LABEL)
     ax.grid(True, alpha=0.3, axis="y")
 
-    legend_elements = [Patch(facecolor=colors[m], label=m) for m in model_names]
-    ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75),
-              loc="upper left", title="Model")
+    # Create Legend
+    legend_elements = [Patch(facecolor=colors.get(m, "#333333"), label=m) for m in model_names]
+    ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75), loc="upper left", title="Model")
 
     for side in ['left', 'bottom', 'right', 'top']:
         ax.spines[side].set_color("black")
