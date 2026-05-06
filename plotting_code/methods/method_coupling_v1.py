@@ -19,6 +19,9 @@ def plot_coupling():
     ax.set_title(PLOT_TITLE)
     ax.set_ylabel("Number of Methods", fontsize=12)
     ax.grid(True, alpha=0.3, axis="y")
+    for side in ['left', 'bottom', 'right', 'top']:
+        ax.spines[side].set_color("black")
+        ax.spines[side].set_alpha(0.3)
 
     plt.tight_layout()
 

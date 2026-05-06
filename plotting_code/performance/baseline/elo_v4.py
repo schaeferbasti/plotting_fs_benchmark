@@ -99,7 +99,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
     methods_sorted = [beautify(m) for m in np.array(methods)[order]]
     pt, lo, hi = point_elo[order], lo[order], hi[order]
 
-    fig, ax = plt.subplots(figsize=(max(10, 0.7 * len(methods)), 5))
+    fig, ax = plt.subplots(figsize=(8, 4))
 
     # We will use an array of indices for the x-axis
     x = np.arange(len(methods))
@@ -133,7 +133,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
         bottom=base_bottom,
         width=half_width,
         color=stability_colors,
-        linewidth=1,
+        linewidth=0,
         alpha=0.9,
         label="Stability"
     )
@@ -145,7 +145,7 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
         bottom=base_bottom,
         width=half_width,
         color=validity_colors,
-        linewidth=1,
+        linewidth=0,
         alpha=0.9,
         label="Validity"
     )
@@ -163,25 +163,43 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_s
     ax.set_ylim(bottom=base_bottom)
     ax.grid(axis="y", linestyle="-", alpha=0.3)
     ax.set_axisbelow(True)
+    for side in ['left', 'bottom', 'right', 'top']:
+        ax.spines[side].set_color("black")
+        ax.spines[side].set_alpha(0.3)
 
     # --- ADD DUAL COLORBARS ---
     if stability_scores is not None and validity_scores is not None:
-        cax_stab = fig.add_axes([0.92, 0.15, 0.02, 0.3])
+        cax_stab = fig.add_axes([0.92, 0.10, 0.02, 0.3])
         sm_stab = plt.cm.ScalarMappable(cmap=cmap_stability, norm=plt.Normalize(vmin=0, vmax=1))
         sm_stab.set_array([])
         cbar_stab = fig.colorbar(sm_stab, cax=cax_stab)
-        cbar_stab.set_label("Stability", fontsize=9)
-
+        cbar_stab.ax.set_title("stable", pad=12, fontsize=10)
+        cbar_stab.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        cbar_stab.ax.tick_params(length=0, labelsize=10)
+        cbar_stab.ax.text(
+            0.5, -0.05,
+            "unstable",
+            transform=cbar_stab.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=10
+        )
         cax_val = fig.add_axes([0.92, 0.55, 0.02, 0.3])
         sm_val = plt.cm.ScalarMappable(cmap=cmap_validity, norm=plt.Normalize(vmin=0, vmax=1))
         sm_val.set_array([])
         cbar_val = fig.colorbar(sm_val, cax=cax_val)
-        cbar_val.set_label("Validity", fontsize=9)
-
+        cbar_val.ax.set_title("valid", pad=12, fontsize=10)
+        cbar_val.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        cbar_val.ax.tick_params(length=0, labelsize=10)
+        cbar_val.ax.text(
+            0.5, -0.05,
+            "invalid",
+            transform=cbar_val.ax.transAxes,
+            ha="center",
+            va="top",
+            fontsize=10
+        )
         plt.subplots_adjust(right=0.88)
-
-    # Simple legend to show which side is which
-    ax.legend(loc="upper left")
 
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close()

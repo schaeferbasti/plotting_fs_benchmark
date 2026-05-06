@@ -77,6 +77,10 @@ def plot(df):
     # Display the standard legend (shows Classification vs Regression dots)
     ax.legend(loc="upper right")
 
+    for side in ['left', 'bottom', 'right', 'top']:
+        ax.spines[side].set_color("black")
+        ax.spines[side].set_alpha(0.3)
+
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out, dpi=150, bbox_inches="tight")

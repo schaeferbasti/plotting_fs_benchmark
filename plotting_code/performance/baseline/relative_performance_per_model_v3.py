@@ -128,6 +128,10 @@ def plot_relative(df):
     ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75),
               loc="upper left", title="Model")
 
+    for side in ['left', 'bottom', 'right', 'top']:
+        ax.spines[side].set_color("black")
+        ax.spines[side].set_alpha(0.3)
+
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
     plt.savefig(out, dpi=150, bbox_inches="tight")

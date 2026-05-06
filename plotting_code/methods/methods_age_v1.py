@@ -46,6 +46,9 @@ def plot(df):
     ax.set_title("Method Publication Decade", fontsize=12)
     ax.set_ylabel("Number of Methods", fontsize=12)
     ax.grid(True, alpha=0.3, axis="y")
+    for side in ['left', 'bottom', 'right', 'top']:
+        ax.spines[side].set_color("black")
+        ax.spines[side].set_alpha(0.3)
 
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
