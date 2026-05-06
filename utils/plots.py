@@ -64,7 +64,6 @@ def lasagna_plot(
 
     # --- DATA CLEANING ---
     # Work on a copy to prevent modifying the original dataframe outside the function
-    custom_blue_cmap = LinearSegmentedColormap.from_list("okabe_blue", ["#ffffff", "#0072B2"])
 
     df = df.copy()
 
@@ -125,7 +124,7 @@ def lasagna_plot(
         epvs_dense_edges,
         y_edges,
         Z,
-        cmap=custom_blue_cmap,
+        cmap="Blues",
         vmin=0,
         vmax=1,
         shading="flat",
@@ -165,7 +164,7 @@ def lasagna_plot(
                 epv_edges
             )
 
-    cmap = custom_blue_cmap
+    cmap = cm.get_cmap("Blues")
     color_low = cmap(0.1)
     color_high = cmap(0.9)
 
@@ -224,7 +223,7 @@ def lasagna_plot(
             epv_edges,
             y_edges,
             binary_Z,
-            cmap=custom_blue_cmap,
+            cmap="Blues",
             vmin=0,
             vmax=1,
             shading="flat",
@@ -282,7 +281,7 @@ def lasagna_plot(
             epv_edges,
             y_edges,
             binary_Z,
-            cmap=custom_blue_cmap,
+            cmap="Blues",
             vmin=0,
             vmax=1,
             shading="flat",
