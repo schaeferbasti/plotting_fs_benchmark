@@ -185,7 +185,7 @@ def plot(df):
         pareto["mean_time"],
         pareto["mean_score"],
         s=80,
-        color="tab:red",
+        color="#D55E00",
         edgecolors="black",  # <--- Add this!
         label="Pareto Front",
         zorder=3,
@@ -195,7 +195,7 @@ def plot(df):
     ax.plot(
         pareto["mean_time"],
         pareto["mean_score"],
-        color="tab:red",
+        color="#D55E00",
         linewidth=2,
         zorder=2,
     )
@@ -223,12 +223,12 @@ def plot(df):
         textcoords="axes fraction",
         arrowprops=dict(
             arrowstyle="->",
-            color="green",
+            color="#009E73",
             lw=1.5
         ),
         fontsize=12,
         fontweight="bold",
-        color="green",
+        color="#009E73",
         ha="left",
         va="top"
     )

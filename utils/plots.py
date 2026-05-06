@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import cm
+from matplotlib.colors import LinearSegmentedColormap
+
 
 from matplotlib.patches import Rectangle, Patch
 from scipy.ndimage import gaussian_filter1d
@@ -62,6 +64,8 @@ def lasagna_plot(
 
     # --- DATA CLEANING ---
     # Work on a copy to prevent modifying the original dataframe outside the function
+    custom_blue_cmap = LinearSegmentedColormap.from_list("okabe_blue", ["#ffffff", "#0072B2"])
+
     df = df.copy()
 
     if "selector" in df.columns:
@@ -121,7 +125,7 @@ def lasagna_plot(
         epvs_dense_edges,
         y_edges,
         Z,
-        cmap="Blues",
+        cmap=custom_blue_cmap,
         vmin=0,
         vmax=1,
         shading="flat",
@@ -161,7 +165,7 @@ def lasagna_plot(
                 epv_edges
             )
 
-    cmap = cm.get_cmap("Blues")
+    cmap = custom_blue_cmap
     color_low = cmap(0.1)
     color_high = cmap(0.9)
 
@@ -220,7 +224,7 @@ def lasagna_plot(
             epv_edges,
             y_edges,
             binary_Z,
-            cmap="Blues",
+            cmap=custom_blue_cmap,
             vmin=0,
             vmax=1,
             shading="flat",
@@ -278,7 +282,7 @@ def lasagna_plot(
             epv_edges,
             y_edges,
             binary_Z,
-            cmap="Blues",
+            cmap=custom_blue_cmap,
             vmin=0,
             vmax=1,
             shading="flat",

@@ -27,7 +27,7 @@ def plot(df):
 
     # Bar plot of counts per task
     bins_pos = np.arange(len(task_counts))
-    ax.bar(bins_pos, task_counts.values, color="#4C72B0", alpha=0.8, edgecolor="black")
+    ax.bar(bins_pos, task_counts.values, color="#0072B2", alpha=0.8, edgecolor="black")
 
     # --- NEW CODE: Use textwrap to format labels ---
     # Wraps text so that no single line is longer than ~12 characters

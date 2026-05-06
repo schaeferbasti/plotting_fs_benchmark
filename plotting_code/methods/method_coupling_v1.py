@@ -13,7 +13,7 @@ def plot_coupling():
     fig, ax = plt.subplots(figsize=(2.9, 2.9))
 
     # Bar plot
-    ax.bar(labels, counts, color=['#4C72B0', '#4C72B0'], alpha=0.8, edgecolor="black")
+    ax.bar(labels, counts, color=['#0072B2', '#0072B2'], alpha=0.8, edgecolor="black")
 
     # Labels and Formatting
     ax.set_title(PLOT_TITLE)

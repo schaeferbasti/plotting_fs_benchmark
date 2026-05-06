@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 
 # TODO: Adapt file and plot name
 FILE_NAME = "data_foundry.csv"
@@ -15,6 +16,8 @@ Y_LABEL = "Number of Features"
 
 
 def plot(df):
+    custom_blue_cmap = LinearSegmentedColormap.from_list("okabe_blue", ["#ffffff", "#0072B2"])
+
     # Parse number of features, samples, and classes
     df["n_features"] = pd.to_numeric(df["# features"], errors="coerce")
     df["n_samples"] = pd.to_numeric(df["samples"], errors="coerce")
@@ -35,7 +38,7 @@ def plot(df):
             df_class["n_samples"],
             df_class["n_features"],
             c=df_class["n_classes"],
-            cmap="Blues",
+            cmap=custom_blue_cmap,
             vmin=2,
             vmax=df_class["n_classes"].max(),
             alpha=0.8,
@@ -54,7 +57,7 @@ def plot(df):
         scatter_reg = ax.scatter(
             df_reg["n_samples"],
             df_reg["n_features"],
-            color="red",  # A nice visible green
+            color="#D55E00",  # A nice visible green
             alpha=0.8,
             s=80,
             edgecolors="black",
