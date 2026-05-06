@@ -10,7 +10,7 @@ Name & Problem Type & \# features & \# samples & \# classes \\
 \href{https://archive.ics.uci.edu/dataset/3/annealing}{anneal}\cite{uci1990annealing} & multiclass & 39 & 898 & 5.0 \\
 \href{https://doi.org/10.24432/C5V60Q}{aps\_failure}\cite{ida2016challenge} & binary & 171 & 76000 & 2.0 \\
 \href{https://doi.org/10.24432/C5TP4R}{audiology\_diagnosis}\cite{bareiss1990protos} & multiclass & 69 & 199 & 24.0 \\
-\href{https://doi.org/10.24432/C5B01C}{automobile}\cite{Schlimmer1985Automobile} & ordinal & 25 & 205 & 7.0 \\
+\href{https://doi.org/10.24432/C5B01C}{automobile}\cite{Schlimmer1985Automobile} & regression & 25 & 205 & 7.0 \\
 \href{https://www.kaggle.com/datasets/podsyp/is-this-a-good-customer}{bad\_customer\_detection}\cite{Podsyp2020IsThisAGoodCustomer} & binary & 14 & 1723 & 2.0 \\
 \href{https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset}{bank\_customer\_churn}\cite{Topre2022BankCustomerChurn} & binary & 11 & 10000 & 2.0 \\
 \href{https://archive.ics.uci.edu/dataset/222/bank+marketing}{bank\_marketing}\cite{moro2014bank-marketing} & binary & 13 & 45211 & 2.0 \\

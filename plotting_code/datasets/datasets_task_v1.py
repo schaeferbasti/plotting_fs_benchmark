@@ -7,7 +7,7 @@ import textwrap  # <-- NEW: Import textwrap
 
 # TODO: Adapt file and plot name
 FILE_NAME = "data_foundry.csv"
-PLOT_NAME = "dataset_task_v1.svg"
+PLOT_NAME = "dataset_task_v1.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"
@@ -23,7 +23,7 @@ def plot(df):
     # Count datasets per task
     task_counts = df["Problem Type"].value_counts()
 
-    fig, ax = plt.subplots(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(3, 3))
 
     # Bar plot of counts per task
     bins_pos = np.arange(len(task_counts))
@@ -31,10 +31,10 @@ def plot(df):
 
     # --- NEW CODE: Use textwrap to format labels ---
     # Wraps text so that no single line is longer than ~12 characters
-    multi_line_labels = [label.replace(" ", "\n") for label in task_counts.index]
+    multi_line_labels = [label.replace(" Classification", "") for label in task_counts.index]
 
     ax.set_xticks(bins_pos)
-    ax.set_xticklabels(multi_line_labels, rotation=0, ha="center", va="top", fontsize=8)  # Slightly smaller font
+    ax.set_xticklabels(multi_line_labels, rotation=45, ha="center", va="top", fontsize=12)  # Slightly smaller font
 
     ax.set_title("Datasets by Problem Type")
     ax.set_ylabel("Number of Datasets")

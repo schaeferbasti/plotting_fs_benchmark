@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 # TODO: Adapt file and plot name
 FILE_NAME = "method_curation.csv"
-PLOT_NAME = "method_age_v1.svg"
+PLOT_NAME = "method_age_v1.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = "Dummy Plot"
@@ -35,16 +35,16 @@ def plot(df):
     # Count datasets per bin
     bin_counts = year_bins.value_counts().sort_index()
 
-    fig, ax = plt.subplots(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(2.9, 3))
 
     # Bar plot of counts per decade
     bins_pos = np.arange(len(bin_counts))
     ax.bar(bins_pos, bin_counts.values, color="#4C72B0", alpha=0.8, edgecolor="black")
 
     ax.set_xticks(bins_pos)
-    ax.set_xticklabels(bin_counts.index, rotation=0)
-    ax.set_title("Method Publication Decade")
-    ax.set_ylabel("Number of Methods")
+    ax.set_xticklabels(bin_counts.index, rotation=45, fontsize=12)
+    ax.set_title("Method Publication Decade", fontsize=12)
+    ax.set_ylabel("Number of Methods", fontsize=12)
     ax.grid(True, alpha=0.3, axis="y")
 
     plt.tight_layout()

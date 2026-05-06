@@ -2,23 +2,22 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 # Plot settings
-PLOT_NAME = "method_coupling_v1.png"
+PLOT_NAME = "method_coupling_v1.pdf"
 PLOT_TITLE = "Model Coupling"
 
 
 def plot_coupling():
-    # Data: 3 with, 11 without
     labels = ['Yes', 'No']
     counts = [3, 11]
 
-    fig, ax = plt.subplots(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(2.9, 2.9))
 
     # Bar plot
     ax.bar(labels, counts, color=['#4C72B0', '#4C72B0'], alpha=0.8, edgecolor="black")
 
     # Labels and Formatting
     ax.set_title(PLOT_TITLE)
-    ax.set_ylabel("Number of Methods")
+    ax.set_ylabel("Number of Methods", fontsize=12)
     ax.grid(True, alpha=0.3, axis="y")
 
     plt.tight_layout()

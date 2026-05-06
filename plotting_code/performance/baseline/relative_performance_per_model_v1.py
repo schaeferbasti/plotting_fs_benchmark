@@ -2,12 +2,13 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+from matplotlib.patches import Patch
 
 from utils.beautify import beautify_names, add_model_name, remove_jmi
 from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "relative_performance_v3.png"
+PLOT_NAME = "relative_performance_per_model_v3.png"
 PLOT_TITLE = ""
 X_LABEL = ""
 Y_LABEL = "Improvability (%)"
@@ -20,80 +21,72 @@ def calculate_relative_performance(df):
     df = remove_jmi(df)
     df = add_model_name(df)
 
+
     # 1. Average budget, models (and splits)
     df_avg = (
-        df.groupby(["tid", "feature_selection_method"])["metric_error"]
+        df.groupby(["tid", "feature_selection_method", "model_cls"])["metric_error"]
         .mean()
         .reset_index()
     )
 
     # 2. Best error per dataset
-    best_errors = (
-        df_avg.groupby("tid")["metric_error"]
-        .min()
+    random_errors = df_avg[df_avg["feature_selection_method"] == "Random"].copy()
+
+    random_baseline = (
+        random_errors.groupby("tid")["metric_error"]
+        .mean()
         .reset_index()
-        .rename(columns={"metric_error": "best_error"})
+        .rename(columns={"metric_error": "random_error"})
     )
 
     # 3. Merge best error back
-    df_merged = df_avg.merge(best_errors, on="tid", how="left")
+    df_merged = df_avg.merge(random_baseline, on="tid", how="left")
 
     # 4. Improvability = how much error remains until best, relative to own error
     df_merged["improvability"] = (
-        (df_merged["metric_error"] - df_merged["best_error"])
-        / (df_merged["metric_error"])
+        (df_merged["random_error"] - df_merged["metric_error"])
+        / (df_merged["random_error"])
     ) * 100
 
-    # 5. Aggregate across datasets
-    agg_df = (
-        df_merged.groupby("feature_selection_method")["improvability"]
-        .agg(["mean", "std"])
-        .reset_index()
-    )
-    agg_df.columns = [
-        "feature_selection_method",
-        "mean_improvability",
-        "std_improvability",
-    ]
+    pivot = df_merged.pivot_table(
+        values="improvability",
+        index="feature_selection_method",
+        columns="model_cls",
+        aggfunc="mean"
+    ).fillna(np.nan)
 
-    return agg_df
-
+    return pivot
 
 def plot_relative(df):
-    agg_df = calculate_relative_performance(df)
+    pivot = calculate_relative_performance(df)
 
     # FIX 1: Sort by improvement (best first: most POSITIVE value = best performance)
     # ascending=False puts the highest positive values at the beginning
-    agg_df = agg_df.sort_values("mean_improvability", ascending=True)
+    methods = sorted(pivot.index)
+    model_names = sorted(pivot.columns)
 
-    methods = agg_df["feature_selection_method"].values
-    mean_improv = agg_df["mean_improvability"].values
-    std_improv = agg_df["std_improvability"].values
+    fig, ax = plt.subplots(figsize=(16, 7))
 
-    fig, ax = plt.subplots(figsize=(16, 8))
+    cmap = plt.get_cmap("Set3", len(model_names))
+    colors = {m: cmap(i) for i, m in enumerate(model_names)}
+
     x = np.arange(len(methods))
+    width = 0.8 / len(model_names)
 
-    # FIX 2: Color code: Green if positive (better than random), Red if negative (worse)
-    colors = ["#4C72B0" if score >= 0 else "#4C72B0" for score in mean_improv]
+    for j, model in enumerate(model_names):
+        values = pivot[model].reindex(methods).values
+        ax.bar(x + j * width, values, width=width, color=colors[model], label=model)
 
-    bars = ax.bar(
-        x,
-        mean_improv,
-        capsize=5,
-        alpha=0.85,
-        edgecolor="black",
-        color=colors
-    )
-
-    # Draw a solid horizontal line at Y=0 (The Random Baseline)
-    ax.axhline(0, color="black", linewidth=1.5, linestyle="--", zorder=0)
-
-    ax.set_xticks(x)
+    ax.set_xticks(x + width * (len(model_names) - 1) / 2)
     ax.set_xticklabels(methods, rotation=45, ha="right")
     ax.set_title(PLOT_TITLE)
     ax.set_xlabel(X_LABEL)
     ax.set_ylabel(Y_LABEL)
     ax.grid(True, alpha=0.3, axis="y")
+
+    legend_elements = [Patch(facecolor=colors[m], label=m) for m in model_names]
+    ax.legend(handles=legend_elements, bbox_to_anchor=(1.05, 0.75),
+              loc="upper left", title="Model")
 
     plt.tight_layout()
     out = OUTPUT_DIR / PLOT_NAME
