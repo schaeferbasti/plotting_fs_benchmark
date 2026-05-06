@@ -7,7 +7,7 @@ from utils.average import average_per_dataset_and_method, average_per_dataset_mo
 from utils.beautify import beautify_names, remove_jmi, add_model_name
 
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "critical_difference_v2.png"
+PLOT_NAME = "critical_difference_v2.pdf"
 PLOT_TITLE = ""
 
 def prepare_data_for_autorank(df):
