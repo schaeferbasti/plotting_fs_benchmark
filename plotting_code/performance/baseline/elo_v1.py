@@ -5,12 +5,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 import ast
-import matplotlib.colors as mcolors
-
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "elo_v2.pdf"
+PLOT_NAME = "elo_v1.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
@@ -18,8 +16,8 @@ X_LABEL = "Feature Selection Time (s) per 1k Features"
 Y_LABEL = "Improvement over Random (%)"
 
 N_BOOTSTRAP = 1000
-SCALE = 400 / np.log(10)   # logit units -> Elo units
-ANCHOR = 1000              # rating to assign the mean method (cosmetic)
+SCALE = 400 / np.log(10)  # logit units -> Elo units
+ANCHOR = 1000  # rating to assign the mean method (cosmetic)
 RNG = np.random.default_rng(42)
 CELL_KEYS = ["tid", "downstream_model", "feature_selection_budget_index", "metric"]
 
@@ -38,13 +36,14 @@ def beautify(name):
         return NAME_MAP[name]
     return name.replace("FeatureSelector", "")
 
+
 def aggregate_to_cells(df):
     """Collapse splits/folds/repeats: one error value per (cell, FS method)."""
     return (
         df.dropna(subset=CELL_KEYS + ["feature_selection_method", "metric_error"])
-          .groupby(CELL_KEYS + ["feature_selection_method"], as_index=False)["metric_error"]
-          .mean()
-          .rename(columns={"metric_error": "error"})
+        .groupby(CELL_KEYS + ["feature_selection_method"], as_index=False)["metric_error"]
+        .mean()
+        .rename(columns={"metric_error": "error"})
     )
 
 
@@ -63,9 +62,11 @@ def build_matches(cell_df, methods):
                 if errs[a] == errs[b]:
                     continue
                 if errs[a] < errs[b]:
-                    winners.append(method_to_idx[a]); losers.append(method_to_idx[b])
+                    winners.append(method_to_idx[a]);
+                    losers.append(method_to_idx[b])
                 else:
-                    winners.append(method_to_idx[b]); losers.append(method_to_idx[a])
+                    winners.append(method_to_idx[b]);
+                    losers.append(method_to_idx[a])
                 datasets.append(group["tid"].iloc[0])
 
     return (
@@ -73,6 +74,7 @@ def build_matches(cell_df, methods):
         np.array(losers, dtype=np.int64),
         np.array(datasets),
     )
+
 
 def fit_bt(winners, losers, n_methods):
     """Bradley-Terry MLE via logistic regression with no intercept.
@@ -88,9 +90,14 @@ def fit_bt(winners, losers, n_methods):
     X[M + np.arange(M), losers] = 1
     y = np.concatenate([np.ones(M), np.zeros(M)])
 
-    model = LogisticRegression(fit_intercept=False, C=1e9, solver="lbfgs", max_iter=1000) # regularization to not send scores to inf if method is really good
+    model = LogisticRegression(fit_intercept=False, C=1e9, solver="lbfgs",
+                               max_iter=1000)  # regularization to not send scores to inf if method is really good
     model.fit(X, y)
     return model.coef_.flatten()
+
+
+import matplotlib.cm as cm
+import matplotlib.colors as mcolors
 
 
 def plot(methods, point_elo, lo, hi, out_path, stability_scores=None):
@@ -141,18 +148,20 @@ def plot(methods, point_elo, lo, hi, out_path, stability_scores=None):
     if stability_scores is not None:
         sm = plt.cm.ScalarMappable(cmap=custom_cmap, norm=plt.Normalize(vmin=0, vmax=1))
         sm.set_array([])
-        cbar = fig.colorbar(sm, ax=ax, pad=0.02, shrink=0.6)
+        cbar = fig.colorbar(sm, ax=ax, pad=0.02)
         cbar.set_label("Stability Ranking Score")
 
     plt.tight_layout()
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close()
 
+
 def extract_model_cls(s):
     try:
         return ast.literal_eval(s)["model_cls"]
     except Exception:
         return None
+
 
 def main():
     COLUMNS = [
@@ -195,7 +204,7 @@ def main():
     # uncertainty measure relative to random
     random_idx = methods.index("RandomFeatureSelector")
     shift = point_beta[random_idx]
-    point_elo = (point_beta - shift) * SCALE + ANCHOR # convert to elo
+    point_elo = (point_beta - shift) * SCALE + ANCHOR  # convert to elo
     boot_elos = (boot_betas - shift) * SCALE + ANCHOR
 
     lo = np.percentile(boot_elos, 2.5, axis=0)
@@ -219,25 +228,8 @@ def main():
         "Random": 0.1,
     }
 
-    validity_scores = {
-        "F-test": 0.9,
-        "GainRatio": 0.9,
-        "MI": 0.85,
-        "LaplacianScore": 0.85,
-        "SFS": 0.8,
-        "(R)ReliefF": 0.75,
-        "ElasticNet": 0.7,
-        "Lasso": 0.65,
-        "RFImportance": 0.55,
-        "LOCO": 0.5,
-        "RFE": 0.4,
-        "mRMR": 0.35,
-        "CART": 0.3,
-        "Random": 0.25,
-        "MarkovBlanket": 0.2,
-    }
     out = OUTPUT_DIR / PLOT_NAME
-    plot(methods, point_elo, lo, hi, out, stability_scores=stability_scores)
+    plot(methods, point_elo, lo, hi, out)
     print(f"✅ Saved to {PLOT_NAME}")
 
 
@@ -246,7 +238,6 @@ SCRIPT_DIR = Path(__file__).parent / "../../../"
 RESULTS_FILE = SCRIPT_DIR / "result_files" / FILE_NAME
 OUTPUT_DIR = SCRIPT_DIR / "generated_plots/performance/baseline"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
 
 if __name__ == "__main__":
     main()

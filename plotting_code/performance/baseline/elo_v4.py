@@ -10,7 +10,7 @@ import matplotlib.colors as mcolors
 
 # TODO: Adapt file and plot name
 FILE_NAME = "results_per_split.csv"
-PLOT_NAME = "elo_v2.pdf"
+PLOT_NAME = "elo_v4.pdf"
 
 # TODO: Adapt title and labels
 PLOT_TITLE = ""
@@ -93,58 +93,96 @@ def fit_bt(winners, losers, n_methods):
     return model.coef_.flatten()
 
 
-def plot(methods, point_elo, lo, hi, out_path, stability_scores=None):
+
+def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_scores=None):
     order = np.argsort(point_elo)
     methods_sorted = [beautify(m) for m in np.array(methods)[order]]
     pt, lo, hi = point_elo[order], lo[order], hi[order]
 
     fig, ax = plt.subplots(figsize=(max(10, 0.7 * len(methods)), 5))
+
+    # We will use an array of indices for the x-axis
     x = np.arange(len(methods))
-    bottom = np.floor(lo.min() / 50) * 50 - 25
 
-    # --- NEW: Color mapping logic ---
-    if stability_scores is not None:
-        # Create a colormap from White to your Okabe-Ito Blue
-        custom_cmap = mcolors.LinearSegmentedColormap.from_list("okabe", ["#ffffff", "#0072B2"])
+    # Define how wide the side-by-side bars should be
+    total_bar_width = 0.7
+    half_width = total_bar_width / 2
 
-        # Build a list of colors corresponding to the sorted methods
-        bar_colors = []
-        for m in methods_sorted:
-            # Get the score (assume it's 0-1, default to 0.5 if missing)
-            score = stability_scores.get(m, 0.5)
-            # Map the 0-1 score to an actual RGBA color
-            bar_colors.append(custom_cmap(score))
-    else:
-        # Fallback to solid blue if no scores are provided
-        bar_colors = ["#0072B2"] * len(methods)
+    base_bottom = np.floor(lo.min() / 50) * 50 - 25
 
-    # Apply the mapped colors to the bars
+    # --- COLOR MAPPING LOGIC ---
+    cmap_stability = mcolors.LinearSegmentedColormap.from_list("stability_cmap", ["#ffffff", "#0072B2"])
+    cmap_validity = mcolors.LinearSegmentedColormap.from_list("validity_cmap", ["#ffffff", "#D55E00"])
+
+    stability_colors = []
+    validity_colors = []
+
+    for m in methods_sorted:
+        s_score = stability_scores.get(m, 0.5) if stability_scores else 0.5
+        v_score = validity_scores.get(m, 0.5) if validity_scores else 0.5
+
+        stability_colors.append(cmap_stability(s_score))
+        validity_colors.append(cmap_validity(v_score))
+
+    # --- PLOT THE VERTICALLY SPLIT (SIDE-BY-SIDE) BARS ---
+
+    # Left bar (Stability) -> shifted slightly to the left
     ax.bar(
-        x, pt - bottom, bottom=bottom, width=0.7,
-        color=bar_colors, linewidth=1, alpha=0.9
+        x - (half_width / 2),
+        pt - base_bottom,
+        bottom=base_bottom,
+        width=half_width,
+        color=stability_colors,
+        linewidth=1,
+        alpha=0.9,
+        label="Stability"
     )
 
-    # ... [Keep your error bars and existing formatting] ...
+    # Right bar (Validity) -> shifted slightly to the right
+    ax.bar(
+        x + (half_width / 2),
+        pt - base_bottom,
+        bottom=base_bottom,
+        width=half_width,
+        color=validity_colors,
+        linewidth=1,
+        alpha=0.9,
+        label="Validity"
+    )
+
+    # Error bars (plotted exactly in the middle of the two bars)
     ax.errorbar(
         x, pt, yerr=[pt - lo, hi - pt],
-        fmt="none", ecolor="black", capsize=3, linewidth=1,
+        fmt="none", ecolor="black", capsize=3, linewidth=1.5,
     )
 
+    # --- FORMATTING ---
     ax.set_xticks(x)
     ax.set_xticklabels(methods_sorted, rotation=30, ha="right")
     ax.set_ylabel("Elo")
-    ax.set_ylim(bottom=bottom)
+    ax.set_ylim(bottom=base_bottom)
     ax.grid(axis="y", linestyle="-", alpha=0.3)
     ax.set_axisbelow(True)
 
-    # --- NEW: Add a colorbar legend to explain the colors ---
-    if stability_scores is not None:
-        sm = plt.cm.ScalarMappable(cmap=custom_cmap, norm=plt.Normalize(vmin=0, vmax=1))
-        sm.set_array([])
-        cbar = fig.colorbar(sm, ax=ax, pad=0.02, shrink=0.6)
-        cbar.set_label("Stability Ranking Score")
+    # --- ADD DUAL COLORBARS ---
+    if stability_scores is not None and validity_scores is not None:
+        cax_stab = fig.add_axes([0.92, 0.15, 0.02, 0.3])
+        sm_stab = plt.cm.ScalarMappable(cmap=cmap_stability, norm=plt.Normalize(vmin=0, vmax=1))
+        sm_stab.set_array([])
+        cbar_stab = fig.colorbar(sm_stab, cax=cax_stab)
+        cbar_stab.set_label("Stability", fontsize=9)
 
-    plt.tight_layout()
+        cax_val = fig.add_axes([0.92, 0.55, 0.02, 0.3])
+        sm_val = plt.cm.ScalarMappable(cmap=cmap_validity, norm=plt.Normalize(vmin=0, vmax=1))
+        sm_val.set_array([])
+        cbar_val = fig.colorbar(sm_val, cax=cax_val)
+        cbar_val.set_label("Validity", fontsize=9)
+
+        plt.subplots_adjust(right=0.88)
+
+    # Simple legend to show which side is which
+    ax.legend(loc="upper left")
+
     plt.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close()
 
@@ -237,7 +275,7 @@ def main():
         "MarkovBlanket": 0.2,
     }
     out = OUTPUT_DIR / PLOT_NAME
-    plot(methods, point_elo, lo, hi, out, stability_scores=stability_scores)
+    plot(methods, point_elo, lo, hi, out, stability_scores=stability_scores, validity_scores=validity_scores)
     print(f"✅ Saved to {PLOT_NAME}")
 
 
