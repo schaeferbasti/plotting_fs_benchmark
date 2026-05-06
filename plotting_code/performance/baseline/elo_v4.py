@@ -28,7 +28,7 @@ NAME_MAP = {
     "SequentialForwardSelectionFeatureSelector": "SFS",
     "AccuracyFeatureSelector": "LOCO",
     "ReliefFFeatureSelector": "(R)ReliefF",
-    "ANOVAFeatureSelector": "F-test",
+    "ANOVAFeatureSelector": "F-Test",
 }
 
 
@@ -258,7 +258,7 @@ def main():
     hi = np.percentile(boot_elos, 97.5, axis=0)
 
     stability_scores = {
-        "F-test": 0.8,
+        "F-Test": 0.8,
         "LaplacianScore": 0.7,
         "MI": 0.65,
         "GainRatio": 0.6,
@@ -276,7 +276,7 @@ def main():
     }
 
     validity_scores = {
-        "F-test": 0.9,
+        "F-Test": 0.9,
         "GainRatio": 0.9,
         "MI": 0.85,
         "LaplacianScore": 0.85,

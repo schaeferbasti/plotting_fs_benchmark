@@ -76,7 +76,7 @@ def lasagna_plot(
             "Accuracy": "LOCO",
             "SequentialBackwardElimination": "RFE",
             "SequentialForwardSelection": "SFS",
-            "ANOVA": "F-test",
+            "ANOVA": "F-Test",
             "ReliefF": "(R)ReliefF",
         })
 

@@ -13,7 +13,7 @@ def beautify_names(df):
         "Accuracy": "LOCO",
         "SequentialBackwardElimination": "RFE",
         "SequentialForwardSelection": "SFS",
-        "ANOVA": "F-test"
+        "ANOVA": "F-Test"
     })
     return df
 
