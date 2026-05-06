@@ -1,0 +1,27 @@
+\begin{table}[ht]
+\caption{\textbf{Feature selection performance and runtime}: We report the mean score and mean runtime for all benchmarked feature selection methods. The mean score can be interpreted as the average improvement over the random baseline. Runtime is reported in seconds.}
+\label{table-feature-selection-performance}
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+\textbf{Name} & \textbf{Mean score} & \textbf{Mean runtime (s)} \\
+\midrule
+RFE & 27.08 & 28491 \\
+RFImportance & 25.88 & 48.33 \\
+CART & 23.73 & 16.07 \\
+F-Test & 23.60 & 0.851 \\
+MI & 23.22 & 51.11 \\
+ElasticNet & 23.09 & 2493.3 \\
+mRMR & 21.84 & 54.81 \\
+Lasso & 21.43 & 2490.3 \\
+GainRatio & 19.11 & 14.13 \\
+ReliefF & 18.89 & 24198 \\
+SFS & 16.50 & 28876 \\
+MarkovBlanket & 13.94 & 2214.6 \\
+LOCO & 10.22 & 6617.2 \\
+Random & 0.00 & 0.003 \\
+LaplacianScore & -19.71 & 53.45 \\
+\bottomrule
+\end{tabular}
+\end{table}

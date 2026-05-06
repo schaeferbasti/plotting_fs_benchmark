@@ -93,6 +93,40 @@ def fit_bt(winners, losers, n_methods):
     return model.coef_.flatten()
 
 
+def generate_latex_table(scores_dict, metric_name, filename, label, caption_text):
+    # Sort the dictionary by score in descending order
+    sorted_scores = sorted(scores_dict.items(), key=lambda x: x[1], reverse=True)
+
+    # Determine formatting: Elo gets 1 decimal (or 0), others get 4 decimals
+    is_elo = "Elo" in metric_name
+
+    lines = []
+    lines.append("\\begin{table}[ht]")
+    lines.append(f"\\caption{{\\textbf{{Feature selection {metric_name.lower()}}}: {caption_text}}}")
+    lines.append(f"\\label{{{label}}}")
+    lines.append("\\centering")
+    lines.append("\\small")
+    lines.append("\\begin{tabular}{lc}")
+    lines.append("\\toprule")
+    lines.append(f"\\textbf{{Name}} & \\textbf{{{metric_name}}} \\\\")
+    lines.append("\\midrule")
+
+    for method, score in sorted_scores:
+        # Format the score
+        score_str = f"{score:.1f}" if is_elo else f"{score:.4f}"
+
+        # Clean up method names for LaTeX if necessary (e.g., escaping underscores if you have them)
+        safe_method = str(method).replace("_", "\\_")
+
+        lines.append(f"{safe_method} & {score_str} \\\\")
+
+    lines.append("\\bottomrule")
+    lines.append("\\end{tabular}")
+    lines.append("\\end{table}")
+
+    with open(filename, "w") as f:
+        f.write("\n".join(lines))
+    print(f"✅ Generated {filename}")
 
 def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_scores=None):
     order = np.argsort(point_elo)
@@ -291,6 +325,33 @@ def main():
         "Random": 0.675176,
         "MarkovBlanket": 0.557068,
     }
+
+    elo_scores = dict(zip(methods, point_elo))
+
+    generate_latex_table(
+        scores_dict=elo_scores,
+        metric_name="Elo rating",
+        filename="table_performance_elo.tex",
+        label="table-results-performance-elo",
+        caption_text="We report the predictive performance of each method measured in Elo rating. Higher is better."
+    )
+
+    generate_latex_table(
+        scores_dict=stability_scores,
+        metric_name="Mean stability",
+        filename="table_stability.tex",
+        label="table-results-stability",
+        caption_text="We report the average stability scores across all datasets. Higher is better."
+    )
+
+    generate_latex_table(
+        scores_dict=validity_scores,
+        metric_name="Mean validity",
+        filename="table_validity.tex",
+        label="table-results-validity",
+        caption_text="We report the average validity scores across all datasets. Higher is better."
+    )
+
     out = OUTPUT_DIR / PLOT_NAME
     plot(methods, point_elo, lo, hi, out, stability_scores=stability_scores, validity_scores=validity_scores)
     print(f"✅ Saved to {PLOT_NAME}")

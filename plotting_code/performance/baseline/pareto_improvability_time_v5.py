@@ -106,6 +106,8 @@ def calculate_relative_performance(df):
         mean_time=("time_per_1k", "mean")
     ).reset_index()
 
+    agg_df.to_csv(OUTPUT_DIR / "pareto_data.csv", index=False)
+
     # Drop 'Random' from the final aggregated dataframe so it isn't plotted
     agg_df = agg_df[agg_df["feature_selection_method"] != "LaplacianScore"].reset_index(drop=True)
     # agg_df = agg_df[agg_df["feature_selection_method"] != "Random"].reset_index(drop=True)
