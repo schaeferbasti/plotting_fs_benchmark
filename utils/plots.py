@@ -96,6 +96,7 @@ def lasagna_plot(
         # Calculates the mean stability for each method across all EPVs.
         # Sorts descending, so the highest mean is placed at the top.
         row_means = lasagna_df.mean(axis=1)
+        print(output_path)
         print(row_means)
         lasagna_df = lasagna_df.loc[row_means.sort_values(ascending=False).index]
 

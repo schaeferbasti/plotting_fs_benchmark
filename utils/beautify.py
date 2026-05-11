@@ -13,13 +13,16 @@ def beautify_names(df):
         "Accuracy": "LOCO",
         "SequentialBackwardElimination": "RFE",
         "SequentialForwardSelection": "SFS",
-        "ANOVA": "F-Test"
+        "ANOVA": "F-Test",
+        "ReliefF": "(R)ReliefF"
     })
     return df
 
 
 def remove_jmi(df):
-    return df[df["feature_selection_method"] != "JMI"]
+    df = df[df["feature_selection_method"] != "JMI"]
+    df = df[df["feature_selection_method"] != "AccuracyLinear"]
+    return df
 
 
 def remove_jmi_random(df):

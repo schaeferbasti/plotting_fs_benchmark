@@ -131,7 +131,18 @@ def generate_latex_table(scores_dict, metric_name, filename, label, caption_text
 def plot(methods, point_elo, lo, hi, out_path, stability_scores=None, validity_scores=None):
     order = np.argsort(point_elo)
     methods_sorted = [beautify(m) for m in np.array(methods)[order]]
+
     pt, lo, hi = point_elo[order], lo[order], hi[order]
+    if "AccuracyLinear" in methods_sorted:
+        idx_to_drop = methods_sorted.index("AccuracyLinear")
+
+        # Remove from the list of names
+        methods_sorted.pop(idx_to_drop)
+
+        # Remove from the numpy arrays
+        pt = np.delete(pt, idx_to_drop)
+        lo = np.delete(lo, idx_to_drop)
+        hi = np.delete(hi, idx_to_drop)
 
     fig, ax = plt.subplots(figsize=(11, 3))
     # We will use an array of indices for the x-axis
@@ -257,6 +268,9 @@ def main():
 
     df = pd.read_csv(RESULTS_FILE, low_memory=False, header=None, names=COLUMNS)
 
+    df = df[df["feature_selection_method"] != "AccuracyLinearFeatureSelector"]
+
+
     numeric_cols = ["metric_error", "metric_error_val", "time_train_s", "time_infer_s",
                     "max_features", "feature_selection_budget_total",
                     "feature_selection_budget_index", "feature_selection_fit_time",
@@ -296,17 +310,18 @@ def main():
         "MI": 0.644649,
         "GainRatio": 0.635743,
         "mRMR": 0.584812,
-        "(R)ReliefF": 0.612715,
+        "(R)ReliefF": 0.611916,
         "RFImportance": 0.550328,
         "ElasticNet": 0.445675,
         "CART": 0.423454,
         "MarkovBlanket": 0.416231,
         "Lasso": 0.354916,
+        "RFE": 0.287160,
         "SFS": 0.193160,
         "LOCO": 0.184622,
-        "RFE": 0.139315,
         "Random": 0.0,
     }
+
 
     validity_scores = {
         "F-Test": 0.922208,
@@ -314,17 +329,19 @@ def main():
         "MI": 0.879216,
         "LaplacianScore": 0.875109,
         "SFS": 0.854128,
-        "(R)ReliefF": 0.852300,
+        "(R)ReliefF": 0.845918,
         "ElasticNet": 0.848003,
         "Lasso": 0.837922,
         "RFImportance": 0.799050,
         "LOCO": 0.758831,
         "RFE": 0.748798,
-        "mRMR": 0.738260,
+        "mRMR": 0.730539,
         "CART": 0.708525,
         "Random": 0.675176,
         "MarkovBlanket": 0.557068,
     }
+
+
 
     elo_scores = dict(zip(methods, point_elo))
 

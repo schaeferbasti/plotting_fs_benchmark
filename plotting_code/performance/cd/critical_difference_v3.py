@@ -41,7 +41,7 @@ def plot_autorank(df):
 
     # 3. Create the figure with desired dimensions: (width, height)
     # Using (4, 8) makes it narrow (4 inches) and tall (8 inches)
-    fig, ax = plt.subplots(figsize=(3, 12))
+    fig, ax = plt.subplots(figsize=(3, 6))
 
     # 4. Plot stats into the pre-defined ax
     # Autorank will draw the plot inside this specific axis
@@ -49,16 +49,16 @@ def plot_autorank(df):
 
     for text in ax.texts:
         if text.get_text() not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
-                                   "15"]:
+                                   "15", "16"]:
             x, y = text.get_position()
             text.set_position((x - 0, y))
-            text.set_fontsize(20)  # Augment size here
+            text.set_fontsize(12)  # Augment size here
 
     xmin, xmax = ax.get_xlim()
     ax.set_xlim(xmin + 0.15, xmax - 0.15)
 
     # Add title and layout adjustments
-    ax.set_title(PLOT_TITLE, pad=20, fontsize=14, weight='bold')
+    ax.set_title(PLOT_TITLE, pad=20, fontsize=10, weight='bold')
 
     out = OUTPUT_DIR / PLOT_NAME
     fig.savefig(out, dpi=300, bbox_inches="tight")

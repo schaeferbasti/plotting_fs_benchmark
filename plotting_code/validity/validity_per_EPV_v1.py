@@ -26,6 +26,54 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_PATH = OUTPUT_DIR / PLOT_NAME
 
 
+def diagnose_validity_data(df_validity):
+    """
+    Comprehensive missing data analysis for validity dataframe.
+    Pass your df_validity directly - no file loading needed.
+    """
+    print("\n" + "=" * 60)
+    print("🔍 VALIDITY DATA DIAGNOSTICS")
+    print("=" * 60)
+
+    # Extract method names
+    df_validity = df_validity.copy()
+
+    # Handle potentially missing method column safely
+    df_validity['selector'] = df_validity['method'].str.split("__").str[1]
+
+    # 1. BASIC SHAPE
+    print(f"📊 Shape: {df_validity.shape[0]:,} rows, {df_validity.shape[1]} cols")
+    print(f"📋 Supposed Shape: {71*15*5*3}, rows, {df_validity.shape[1]} cols\n")
+
+    if 'extracted_noise_level' not in df_validity.columns:
+        df_validity['extracted_noise_level'] = df_validity['mode_kwargs'].apply(extract_noise)
+
+    combo_noise_counts = df_validity.groupby(
+        ['data_foundry_task_id', 'selector']
+    )['extracted_noise_level'].nunique().reset_index(name='completed_noise_levels')
+
+    # 2. Filter for combinations that have exactly the number you are looking for
+    # For example: 2 out of 3, or 4 out of 5
+    target_completed = 1  # Change this to whatever number you are looking for (e.g., 4)
+
+    matches = combo_noise_counts[combo_noise_counts['completed_noise_levels'] == target_completed]
+
+    print(f"\n🎯 Found {len(matches)} dataset/method combinations with exactly {target_completed} noise levels:")
+
+    if not matches.empty:
+        # Print the first 15 as an example
+        print(matches.head(15).to_string(index=False))
+
+        # If you want to see which methods are most prone to finishing "almost" all budgets
+        print("\nBreakdown of these 'almost complete' combinations per method:")
+        print(matches['selector'].value_counts().to_string())
+    else:
+        print("None found.")
+
+    print("=" * 60)
+
+
+
 def extract_noise(val):
     try:
         # If it is a string like "{'noise': 0.1, ...}", parse it
@@ -47,6 +95,8 @@ def main():
     
     # TODO: adapt if not all rows, but only rows where repeat == 0
     df = pd.read_csv(RESULTS_FILE, low_memory=False)
+
+    diagnose_validity_data(df)
 
     df = df[df["method"].astype(str).str.startswith("FSBench")]
 

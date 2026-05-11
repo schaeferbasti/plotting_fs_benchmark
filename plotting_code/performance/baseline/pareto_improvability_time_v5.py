@@ -218,7 +218,7 @@ def plot(df):
         labeled_positions.append((x, y))
 
     ax.annotate(
-        "ideal",
+        "optimal",
         xy=(0.0, 1.0),  # arrow tip near top-left
         xytext=(0.02, 0.89),  # text a bit inside the plot
         xycoords="axes fraction",
