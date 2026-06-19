@@ -8,10 +8,11 @@ from utils.beautify import beautify_names, remove_jmi
 from utils.scaling import tabarena_normalization
 
 FILE_NAME = "results_per_split_with_tuned.csv"
-PLOT_NAME = "performance_per_budget_v5.pdf"
+PLOT_NAME = "performance_per_budget_v6.pdf"
 PLOT_TITLE = ""
 X_LABEL = ""
 Y_LABEL = "Normalized Score"
+
 
 def calculate_relative_performance(df):
     df = df.copy()
@@ -64,82 +65,56 @@ def calculate_relative_performance(df):
 def plot_relative(df):
     pivot = calculate_relative_performance(df)
 
-    # Rename base models, keeping the " (Tuned)" suffix intact if present
-    """ budget_rename_map = {
-        "LGBModel": "LGBM",
-        "LinearModel": "LM",
-        "RFModel": "RF",
-        "TabICLv2Model": "TabICLv2"
-    }
-
-    new_columns = {}
-    for col in pivot.columns:
-        base_name = col.replace(" (Tuned)", "")
-        new_base = model_rename_map.get(base_name, base_name)
-        new_columns[col] = f"{new_base} (Tuned)" if " (Tuned)" in col else new_base
-    pivot = pivot.rename(columns=new_columns)
-    """
-
     methods = sorted(pivot.index)
     budgets = sorted(pivot.columns)
 
     fig, ax = plt.subplots(figsize=(10, 4))
 
-    # Define base colors for untuned, and lighter/hashed variants for tuned
-    colors = {
-        1: "#0072B2",
-        2: "#56B4E9",  # Lighter blue
-        3: "#F0E442",
-        4: "#009E73",
-        5: "#D55E00",
-    }
+    # Color per method — colorblind-friendly palette (Wong)
+    method_colors = [
+        "#0072B2", "#E69F00", "#009E73", "#D55E00",
+        "#CC79A7", "#56B4E9", "#F0E442", "#000000",
+        "#999999", "#882255", "#44AA99", "#DDCC77",
+    ]
+    colors = {method: method_colors[i % len(method_colors)] for i, method in enumerate(methods)}
 
-    # Standard x coordinates
-    x = np.arange(len(methods), dtype=float)
-
+    x = np.arange(len(budgets), dtype=float)
     total_width = 0.85
-    width_per_model = total_width / len(budgets)
+    width_per_method = total_width / len(methods)
 
-    # Plot the divergent bars extending from 0.0
-    for j, budget in enumerate(budgets):
-        values = pivot[budget].reindex(methods).values
-
-        offset = -(total_width / 2) + (j + 0.5) * width_per_model
+    for j, method in enumerate(methods):
+        values = [pivot.loc[method, b] if b in pivot.columns else np.nan for b in budgets]
+        offset = -(total_width / 2) + (j + 0.5) * width_per_method
 
         ax.bar(
             x + offset,
             values,
-            width=width_per_model * 0.9,
-            color=colors.get(budget, "#333333"),
+            width=width_per_method * 0.9,
+            color=colors[method],
             edgecolor="black",
             linewidth=0.5,
-            label=budget
+            label=method
         )
 
     ax.set_xticks(x)
-    ax.set_xticklabels(methods, rotation=45, ha="right")
+    ax.set_xticklabels([f"Budget {b}" for b in budgets], rotation=0, ha="center")
     ax.axhline(y=0.0, color="black", linestyle="-", alpha=0.2, linewidth=1)
 
     ax.set_title(PLOT_TITLE)
-    ax.set_xlabel(X_LABEL)
+    ax.set_xlabel("Budget Stage")
     ax.set_ylabel(Y_LABEL)
     ax.grid(True, alpha=0.3, axis="y")
 
-    legend_elements = []
-    for m in budgets:
-        legend_elements.append(
-            Patch(
-                facecolor=colors.get(m, "#333333"),
-                edgecolor="black",
-                label=m
-            )
-        )
+    legend_elements = [
+        Patch(facecolor=colors[m], edgecolor="black", label=m)
+        for m in methods
+    ]
 
     ax.legend(
         handles=legend_elements,
         loc="upper left",
         bbox_to_anchor=(1.02, 1.0),
-        title="Budget",
+        title="Method",
         framealpha=0.9,
         edgecolor="black",
         ncol=1
