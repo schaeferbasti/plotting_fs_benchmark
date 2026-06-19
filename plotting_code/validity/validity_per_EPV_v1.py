@@ -96,7 +96,7 @@ def main():
     # TODO: adapt if not all rows, but only rows where repeat == 0
     df = pd.read_csv(RESULTS_FILE, low_memory=False)
 
-    diagnose_validity_data(df)
+    # diagnose_validity_data(df)
 
     df = df[df["method"].astype(str).str.startswith("FSBench")]
 
