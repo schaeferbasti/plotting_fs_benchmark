@@ -266,7 +266,7 @@ def main():
         "feature_selection_fit_time", "feature_selection_time_limit",
     ]
 
-    df = pd.read_csv(RESULTS_FILE, low_memory=False, header=None, names=COLUMNS)
+    df = pd.read_csv(RESULTS_FILE, low_memory=False, header=0)
 
     df = df[df["feature_selection_method"] != "AccuracyLinearFeatureSelector"]
 
@@ -305,40 +305,40 @@ def main():
     hi = np.percentile(boot_elos, 97.5, axis=0)
 
     stability_scores = {
-        "F-Test": 0.672325,
-        "LaplacianScore": 0.654536,
-        "MI": 0.644649,
-        "GainRatio": 0.635743,
-        "mRMR": 0.584812,
-        "(R)ReliefF": 0.611916,
-        "RFImportance": 0.550328,
-        "ElasticNet": 0.445675,
-        "CART": 0.423454,
-        "MarkovBlanket": 0.416231,
-        "Lasso": 0.354916,
-        "RFE": 0.287160,
-        "SFS": 0.193160,
-        "LOCO": 0.184622,
-        "Random": 0.0,
+        "F-Test": 0.681240,
+        "LaplacianScore": 0.661095,
+        "MI": 0.653241,
+        "GainRatio": 0.650649,
+        "mRMR": 0.588703,
+        "(R)ReliefF": 0.604341,
+        "RFImportance": 0.546352,
+        "ElasticNet": 0.444959,
+        "CART": 0.432157,
+        "MarkovBlanket": 0.439649,
+        "Lasso": 0.374562,
+        "RFE": 0.233178,
+        "SFS": 0.278901,
+        "LOCO": 0.174991,
+        "Random": 0.004846,
     }
 
 
     validity_scores = {
-        "F-Test": 0.922208,
-        "GainRatio": 0.903634,
-        "MI": 0.879216,
-        "LaplacianScore": 0.875109,
-        "SFS": 0.854128,
-        "(R)ReliefF": 0.845918,
-        "ElasticNet": 0.848003,
-        "Lasso": 0.837922,
-        "RFImportance": 0.799050,
-        "LOCO": 0.758831,
-        "RFE": 0.748798,
-        "mRMR": 0.730539,
-        "CART": 0.708525,
-        "Random": 0.675176,
-        "MarkovBlanket": 0.557068,
+        "F-Test": 0.847953,
+        "GainRatio": 0.826548,
+        "MI": 0.785338,
+        "LaplacianScore": 0.797492,
+        "SFS": 0.626375,
+        "(R)ReliefF": 0.740539,
+        "ElasticNet": 0.759485,
+        "Lasso": 0.731577,
+        "RFImportance": 0.715986,
+        "LOCO": 0.583660,
+        "RFE": 0.558420,
+        "mRMR": 0.654502,
+        "CART": 0.588315,
+        "Random": 0.499358,
+        "MarkovBlanket": 0.369787,
     }
 
 
