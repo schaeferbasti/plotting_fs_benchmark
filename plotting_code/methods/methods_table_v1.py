@@ -1,7 +1,5 @@
 from pathlib import Path
-import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
 
 FILE_NAME = "method_curation.csv"
 PLOT_NAME = "method_table_v1.txt"
@@ -19,13 +17,15 @@ def latex_escape(text):
 
 
 def make_table(df):
-    df_filtered = df[
+    df_filtered = df.dropna(thresh=2)
+
+    """[
         (df["Name"].notna()) &
         (df["Source (Paper)"].notna()) &
         (df["Year (Paper)"].notna()) &
         (df["Number of appearances"].notna()) &
         (df["Final Decision "].notna())
-    ].copy()
+    ].copy()"""
 
     table_cols = ["Name", "Year (Paper)", "Number of appearances", "Final Decision ", "Source (Paper)"]
     df_table = df_filtered[table_cols].copy()
@@ -46,6 +46,7 @@ def make_table(df):
         latex_row = latex_row.replace("Variation of another method", r"\textcolor{red}{Variation}")
         latex_row = latex_row.replace("Too few citations", r"\textcolor{red}{Citations}")
         latex_row = latex_row.replace("Wrong data domain", r"\textcolor{red}{Wrong Domain}")
+        latex_row = latex_row.replace("No", r"\textcolor{red}{Not task-agnostic}")
         latex_row = latex_row.replace("Yes", r"\textcolor{green}{Yes}")
         latex_rows.append(latex_row)
 
@@ -53,8 +54,8 @@ def make_table(df):
 
     latex = r"""\begin{longtable}{p{6.5cm}ccc}
 \caption[\textbf{Overview of all investigated feature selection methods.}]{%
-  \textbf{Overview of all investigated feature selection methods.} We list the method name with a link to the source of the method, provide year and the number of appearances across the considered literature. In the "Decision" column we list the reason for excluding the method ("Citations" if there are below three citations, "Variation" if the method is a variation of another method, and "Wrong Domain" if the method is not suited for tabular data) or we put a yes if the method is included.
-  \label{appendix-table-methods-overview}
+    \textbf{Overview of all investigated feature selection methods.} We list all methods with their source links, provide the year, and the number of appearances across the relevant literature (Section \ref{subsection-benchmarking-setup}). In the \textbf{Decision} column, we use \textcolor{green}{Yes} if the method is included in \benchmarkName{} or list the reason for exclusion (\textcolor{red}{Citations} if there are fewer than three citations, \textcolor{red}{Variation} if the method is a variation of another method, \textcolor{red}{Wrong Domain} if the method is not suitable for tabular data, and \textcolor{red}{Not task-agnostic} if the method is not suitable for all tasks). We additionally mark some methods with \textcolor{orange}{Yes, future work} to indicate that their implementations are ongoing. In all cases, these implementations are missing differential entropy logic.
+\label{appendix-table-methods-overview}
 }\\
 \toprule
 Feature Selection Method Name & Year & \# appearances & Decision \\
