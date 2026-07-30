@@ -1,0 +1,78 @@
+/Users/schaefer.bastian/Programming/ULCO/Plotting_FS/plotting_code/validity/../../generated_plots/validity/validity_per_EPV_v1_noise_1_0
+selector
+(R)ReliefF        0.740539
+CART              0.588315
+ElasticNet        0.759485
+F-Test            0.847953
+GainRatio         0.826548
+LOCO              0.583660
+LaplacianScore    0.797492
+Lasso             0.731577
+MI                0.785338
+MarkovBlanket     0.366982
+RFE               0.558420
+RFImportance      0.715986
+Random            0.499389
+SFS               0.626375
+mRMR              0.654502
+dtype: float64
+
+
+/Users/schaefer.bastian/Programming/ULCO/Plotting_FS/plotting_code/validity/../../generated_plots/validity/validity_per_EPV_v1_noise_0_5
+selector
+(R)ReliefF        0.836929
+CART              0.708525
+ElasticNet        0.853544
+F-Test            0.922208
+GainRatio         0.909595
+LOCO              0.730326
+LaplacianScore    0.875447
+Lasso             0.839766
+MI                0.879216
+MarkovBlanket     0.573959
+RFE               0.726402
+RFImportance      0.799050
+Random            0.675152
+SFS               0.781449
+mRMR              0.749956
+dtype: float64
+
+
+/Users/schaefer.bastian/Programming/ULCO/Plotting_FS/plotting_code/validity/../../generated_plots/validity/validity_per_EPV_v1_noise_0_75
+selector
+(R)ReliefF        0.775536
+CART              0.650755
+ElasticNet        0.804436
+F-Test            0.885445
+GainRatio         0.867829
+LOCO              0.639994
+LaplacianScore    0.837405
+Lasso             0.778133
+MI                0.831729
+MarkovBlanket     0.456492
+RFE               0.634586
+RFImportance      0.756683
+Random            0.586890
+SFS               0.702861
+mRMR              0.698682
+dtype: float64
+
+
+/Users/schaefer.bastian/Programming/ULCO/Plotting_FS/plotting_code/stability/../../generated_plots/stability/stability_per_EPV_v1
+selector
+(R)ReliefF        0.775536
+CART              0.650755
+ElasticNet        0.804436
+F-Test            0.885445
+GainRatio         0.867829
+LOCO              0.639994
+LaplacianScore    0.837405
+Lasso             0.778133
+MI                0.831729
+MarkovBlanket     0.456492
+RFE               0.634586
+RFImportance      0.756683
+Random            0.586890
+SFS               0.702861
+mRMR              0.698682
+dtype: float64
